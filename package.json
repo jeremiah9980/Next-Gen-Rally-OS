@@ -5,6 +5,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
+    "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "db:push": "turbo run db:push --filter=@rally/core-data",
     "db:generate": "turbo run db:generate --filter=@rally/core-data",

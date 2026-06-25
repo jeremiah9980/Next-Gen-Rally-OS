@@ -35,6 +35,9 @@ model TeamSeason {
   team                           Team?                     @relation(fields: [teamId], references: [id])
   rosterEntries                  RosterEntry[]
   gameChangerStatSnapshots       GameChangerStatSnapshot[]
+  ncsPlayerSources               NcsPlayerSource[]
+  ncsChangeReviews               NcsChangeReview[]
+  ncsTournamentEntries           NcsTournamentEntry[]
 }
 
 model Player {
@@ -47,18 +50,20 @@ model Player {
   updatedAt                DateTime                  @updatedAt
   rosterEntries            RosterEntry[]
   gameChangerStatSnapshots GameChangerStatSnapshot[]
+  ncsPlayerSource          NcsPlayerSource?
 }
 
 model RosterEntry {
-  id           String     @id @default(cuid())
-  teamSeasonId String
-  playerId     String
-  jerseyNumber String?
-  isActive     Boolean    @default(true)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  player       Player     @relation(fields: [playerId], references: [id])
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
+  id              String           @id @default(cuid())
+  teamSeasonId    String
+  playerId        String
+  jerseyNumber    String?
+  isActive        Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  player          Player           @relation(fields: [playerId], references: [id])
+  teamSeason      TeamSeason       @relation(fields: [teamSeasonId], references: [id])
+  ncsPlayerSource NcsPlayerSource?
 }
 
 model GameChangerStatSnapshot {
@@ -73,4 +78,81 @@ model GameChangerStatSnapshot {
   createdAt    DateTime   @default(now())
   teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
   player       Player     @relation(fields: [playerId], references: [id])
+}
+
+// ─── NCS integration models ───────────────────────────────────────────────────
+
+/// Source-of-truth link between a local Player/RosterEntry and the NCS roster row.
+/// Never mutated by the worker — only updated when a coach explicitly accepts a change.
+model NcsPlayerSource {
+  id              String       @id @default(cuid())
+  playerId        String       @unique
+  rosterEntryId   String?      @unique
+  teamSeasonId    String
+  /// NCS-assigned player ID, used as the primary match key when present.
+  ncsExternalId   String?
+  /// URL of the NCS team page this player was imported from.
+  ncsTeamUrl      String?
+  /// Full parsed row as JSON — the snapshot used for future diffs.
+  sourceSnapshot  Json
+  lastPolledAt    DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  player          Player       @relation(fields: [playerId], references: [id])
+  rosterEntry     RosterEntry? @relation(fields: [rosterEntryId], references: [id])
+  teamSeason      TeamSeason   @relation(fields: [teamSeasonId], references: [id])
+}
+
+enum NcsChangeStatus {
+  change_detected
+  pending_review
+  accepted
+  ignored
+}
+
+/// A single detected difference between stored NCS data and live source data.
+/// NEVER used to auto-update canonical roster — coach must accept/ignore.
+model NcsChangeReview {
+  id           String          @id @default(cuid())
+  teamSeasonId String
+  /// "roster_add" | "roster_remove" | "roster_update" | "tournament_register"
+  changeType   String
+  status       NcsChangeStatus @default(change_detected)
+  /// The structured diff payload (old/new values).
+  payload      Json
+  reviewedAt   DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  teamSeason   TeamSeason      @relation(fields: [teamSeasonId], references: [id])
+}
+
+/// An NCS tournament discovered via paste-and-parse or URL scrape.
+model NcsTournament {
+  id                String               @id @default(cuid())
+  ncsExternalId     String?              @unique
+  name              String
+  startDate         DateTime?
+  endDate           DateTime?
+  location          String?
+  ageGroups         String?
+  sourceUrl         String?
+  /// Raw parsed row as JSON for future diffs.
+  sourceSnapshot    Json?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  teamSeasonEntries NcsTournamentEntry[]
+}
+
+/// Attaches an NcsTournament to a TeamSeason schedule entry.
+model NcsTournamentEntry {
+  id           String        @id @default(cuid())
+  teamSeasonId String
+  tournamentId String
+  isRegistered Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  teamSeason   TeamSeason    @relation(fields: [teamSeasonId], references: [id])
+  tournament   NcsTournament @relation(fields: [tournamentId], references: [id])
+
+  @@unique([teamSeasonId, tournamentId])
 }
