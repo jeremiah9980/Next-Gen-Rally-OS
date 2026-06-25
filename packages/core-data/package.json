@@ -1,0 +1,20 @@
+{
+  "name": "@rally/core-data",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "db:generate": "prisma generate --schema ./prisma/schema.prisma",
+    "lint": "echo 'No lint configured for @rally/core-data'",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.11.1"
+  }
+}
