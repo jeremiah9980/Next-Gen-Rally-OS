@@ -14,7 +14,7 @@
     "@rally/core-data": "workspace:*",
     "@rally/ui": "workspace:*",
     "lucide-react": "^0.525.0",
-    "next": "^14.2.33",
+    "next": "^16.2.9",
     "next-auth": "^4.24.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
