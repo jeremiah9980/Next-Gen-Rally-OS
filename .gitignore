@@ -1,0 +1,25 @@
+# deps
+node_modules
+.pnpm-store
+
+# builds
+dist
+.next
+out
+.turbo
+
+# prisma
+prisma/migrations
+
+# env
+.env
+.env.*
+!.env.example
+
+# editors
+.vscode
+.idea
+*.DS_Store
+
+# vercel
+.vercel
