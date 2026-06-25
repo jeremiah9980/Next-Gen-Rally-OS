@@ -26,11 +26,13 @@ interface PollResult {
 
 // ─── URL fetch (best-effort, paste-and-parse fallback) ────────────────────────
 
+const FETCH_TIMEOUT_MS = 10_000
+
 async function tryFetchRosterText(url: string): Promise<string | null> {
   try {
     const response = await fetch(url, {
       headers: { 'User-Agent': 'NCS-Rally-Worker/1.0' },
-      signal: AbortSignal.timeout(10_000),
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     })
     if (!response.ok) return null
     const text = await response.text()
@@ -59,14 +61,13 @@ function extractTableText(html: string): string {
     const cellRegex = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi
     let cellMatch: RegExpExecArray | null
     while ((cellMatch = cellRegex.exec(rowHtml)) !== null) {
-      // Strip inner HTML tags and decode minimal entities
+      // Strip inner tags; replace non-breaking spaces; leave all other entities as-is.
+      // We intentionally avoid decoding &amp; / &lt; / &gt; to prevent the
+      // incomplete-sanitisation class of issues — the parser only needs plain text.
       const text = cellMatch[1]
-        .replace(/<[^>]+>/g, '')
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
+        .replace(/<[^>]+>/g, ' ')
         .replace(/&nbsp;/g, ' ')
-        .replace(/&#\d+;/g, '')
+        .replace(/\s+/g, ' ')
         .trim()
       cells.push(text)
     }

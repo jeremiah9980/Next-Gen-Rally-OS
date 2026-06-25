@@ -42,6 +42,7 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
   const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set())
   const [importResult, setImportResult] = useState<{ imported: number; skipped: number } | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [ncsTeamUrl, setNcsTeamUrl] = useState('')
   const [rediffText, setRediffText] = useState('')
   const [rediffResult, setRediffResult] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -64,11 +65,11 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
 
   // ── Step 2: Import ─────────────────────────────────────────────────────────
 
-  function handleImport(rows: ParsedRosterRow[], ncsTeamUrl: string | null) {
+  function handleImport(rows: ParsedRosterRow[]) {
     setError(null)
     const formData = new FormData()
     formData.set('teamSeasonId', teamSeasonId)
-    if (ncsTeamUrl) formData.set('ncsTeamUrl', ncsTeamUrl)
+    if (ncsTeamUrl.trim()) formData.set('ncsTeamUrl', ncsTeamUrl.trim())
     formData.set('rows', JSON.stringify(rows))
     formData.set('selectedIndices', JSON.stringify([...selectedIndices]))
     startTransition(async () => {
@@ -115,10 +116,6 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
   }
 
   const rows = previewResult?.ok ? previewResult.rows : []
-  const ncsTeamUrlValue =
-    step === 'preview'
-      ? (document.querySelector<HTMLInputElement>('input[name="ncsTeamUrl"]')?.value ?? null)
-      : null
 
   return (
     <div className="space-y-8">
@@ -144,6 +141,8 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
               <input
                 name="ncsTeamUrl"
                 type="url"
+                value={ncsTeamUrl}
+                onChange={(e) => setNcsTeamUrl(e.target.value)}
                 className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent-lime"
                 placeholder="https://www.ncssports.org/teams/…"
               />
@@ -262,7 +261,7 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
 
           <Button
             disabled={isPending || selectedIndices.size === 0}
-            onClick={() => handleImport(rows, ncsTeamUrlValue)}
+            onClick={() => handleImport(rows)}
           >
             {isPending
               ? 'Importing…'
