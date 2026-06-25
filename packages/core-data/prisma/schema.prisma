@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id        String       @id @default(cuid())
+  name      String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  seasons   TeamSeason[]
+}
+
+model TeamSeason {
+  id                             String                    @id @default(cuid())
+  teamId                         String?
+  isActive                       Boolean                   @default(true)
+  team_name                      String
+  season                         String
+  age_group                      String
+  organization                   String?
+  head_coach                     String?
+  assistant_coaches              String?
+  practice_location              String?
+  primary_game_location          String?
+  team_standards                 String?                   @db.Text
+  development_goals              String?                   @db.Text
+  communication_expectations     String?                   @db.Text
+  createdAt                      DateTime                  @default(now())
+  updatedAt                      DateTime                  @updatedAt
+  team                           Team?                     @relation(fields: [teamId], references: [id])
+  rosterEntries                  RosterEntry[]
+  gameChangerStatSnapshots       GameChangerStatSnapshot[]
+}
+
+model Player {
+  id                       String                    @id @default(cuid())
+  firstName                String?
+  lastName                 String?
+  fullName                 String?
+  jerseyNumber             String?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  rosterEntries            RosterEntry[]
+  gameChangerStatSnapshots GameChangerStatSnapshot[]
+}
+
+model RosterEntry {
+  id           String     @id @default(cuid())
+  teamSeasonId String
+  playerId     String
+  jerseyNumber String?
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  player       Player     @relation(fields: [playerId], references: [id])
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
+}
+
+model GameChangerStatSnapshot {
+  id           String     @id @default(cuid())
+  teamSeasonId String
+  playerId     String
+  avg          Decimal?   @db.Decimal(5, 3)
+  ab           Int?
+  rbi          Int?
+  hr           Int?
+  capturedAt   DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
+  player       Player     @relation(fields: [playerId], references: [id])
+}
