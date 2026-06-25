@@ -173,10 +173,9 @@ export async function importNcsRosterRows(
 
       existingSources.push({
         ...createdSource,
-        player: matched.matched
-          ? rosterEntries.find((entry) => entry.playerId === playerId)?.player ??
-            (await prisma.player.findUniqueOrThrow({ where: { id: playerId } }))
-          : await prisma.player.findUniqueOrThrow({ where: { id: playerId } }),
+        player:
+          rosterEntries.find((entry) => entry.playerId === playerId)?.player ??
+          (await prisma.player.findUniqueOrThrow({ where: { id: playerId } })),
       })
 
       if (!localPlayers.some((player) => player.id === playerId)) {

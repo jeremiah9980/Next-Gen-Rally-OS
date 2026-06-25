@@ -26,7 +26,7 @@ async function pollNcsRosters() {
       urlGroups.set(url, group)
     }
 
-    for (const [, sources] of urlGroups) {
+    for (const [_url, sources] of urlGroups) {
       console.log(
         `[ncs-worker] Would fetch NCS data for TeamSeason ${teamSeason.id} (${sources.length} known players)`,
       )

@@ -33,6 +33,8 @@ export function diffRoster(
   const changes: ChangeItem[] = []
 
   for (const row of incoming) {
+    // Compute once per row — reused in both the matching and change-detection phases.
+    const normIncomingName = normalizePlayerName(row.rawName)
     let source: StoredSource | undefined
 
     if (row.ncsId) {
@@ -49,8 +51,7 @@ export function diffRoster(
         continue
       }
     } else {
-      const normalizedIncoming = normalizePlayerName(row.rawName)
-      source = stored.find((item) => normalizePlayerName(item.rawName) === normalizedIncoming)
+      source = stored.find((item) => normalizePlayerName(item.rawName) === normIncomingName)
 
       if (!source && row.jersey) {
         source = stored.find((item) => item.rawJersey === row.jersey)
@@ -80,9 +81,7 @@ export function diffRoster(
       })
     }
 
-    const normalizedIncoming = normalizePlayerName(row.rawName)
-    const normalizedStored = normalizePlayerName(source.rawName)
-    if (normalizedIncoming !== normalizedStored) {
+    if (normIncomingName !== normalizePlayerName(source.rawName)) {
       changes.push({
         teamSeasonId,
         playerId: source.playerId,

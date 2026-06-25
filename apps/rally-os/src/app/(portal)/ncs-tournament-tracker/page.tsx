@@ -74,11 +74,19 @@ export default async function NcsTournamentTrackerPage() {
                     </p>
                     <p className="mt-2 text-xs uppercase tracking-[0.24em] text-text-muted">
                       {entry.tournament.startDate
-                        ? entry.tournament.startDate.toLocaleDateString()
+                        ? entry.tournament.startDate.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })
                         : 'Start TBD'}
                       {' • '}
                       {entry.tournament.endDate
-                        ? entry.tournament.endDate.toLocaleDateString()
+                        ? entry.tournament.endDate.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })
                         : 'End TBD'}
                     </p>
                   </div>
