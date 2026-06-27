@@ -37,7 +37,7 @@ describe('buildGameChangerSnapshot', () => {
         score: '5-4',
         sourcePayload: {},
       }),
-    ).toThrow('Result is required for GameChanger stat import.')
+    ).toThrow('Result cannot be empty or whitespace-only for GameChanger stat import.')
 
     expect(() =>
       buildGameChangerSnapshot({
@@ -53,6 +53,6 @@ describe('buildGameChangerSnapshot', () => {
         score: ' ',
         sourcePayload: {},
       }),
-    ).toThrow('Score is required for GameChanger stat import.')
+    ).toThrow('Score cannot be empty or whitespace-only for GameChanger stat import.')
   })
 })

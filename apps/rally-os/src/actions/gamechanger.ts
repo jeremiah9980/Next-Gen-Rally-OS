@@ -196,7 +196,7 @@ const createDraftsSchema = z.object({
   teamSeasonId: z.string().min(1),
 })
 
-function toSafeDate(date: Date | null | undefined): Date {
+function ensureValidDate(date: Date | null | undefined): Date {
   if (date && !Number.isNaN(date.getTime())) return date
   return new Date()
 }
@@ -238,7 +238,7 @@ export async function createScheduleDraftsFromNcs(
   let skipped = 0
 
   for (const entry of entries) {
-    const startDate = toSafeDate(entry.tournament.startDate)
+    const startDate = ensureValidDate(entry.tournament.startDate)
     const sourceFingerprint = createHash('sha1')
       .update(`${parsed.data.teamSeasonId}:${entry.tournamentId}:${startDate.toISOString()}:${entry.tournament.name}`)
       .digest('hex')
@@ -471,7 +471,14 @@ function fakeGameChangerPush(teamGcTeamId: string, scheduleGameId: string, idemp
 
 export async function pushApprovedScheduleDrafts(
   formData: FormData,
-): Promise<ActionResult<{ pushed: number; skipped: number; results: Array<{ draftId: string; gcGameId: string }> }>> {
+): Promise<
+  ActionResult<{
+    pushed: number
+    reused: number
+    blocked: number
+    results: Array<{ draftId: string; gcGameId: string }>
+  }>
+> {
   const parsed = pushSchema.safeParse({
     teamSeasonId: formData.get('teamSeasonId'),
     mode: formData.get('mode'),
@@ -494,7 +501,8 @@ export async function pushApprovedScheduleDrafts(
   const draftIds = await resolveDraftSelection(parsed.data, 'approved')
 
   let pushed = 0
-  let skipped = 0
+  let reused = 0
+  let blocked = 0
   const results: Array<{ draftId: string; gcGameId: string }> = []
 
   for (const draftId of draftIds) {
@@ -513,14 +521,14 @@ export async function pushApprovedScheduleDrafts(
     })
 
     if (!draft) {
-      skipped++
+      blocked++
       continue
     }
 
     try {
       ensurePushAllowed(draft.status)
     } catch {
-      skipped++
+      blocked++
       continue
     }
 
@@ -531,7 +539,7 @@ export async function pushApprovedScheduleDrafts(
       select: { gcGameId: true, status: true },
     })
     const generatedGcGameId = fakeGameChangerPush(teamSeason.gcTeamId, draft.id, idempotencyKey)
-    const { gcGameId, reused } = resolvePersistedGcGameId(
+    const { gcGameId, reused: wasReused } = resolvePersistedGcGameId(
       existingPush?.gcGameId ?? null,
       generatedGcGameId,
     )
@@ -565,12 +573,16 @@ export async function pushApprovedScheduleDrafts(
     await transitionScheduleStatus(draft.id, 'pushed_to_gamechanger')
 
     results.push({ draftId: draft.id, gcGameId })
-    if (reused) skipped++
+    if (wasReused) reused++
     else pushed++
   }
 
   revalidatePath('/gamechanger')
-  return { ok: true, data: { pushed, skipped, results }, message: 'Approved schedules pushed to GameChanger.' }
+  return {
+    ok: true,
+    data: { pushed, reused, blocked, results },
+    message: 'Approved schedules pushed to GameChanger.',
+  }
 }
 
 export async function getGameChangerPageData(teamSeasonId: string) {
