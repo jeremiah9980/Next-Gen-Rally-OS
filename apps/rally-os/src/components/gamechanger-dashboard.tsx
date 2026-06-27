@@ -367,7 +367,8 @@ export function GameChangerDashboard({
                       const pushedResults = result.data.results
                       setMessage(
                         `${result.data.pushed} pushed${
-                          result.data.skipped > 0 ? `, ${result.data.skipped} skipped` : ''
+                          result.data.reused > 0 ? `, ${result.data.reused} reused` : ''
+                        }${result.data.blocked > 0 ? `, ${result.data.blocked} blocked` : ''
                         }. ${pushedResults
                           .map((row) => `${row.draftId}: ${row.gcGameId}`)
                           .join(' | ')}`,

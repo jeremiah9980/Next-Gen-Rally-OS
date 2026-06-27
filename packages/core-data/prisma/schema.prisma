@@ -78,6 +78,7 @@ model RosterEntry {
 model GameChangerStatSnapshot {
   id            String        @id @default(cuid())
   teamSeasonId  String
+  /// Nullable when incoming GC row cannot be matched to a local player.
   playerId      String?
   scheduleGameId String?
   gcTeamId      String?
