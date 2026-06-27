@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss'
 
-export const tailwindPreset: Config = {
+export const tailwindPreset = {
   theme: {
     extend: {
       colors: {
@@ -24,4 +24,4 @@ export const tailwindPreset: Config = {
       },
     },
   },
-}
+} satisfies Omit<Config, 'content'>

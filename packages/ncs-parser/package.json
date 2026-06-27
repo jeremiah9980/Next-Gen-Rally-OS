@@ -1,0 +1,17 @@
+{
+  "name": "@rally/ncs-parser",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "lint": "echo 'No lint configured for @rally/ncs-parser'",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.0.0"
+  }
+}
