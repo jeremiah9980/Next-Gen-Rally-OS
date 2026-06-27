@@ -16,29 +16,34 @@ model Team {
 }
 
 model TeamSeason {
-  id                             String                    @id @default(cuid())
-  teamId                         String?
-  isActive                       Boolean                   @default(true)
-  team_name                      String
-  season                         String
-  age_group                      String
-  organization                   String?
-  head_coach                     String?
-  assistant_coaches              String?
-  practice_location              String?
-  primary_game_location          String?
-  team_standards                 String?                   @db.Text
-  development_goals              String?                   @db.Text
-  communication_expectations     String?                   @db.Text
-  createdAt                      DateTime                  @default(now())
-  updatedAt                      DateTime                  @updatedAt
-  team                           Team?                     @relation(fields: [teamId], references: [id])
-  rosterEntries                  RosterEntry[]
-  gameChangerStatSnapshots       GameChangerStatSnapshot[]
-  ncsPlayerSources               NcsPlayerSource[]
-  ncsChangeReviews               NcsChangeReview[]
-  ncsTournamentEntries           NcsTournamentEntry[]
-  tournamentEntries              NcsTournamentEntry[]
+  id                         String                    @id @default(cuid())
+  teamId                     String?
+  isActive                   Boolean                   @default(true)
+  team_name                  String
+  season                     String
+  age_group                  String
+  organization               String?
+  head_coach                 String?
+  assistant_coaches          String?
+  practice_location          String?
+  primary_game_location      String?
+  team_standards             String?                   @db.Text
+  development_goals          String?                   @db.Text
+  communication_expectations String?                   @db.Text
+  gcTeamId                   String?
+  gcTeamIdMappedAt           DateTime?
+  coach_notes                String?                   @db.Text
+  coach_practice_version     String?
+  createdAt                  DateTime                  @default(now())
+  updatedAt                  DateTime                  @updatedAt
+  team                       Team?                     @relation(fields: [teamId], references: [id])
+  rosterEntries              RosterEntry[]
+  gameChangerStatSnapshots   GameChangerStatSnapshot[]
+  ncsPlayerSources           NcsPlayerSource[]
+  ncsChangeReviews           NcsChangeReview[]
+  ncsTournamentEntries       NcsTournamentEntry[]
+  scheduleGames              ScheduleGame[]
+  schedulePushRequests       SchedulePushRequest[]
 }
 
 model Player {
@@ -47,11 +52,12 @@ model Player {
   lastName                 String?
   fullName                 String?
   jerseyNumber             String?
+  gcPlayerId               String?                   @unique
+  gcPlayerIdMappedAt       DateTime?
   createdAt                DateTime                  @default(now())
   updatedAt                DateTime                  @updatedAt
   rosterEntries            RosterEntry[]
   gameChangerStatSnapshots GameChangerStatSnapshot[]
-  ncsPlayerSource          NcsPlayerSource?
   ncsPlayerSources         NcsPlayerSource[]
   ncsChangeReviews         NcsChangeReview[]
 }
@@ -70,17 +76,79 @@ model RosterEntry {
 }
 
 model GameChangerStatSnapshot {
-  id           String     @id @default(cuid())
-  teamSeasonId String
-  playerId     String
-  avg          Decimal?   @db.Decimal(5, 3)
-  ab           Int?
-  rbi          Int?
-  hr           Int?
-  capturedAt   DateTime   @default(now())
-  createdAt    DateTime   @default(now())
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
-  player       Player     @relation(fields: [playerId], references: [id])
+  id            String        @id @default(cuid())
+  teamSeasonId  String
+  playerId      String?
+  scheduleGameId String?
+  gcTeamId      String?
+  gcGameId      String?
+  gcPlayerId    String?
+  avg           Decimal?      @db.Decimal(5, 3)
+  ab            Int?
+  rbi           Int?
+  hr            Int?
+  result        String
+  score         String
+  sourcePayload Json?
+  isReadOnly    Boolean       @default(true)
+  capturedAt    DateTime      @default(now())
+  createdAt     DateTime      @default(now())
+  teamSeason    TeamSeason    @relation(fields: [teamSeasonId], references: [id])
+  player        Player?       @relation(fields: [playerId], references: [id])
+  scheduleGame  ScheduleGame? @relation(fields: [scheduleGameId], references: [id])
+
+  @@index([teamSeasonId, capturedAt])
+  @@index([gcGameId])
+}
+
+enum ScheduleGameStatus {
+  ncs_detected
+  draft_created
+  pending_coach_approval
+  approved
+  pushed_to_gamechanger
+  rejected
+}
+
+model ScheduleGame {
+  id                   String             @id @default(cuid())
+  teamSeasonId         String
+  ncsTournamentEntryId String?
+  sourceFingerprint    String?            @unique
+  status               ScheduleGameStatus @default(ncs_detected)
+  opponent             String
+  gameDate             DateTime
+  gameTime             String?
+  field                String?
+  location             String?
+  game_type            String?
+  sourcePayload        Json?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  teamSeason           TeamSeason         @relation(fields: [teamSeasonId], references: [id])
+  ncsTournamentEntry   NcsTournamentEntry? @relation(fields: [ncsTournamentEntryId], references: [id])
+  statSnapshots        GameChangerStatSnapshot[]
+  pushRequests         SchedulePushRequest[]
+
+  @@index([teamSeasonId, status])
+}
+
+model SchedulePushRequest {
+  id             String      @id @default(cuid())
+  teamSeasonId   String
+  scheduleGameId String
+  status         String      @default("pending")
+  gcGameId       String?
+  idempotencyKey String      @unique
+  requestPayload Json?
+  responsePayload Json?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  teamSeason     TeamSeason  @relation(fields: [teamSeasonId], references: [id])
+  scheduleGame   ScheduleGame @relation(fields: [scheduleGameId], references: [id])
+
+  @@unique([scheduleGameId])
+  @@index([teamSeasonId, status])
 }
 
 // ─── NCS integration models ───────────────────────────────────────────────────
@@ -88,22 +156,29 @@ model GameChangerStatSnapshot {
 /// Source-of-truth link between a local Player/RosterEntry and the NCS roster row.
 /// Never mutated by the worker — only updated when a coach explicitly accepts a change.
 model NcsPlayerSource {
-  id              String       @id @default(cuid())
-  playerId        String       @unique
-  rosterEntryId   String?      @unique
-  teamSeasonId    String
+  id             String       @id @default(cuid())
+  playerId       String       @unique
+  rosterEntryId  String?      @unique
+  teamSeasonId   String
   /// NCS-assigned player ID, used as the primary match key when present.
-  ncsExternalId   String?
+  ncsExternalId  String?
+  ncsId          String?
   /// URL of the NCS team page this player was imported from.
-  ncsTeamUrl      String?
+  ncsTeamUrl     String?
+  rawName        String?
+  rawJersey      String?
+  rawPosition    String?
   /// Full parsed row as JSON — the snapshot used for future diffs.
-  sourceSnapshot  Json
-  lastPolledAt    DateTime?
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  player          Player       @relation(fields: [playerId], references: [id])
-  rosterEntry     RosterEntry? @relation(fields: [rosterEntryId], references: [id])
-  teamSeason      TeamSeason   @relation(fields: [teamSeasonId], references: [id])
+  sourceSnapshot Json
+  lastSeenAt     DateTime     @default(now())
+  lastPolledAt   DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  player         Player       @relation(fields: [playerId], references: [id])
+  rosterEntry    RosterEntry? @relation(fields: [rosterEntryId], references: [id])
+  teamSeason     TeamSeason   @relation(fields: [teamSeasonId], references: [id])
+
+  @@unique([ncsId, teamSeasonId])
 }
 
 enum NcsChangeStatus {
@@ -118,90 +193,57 @@ enum NcsChangeStatus {
 model NcsChangeReview {
   id           String          @id @default(cuid())
   teamSeasonId String
-  /// "roster_add" | "roster_remove" | "roster_update" | "tournament_register"
-  changeType   String
-  status       NcsChangeStatus @default(change_detected)
-  /// The structured diff payload (old/new values).
-  payload      Json
-model NcsPlayerSource {
-  id           String     @id @default(cuid())
-  playerId     String
-  teamSeasonId String
-  ncsId        String?
-  ncsTeamUrl   String?
-  rawName      String
-  rawJersey    String?
-  rawPosition  String?
-  lastSeenAt   DateTime   @default(now())
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  player       Player     @relation(fields: [playerId], references: [id])
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
-
-  @@unique([ncsId, teamSeasonId])
-}
-
-model NcsChangeReview {
-  id           String          @id @default(cuid())
-  teamSeasonId String
   playerId     String?
   ncsId        String?
-  field        String
+  field        String?
   oldValue     String?
   newValue     String?
+  /// "roster_add" | "roster_remove" | "roster_update" | "tournament_register"
+  changeType   String?
   status       NcsChangeStatus @default(change_detected)
+  /// The structured diff payload (old/new values).
+  payload      Json?
   reviewedAt   DateTime?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
   teamSeason   TeamSeason      @relation(fields: [teamSeasonId], references: [id])
+  player       Player?         @relation(fields: [playerId], references: [id])
+
+  @@index([teamSeasonId, status])
 }
 
 /// An NCS tournament discovered via paste-and-parse or URL scrape.
 model NcsTournament {
-  id                String               @id @default(cuid())
-  ncsExternalId     String?              @unique
-  name              String
-  startDate         DateTime?
-  endDate           DateTime?
-  location          String?
-  ageGroups         String?
-  sourceUrl         String?
+  id             String               @id @default(cuid())
+  ncsExternalId  String?              @unique
+  ncsId          String?              @unique
+  name           String
+  startDate      DateTime?
+  endDate        DateTime?
+  location       String?
+  ageGroups      String?
+  registrationUrl String?
+  sourceUrl      String?
   /// Raw parsed row as JSON for future diffs.
-  sourceSnapshot    Json?
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
-  teamSeasonEntries NcsTournamentEntry[]
+  sourceSnapshot Json?
+  rawMetadata    Json?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  entries        NcsTournamentEntry[]
 }
 
 /// Attaches an NcsTournament to a TeamSeason schedule entry.
-  player       Player?         @relation(fields: [playerId], references: [id])
-}
-
-model NcsTournament {
-  id              String               @id @default(cuid())
-  ncsId           String?              @unique
-  name            String
-  location        String?
-  startDate       DateTime?
-  endDate         DateTime?
-  registrationUrl String?
-  sourceUrl       String?
-  rawMetadata     Json?
-  createdAt       DateTime             @default(now())
-  updatedAt       DateTime             @updatedAt
-  entries         NcsTournamentEntry[]
-}
-
 model NcsTournamentEntry {
-  id           String        @id @default(cuid())
+  id           String         @id @default(cuid())
   teamSeasonId String
   tournamentId String
-  isRegistered Boolean       @default(false)
-  attachedAt   DateTime      @default(now())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  teamSeason   TeamSeason    @relation(fields: [teamSeasonId], references: [id])
-  tournament   NcsTournament @relation(fields: [tournamentId], references: [id])
+  isRegistered Boolean        @default(false)
+  attachedAt   DateTime       @default(now())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  teamSeason   TeamSeason     @relation(fields: [teamSeasonId], references: [id])
+  tournament   NcsTournament  @relation(fields: [tournamentId], references: [id])
+  scheduleGames ScheduleGame[]
 
   @@unique([teamSeasonId, tournamentId])
 }

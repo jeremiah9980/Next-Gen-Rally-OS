@@ -106,7 +106,7 @@ export async function importNcsPlayers(formData: FormData): Promise<ImportRoster
       if (row.ncsExternalId) {
         player = await prisma.player.findFirst({
           where: {
-            ncsPlayerSource: { ncsExternalId: row.ncsExternalId },
+            ncsPlayerSources: { some: { ncsExternalId: row.ncsExternalId } },
           },
         })
       }
@@ -167,14 +167,24 @@ export async function importNcsPlayers(formData: FormData): Promise<ImportRoster
           rosterEntryId,
           teamSeasonId,
           ncsExternalId: row.ncsExternalId ?? null,
+          ncsId: row.ncsExternalId ?? null,
           ncsTeamUrl: ncsTeamUrl ?? null,
+          rawName: fullName,
+          rawJersey: row.jerseyNumber ?? null,
+          rawPosition: row.position ?? null,
           sourceSnapshot: row as object,
+          lastSeenAt: new Date(),
         },
         update: {
           rosterEntryId,
           ncsExternalId: row.ncsExternalId ?? null,
+          ncsId: row.ncsExternalId ?? null,
           ncsTeamUrl: ncsTeamUrl ?? null,
+          rawName: fullName,
+          rawJersey: row.jerseyNumber ?? null,
+          rawPosition: row.position ?? null,
           sourceSnapshot: row as object,
+          lastSeenAt: new Date(),
         },
       })
 

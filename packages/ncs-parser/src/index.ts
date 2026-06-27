@@ -4,4 +4,10 @@ export { parseNcsTournamentText } from './parse-tournament'
 export type { NcsTournamentRow } from './parse-tournament'
 export { matchPlayer } from './match-player'
 export type { LocalPlayer, MatchResult } from './match-player'
+export { matchGameChangerPlayer } from './match-gamechanger-player'
+export type {
+  GameChangerPlayerRow,
+  LocalGameChangerPlayer,
+  GameChangerMatchResult,
+} from './match-gamechanger-player'
 export { normalizePlayerName } from './normalize'
