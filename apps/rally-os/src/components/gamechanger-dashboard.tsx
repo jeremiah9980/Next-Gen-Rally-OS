@@ -238,9 +238,10 @@ export function GameChangerDashboard({
         >
           <input type="hidden" name="teamSeasonId" value={teamSeasonId} />
           <div className="grid gap-3 md:grid-cols-3">
-            <label className="space-y-1 text-sm text-text-muted">
+            <label className="space-y-1 text-sm text-text-muted" htmlFor="gc-stats-result">
               <span>Result (required)</span>
               <input
+                id="gc-stats-result"
                 className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
                 name="result"
                 value={statsResult}
@@ -249,9 +250,10 @@ export function GameChangerDashboard({
                 required
               />
             </label>
-            <label className="space-y-1 text-sm text-text-muted">
+            <label className="space-y-1 text-sm text-text-muted" htmlFor="gc-stats-score">
               <span>Score (required)</span>
               <input
+                id="gc-stats-score"
                 className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
                 name="score"
                 value={statsScore}
@@ -260,8 +262,9 @@ export function GameChangerDashboard({
                 required
               />
             </label>
-            <label className="flex items-center gap-2 pt-6 text-sm text-text-muted">
+            <label className="flex items-center gap-2 pt-6 text-sm text-text-muted" htmlFor="gc-stats-has-id-column">
               <input
+                id="gc-stats-has-id-column"
                 type="checkbox"
                 checked={statsHasIdColumn}
                 onChange={(event) => setStatsHasIdColumn(event.target.checked)}
@@ -270,13 +273,17 @@ export function GameChangerDashboard({
             </label>
           </div>
           <input type="hidden" name="hasIdColumn" value={statsHasIdColumn ? 'true' : 'false'} />
+          <label className="block space-y-1 text-sm text-text-muted" htmlFor="gc-stats-rows">
+            <span>Stats rows JSON</span>
           <textarea
+            id="gc-stats-rows"
             className="min-h-40 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm font-mono"
             name="rows"
             value={statsRowsJson}
             onChange={(event) => setStatsRowsJson(event.target.value)}
             required
           />
+          </label>
           <Button type="submit" disabled={isPending}>
             {isPending ? 'Importing…' : 'Import Stats'}
           </Button>
@@ -309,8 +316,11 @@ export function GameChangerDashboard({
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <label className="text-sm text-text-muted">Filter:</label>
+          <label className="text-sm text-text-muted" htmlFor="schedule-status-filter">
+            Filter:
+          </label>
           <select
+            id="schedule-status-filter"
             className="rounded-xl border border-border bg-background px-2 py-1 text-sm"
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
