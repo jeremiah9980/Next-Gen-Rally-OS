@@ -38,6 +38,7 @@ model TeamSeason {
   ncsPlayerSources               NcsPlayerSource[]
   ncsChangeReviews               NcsChangeReview[]
   ncsTournamentEntries           NcsTournamentEntry[]
+  tournamentEntries              NcsTournamentEntry[]
 }
 
 model Player {
@@ -51,6 +52,8 @@ model Player {
   rosterEntries            RosterEntry[]
   gameChangerStatSnapshots GameChangerStatSnapshot[]
   ncsPlayerSource          NcsPlayerSource?
+  ncsPlayerSources         NcsPlayerSource[]
+  ncsChangeReviews         NcsChangeReview[]
 }
 
 model RosterEntry {
@@ -120,6 +123,33 @@ model NcsChangeReview {
   status       NcsChangeStatus @default(change_detected)
   /// The structured diff payload (old/new values).
   payload      Json
+model NcsPlayerSource {
+  id           String     @id @default(cuid())
+  playerId     String
+  teamSeasonId String
+  ncsId        String?
+  ncsTeamUrl   String?
+  rawName      String
+  rawJersey    String?
+  rawPosition  String?
+  lastSeenAt   DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  player       Player     @relation(fields: [playerId], references: [id])
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
+
+  @@unique([ncsId, teamSeasonId])
+}
+
+model NcsChangeReview {
+  id           String          @id @default(cuid())
+  teamSeasonId String
+  playerId     String?
+  ncsId        String?
+  field        String
+  oldValue     String?
+  newValue     String?
+  status       NcsChangeStatus @default(change_detected)
   reviewedAt   DateTime?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
@@ -144,11 +174,30 @@ model NcsTournament {
 }
 
 /// Attaches an NcsTournament to a TeamSeason schedule entry.
+  player       Player?         @relation(fields: [playerId], references: [id])
+}
+
+model NcsTournament {
+  id              String               @id @default(cuid())
+  ncsId           String?              @unique
+  name            String
+  location        String?
+  startDate       DateTime?
+  endDate         DateTime?
+  registrationUrl String?
+  sourceUrl       String?
+  rawMetadata     Json?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  entries         NcsTournamentEntry[]
+}
+
 model NcsTournamentEntry {
   id           String        @id @default(cuid())
   teamSeasonId String
   tournamentId String
   isRegistered Boolean       @default(false)
+  attachedAt   DateTime      @default(now())
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   teamSeason   TeamSeason    @relation(fields: [teamSeasonId], references: [id])

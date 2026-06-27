@@ -57,6 +57,9 @@ importers:
       '@rally/ncs':
         specifier: workspace:*
         version: link:../../packages/ncs
+      '@rally/ncs-parser':
+        specifier: workspace:*
+        version: link:../../packages/ncs-parser
       '@rally/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -110,6 +113,9 @@ importers:
         specifier: ^6.11.1
         version: 6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)
     devDependencies:
+      '@types/node':
+        specifier: ^24.0.10
+        version: 24.13.2
       prisma:
         specifier: ^6.11.1
         version: 6.19.3(typescript@5.9.3)
@@ -118,6 +124,13 @@ importers:
     devDependencies:
       vitest:
         specifier: ^2.1.9
+  packages/ncs-parser:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.0.0
         version: 2.1.9(@types/node@24.13.2)
 
   packages/ui:
@@ -135,9 +148,37 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.31)
+      next:
+        specifier: ^16.2.9
+        version: 16.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.19(tsx@4.22.4)
+
+  services/ncs-worker:
+    dependencies:
+      '@rally/core-data':
+        specifier: workspace:*
+        version: link:../../packages/core-data
+      '@rally/ncs-parser':
+        specifier: workspace:*
+        version: link:../../packages/ncs-parser
+      node-cron:
+        specifier: ^3.0.3
+        version: 3.0.3
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.10
+        version: 24.13.2
+      '@types/node-cron':
+        specifier: ^3.0.11
+        version: 3.0.11
+      tsx:
+        specifier: ^4.19.4
+        version: 4.22.4
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
 
 packages:
 
