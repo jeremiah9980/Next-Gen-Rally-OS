@@ -163,10 +163,12 @@ export async function importNcsRosterRows(
           playerId,
           teamSeasonId,
           ncsId: row.ncsId || null,
+          ncsExternalId: row.ncsId || null,
           ncsTeamUrl: ncsTeamUrl || null,
           rawName: row.rawName,
           rawJersey: row.jersey || null,
           rawPosition: row.position || null,
+          sourceSnapshot: row as object,
           lastSeenAt: new Date(),
         },
       })

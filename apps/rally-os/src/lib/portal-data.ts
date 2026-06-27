@@ -1,4 +1,5 @@
 import { prisma } from '@rally/core-data'
+import { toPublicTeamSeasonPayload } from '@rally/ncs'
 import { unstable_noStore as noStore } from 'next/cache'
 
 export type TeamSeasonFormData = {
@@ -138,5 +139,16 @@ export async function getDashboardData() {
       athleteCount: 0,
       roster: [],
     }
+  }
+
+  export async function getPublicTeamSeasonPayload() {
+    const teamSeason = await getActiveTeamSeason()
+    if (!teamSeason) return null
+
+    return toPublicTeamSeasonPayload({
+      ...teamSeason,
+      coach_notes: null,
+      coach_practice_version: null,
+    })
   }
 }
