@@ -17,7 +17,7 @@ import type {
   RosterDiff,
   TournamentChange,
   TournamentDiff,
-} from './types.js'
+} from './types'
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 

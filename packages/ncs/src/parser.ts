@@ -9,7 +9,7 @@ import type {
   ParsedTournamentRow,
   RosterParseResult,
   TournamentParseResult,
-} from './types.js'
+} from './types'
 
 // ─── URL validation ───────────────────────────────────────────────────────────
 
