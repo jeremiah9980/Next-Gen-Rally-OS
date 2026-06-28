@@ -63,9 +63,10 @@ Postgres.
 
 ```bash
 pnpm install
-cp infra/.env.example .env      # fill in DATABASE_URL etc.
+cp infra/.env.example .env      # fill in DATABASE_URL, NEXTAUTH_SECRET, etc.
 pnpm db:generate                # generate the Prisma client
 pnpm db:push                    # sync schema to your database
+pnpm db:seed                    # create a demo org + coach login
 pnpm dev                        # run the apps via turbo
 ```
 
@@ -79,6 +80,27 @@ pnpm dev                        # run the apps via turbo
 | `pnpm typecheck`   | Typecheck every workspace (turbo).               |
 | `pnpm db:generate` | Generate the Prisma client (`@rally/core-data`). |
 | `pnpm db:push`     | Push the Prisma schema to the database.          |
+| `pnpm db:seed`     | Seed a demo organization + coach login.          |
+
+## Authentication & tenancy
+
+Rally-OS uses [next-auth](https://next-auth.js.org/) with two sign-in paths:
+
+- **Credentials** (email + password) — for coaches provisioned with a password.
+- **Email magic links** — via the SMTP transport in `EMAIL_SERVER` / `EMAIL_FROM`.
+
+A coach belongs to an **Organization** and only ever sees the `TeamSeason`s under
+that organization's teams — tenancy is enforced in `portal-data` through the
+`Team → Organization` relation. Every `(portal)` route is gated: unauthenticated
+visitors are redirected to `/login`. The public-site projection
+(`getPublicTeamSeasonPayload`) is intentionally **unauthenticated** and never
+exposes coach-private fields.
+
+Set `NEXTAUTH_URL` and `NEXTAUTH_SECRET` (the CI build provides a localhost
+fallback so next-auth doesn't crash on an empty URL). After `pnpm db:seed`, sign
+in at `/login` with the printed demo credentials (default
+`coach@example.com` / `password123` — override via `SEED_COACH_EMAIL` /
+`SEED_COACH_PASSWORD`).
 
 ## CI
 
