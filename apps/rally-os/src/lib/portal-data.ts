@@ -140,15 +140,15 @@ export async function getDashboardData() {
       roster: [],
     }
   }
+}
 
-  export async function getPublicTeamSeasonPayload() {
-    const teamSeason = await getActiveTeamSeason()
-    if (!teamSeason) return null
+export async function getPublicTeamSeasonPayload() {
+  const teamSeason = await getActiveTeamSeason()
+  if (!teamSeason) return null
 
-    return toPublicTeamSeasonPayload({
-      ...teamSeason,
-      coach_notes: null,
-      coach_practice_version: null,
-    })
-  }
+  return toPublicTeamSeasonPayload({
+    ...teamSeason,
+    coach_notes: null,
+    coach_practice_version: null,
+  })
 }

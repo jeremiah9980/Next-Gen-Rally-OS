@@ -21,7 +21,7 @@ type NcsPlayerSourceRow = {
 
 type ChangeReviewRow = {
   id: string
-  changeType: string
+  changeType: string | null
   status: string
   payload: unknown
   createdAt: Date
