@@ -2,14 +2,14 @@
 
 import { createHash } from 'node:crypto'
 import { prisma } from '@rally/core-data'
-import { matchGameChangerPlayer } from '@rally/ncs-parser'
 import {
   buildGameChangerSnapshot,
   ensurePushAllowed,
+  matchGameChangerPlayer,
   resolvePersistedGcGameId,
   transitionScheduleGame,
   type ScheduleGameStatus,
-} from '@rally/ncs'
+} from '@rally/gamechanger'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 

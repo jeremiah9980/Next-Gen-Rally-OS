@@ -9,6 +9,7 @@
     "typecheck": "turbo run typecheck",
     "db:push": "turbo run db:push --filter=@rally/core-data",
     "db:generate": "turbo run db:generate --filter=@rally/core-data",
+    "db:migrate": "pnpm --filter @rally/core-data run db:migrate",
     "db:seed": "pnpm --filter @rally/core-data run db:seed",
     "format": "prettier --write \"**/*.{ts,tsx,md,json,yaml}\" --ignore-path .gitignore"
   },

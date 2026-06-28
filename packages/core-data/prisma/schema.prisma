@@ -124,6 +124,11 @@ model TeamSeason {
   ncsTournamentEntries       NcsTournamentEntry[]
   scheduleGames              ScheduleGame[]
   schedulePushRequests       SchedulePushRequest[]
+  practicePlans              PracticePlan[]
+  practiceTemplates          PracticeTemplate[]
+  drillLibraries             DrillLibrary[]
+  coachNotes                 CoachNote[]
+  developmentFocuses         DevelopmentFocus[]
 }
 
 model Player {
@@ -140,6 +145,8 @@ model Player {
   gameChangerStatSnapshots GameChangerStatSnapshot[]
   ncsPlayerSources         NcsPlayerSource[]
   ncsChangeReviews         NcsChangeReview[]
+  coachNotes               CoachNote[]
+  developmentFocuses       DevelopmentFocus[]
 }
 
 model RosterEntry {
@@ -326,4 +333,133 @@ model NcsTournamentEntry {
   scheduleGames ScheduleGame[]
 
   @@unique([teamSeasonId, tournamentId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AI practice planning + player development (Prompt 4)
+//
+// A PracticePlan has exactly two PracticePlanVersions: a COACH version (full
+// detail, including private notes) and a PLAYER version (public-safe — never
+// carries coach-private notes). Drills and templates are saved to a reusable
+// library. DevelopmentFocus + ai-tagged CoachNotes are advisory only.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum PracticePlanVersionType {
+  COACH
+  PLAYER
+}
+
+model PracticePlan {
+  id              String                @id @default(cuid())
+  teamSeasonId    String
+  practiceDate    DateTime?
+  durationMinutes Int?
+  location        String?
+  teamFocus       String?
+  status          String                @default("draft")
+  aiModel         String?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  teamSeason      TeamSeason            @relation(fields: [teamSeasonId], references: [id])
+  versions        PracticePlanVersion[]
+
+  @@index([teamSeasonId])
+}
+
+model PracticePlanVersion {
+  id             String                  @id @default(cuid())
+  practicePlanId String
+  type           PracticePlanVersionType
+  /// Structured content (shape differs per type). The PLAYER version must never
+  /// contain coach-private notes.
+  content        Json
+  createdAt      DateTime                @default(now())
+  practicePlan   PracticePlan            @relation(fields: [practicePlanId], references: [id], onDelete: Cascade)
+
+  @@unique([practicePlanId, type])
+}
+
+model DrillLibrary {
+  id           String      @id @default(cuid())
+  teamSeasonId String?
+  name         String      @default("Default Library")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  teamSeason   TeamSeason? @relation(fields: [teamSeasonId], references: [id])
+  drills       Drill[]
+
+  @@index([teamSeasonId])
+}
+
+model Drill {
+  id              String        @id @default(cuid())
+  drillLibraryId  String?
+  name            String
+  category        String?
+  durationMinutes Int?
+  description     String?       @db.Text
+  instructions    String?       @db.Text
+  equipment       String?
+  /// Skills the drill targets.
+  focusTags       String[]
+  /// "ai" | "coach"
+  source          String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  drillLibrary    DrillLibrary? @relation(fields: [drillLibraryId], references: [id])
+
+  @@index([drillLibraryId])
+}
+
+model PracticeTemplate {
+  id           String      @id @default(cuid())
+  teamSeasonId String?
+  name         String
+  description  String?     @db.Text
+  /// Reusable practice block structure.
+  blocks       Json
+  /// "ai" | "coach"
+  source       String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  teamSeason   TeamSeason? @relation(fields: [teamSeasonId], references: [id])
+
+  @@index([teamSeasonId])
+}
+
+model CoachNote {
+  id           String     @id @default(cuid())
+  teamSeasonId String
+  playerId     String?
+  body         String     @db.Text
+  /// Coach-private notes must NEVER reach the public site renderer.
+  isPrivate    Boolean    @default(true)
+  /// e.g. ["ai", "development"]
+  tags         String[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
+  player       Player?    @relation(fields: [playerId], references: [id])
+
+  @@index([teamSeasonId])
+  @@index([playerId])
+}
+
+model DevelopmentFocus {
+  id           String     @id @default(cuid())
+  teamSeasonId String
+  playerId     String?
+  title        String
+  detail       String?    @db.Text
+  /// "ai" | "coach"
+  source       String?
+  /// Advisory only — never auto-applied to other fields.
+  isAdvisory   Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id])
+  player       Player?    @relation(fields: [playerId], references: [id])
+
+  @@index([teamSeasonId])
+  @@index([playerId])
 }

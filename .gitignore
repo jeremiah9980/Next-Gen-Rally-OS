@@ -10,8 +10,8 @@ out
 *.tsbuildinfo
 next-env.d.ts
 
-# prisma
-prisma/migrations
+# prisma — migrations ARE committed (migration-based workflow); ignore only local artifacts
+packages/core-data/prisma/*.db
 
 # env
 .env
