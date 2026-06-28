@@ -1,0 +1,26 @@
+{
+  "name": "@rally/site-template",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "echo 'No lint configured for @rally/site-template'",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rally/config": "workspace:*",
+    "@rally/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7"
+  }
+}
