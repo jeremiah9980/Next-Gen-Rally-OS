@@ -1,6 +1,8 @@
 import { prisma } from '@rally/core-data'
+import type { Prisma } from '@prisma/client'
 import { toPublicTeamSeasonPayload } from '@rally/ncs'
 import { unstable_noStore as noStore } from 'next/cache'
+import { getCurrentOrganizationId } from './session'
 
 export type TeamSeasonFormData = {
   id: string
@@ -17,27 +19,40 @@ export type TeamSeasonFormData = {
   communication_expectations: string | null
 }
 
+const SEASON_FIELDS = {
+  id: true,
+  team_name: true,
+  season: true,
+  age_group: true,
+  organization: true,
+  head_coach: true,
+  assistant_coaches: true,
+  practice_location: true,
+  primary_game_location: true,
+  team_standards: true,
+  development_goals: true,
+  communication_expectations: true,
+} satisfies Prisma.TeamSeasonSelect
+
+const ORDER = [{ updatedAt: 'desc' as const }, { createdAt: 'desc' as const }]
+
+/**
+ * The active TeamSeason for the signed-in coach's organization. Tenancy is
+ * enforced through the Team → Organization relation, so a coach can never read
+ * another organization's seasons. Returns null when there is no session,
+ * no organization, or no matching season.
+ */
 export async function getActiveTeamSeason() {
   noStore()
 
+  const organizationId = await getCurrentOrganizationId()
+  if (!organizationId) return null
+
   try {
     return await prisma.teamSeason.findFirst({
-      where: { isActive: true },
-      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
-      select: {
-        id: true,
-        team_name: true,
-        season: true,
-        age_group: true,
-        organization: true,
-        head_coach: true,
-        assistant_coaches: true,
-        practice_location: true,
-        primary_game_location: true,
-        team_standards: true,
-        development_goals: true,
-        communication_expectations: true,
-      },
+      where: { isActive: true, team: { organizationId } },
+      orderBy: ORDER,
+      select: SEASON_FIELDS,
     })
   } catch {
     return null
@@ -47,15 +62,14 @@ export async function getActiveTeamSeason() {
 export async function getActiveTeamSeasonSummary() {
   noStore()
 
+  const organizationId = await getCurrentOrganizationId()
+  if (!organizationId) return null
+
   try {
     return await prisma.teamSeason.findFirst({
-      where: { isActive: true },
-      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
-      select: {
-        id: true,
-        team_name: true,
-        season: true,
-      },
+      where: { isActive: true, team: { organizationId } },
+      orderBy: ORDER,
+      select: { id: true, team_name: true, season: true },
     })
   } catch {
     return null
@@ -142,13 +156,37 @@ export async function getDashboardData() {
   }
 }
 
-export async function getPublicTeamSeasonPayload() {
-  const teamSeason = await getActiveTeamSeason()
+/**
+ * Public, UNAUTHENTICATED projection of an active TeamSeason. The public site
+ * reads through this path, so it never gates on a coach session — but it also
+ * never exposes coach-private fields (coach_notes / coach_practice_version are
+ * stripped before projection).
+ */
+export async function getPublicTeamSeasonPayload(organizationId?: string) {
+  noStore()
+
+  let teamSeason: Awaited<ReturnType<typeof findPublicSeason>> = null
+  try {
+    teamSeason = await findPublicSeason(organizationId)
+  } catch {
+    return null
+  }
   if (!teamSeason) return null
 
   return toPublicTeamSeasonPayload({
     ...teamSeason,
     coach_notes: null,
     coach_practice_version: null,
+  })
+}
+
+function findPublicSeason(organizationId?: string) {
+  return prisma.teamSeason.findFirst({
+    where: {
+      isActive: true,
+      ...(organizationId ? { team: { organizationId } } : {}),
+    },
+    orderBy: ORDER,
+    select: SEASON_FIELDS,
   })
 }
