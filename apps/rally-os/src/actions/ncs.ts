@@ -3,9 +3,92 @@
 import { prisma } from '@rally/core-data'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { parseNcsRosterText, parseNcsTournamentText, validateNcsTeamUrl } from '@rally/ncs'
-import type { ParsedRosterRow, ParsedTournamentRow } from '@rally/ncs'
+import { parseNcsRosterText, parseNcsTournamentText, validateNcsTeamUrl, searchTeams, fetchRoster } from '@rally/ncs'
+import type { ParsedRosterRow, ParsedTournamentRow, NcsTeamResult, NcsSeason } from '@rally/ncs'
 import { getActiveTeamSeason } from '../lib/portal-data'
+
+// ─── Roster: live NCS team search ─────────────────────────────────────────────
+
+const searchTeamsSchema = z.object({
+  teamName: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  seasonId: z.string().optional(),
+})
+
+export type SearchNcsTeamsResult =
+  | { ok: true; teams: NcsTeamResult[]; seasons: NcsSeason[] }
+  | { ok: false; error: string }
+
+/** Searches the live NCS portal for teams. Read-only — never touches local data. */
+export async function searchNcsTeams(formData: FormData): Promise<SearchNcsTeamsResult> {
+  const parsed = searchTeamsSchema.safeParse({
+    teamName: formData.get('teamName') ?? undefined,
+    city: formData.get('city') ?? undefined,
+    state: formData.get('state') ?? undefined,
+    seasonId: formData.get('seasonId') ?? undefined,
+  })
+
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.errors[0]?.message ?? 'Invalid input' }
+  }
+
+  const { teamName, city, state, seasonId } = parsed.data
+  if (!teamName?.trim() && !city?.trim() && !state?.trim()) {
+    return { ok: false, error: 'Enter a team name, city, or state to search.' }
+  }
+
+  try {
+    const result = await searchTeams({ teamName, city, state, seasonId })
+    return { ok: true, teams: result.teams, seasons: result.seasons }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to search NCS.'
+    return { ok: false, error: message }
+  }
+}
+
+// ─── Roster: pull a live NCS team's roster (feeds into the same preview step) ─
+
+const fetchTeamRosterSchema = z.object({
+  teamId: z.string().min(1),
+})
+
+export type FetchNcsTeamRosterResult =
+  | {
+      ok: true
+      rows: ParsedRosterRow[]
+      teamName: string
+      location: string
+      division: string
+      ncsTeamUrl: string
+    }
+  | { ok: false; error: string }
+
+/** Pulls a live NCS team's roster by team id. Read-only — import still requires the explicit Import step. */
+export async function fetchNcsTeamRoster(formData: FormData): Promise<FetchNcsTeamRosterResult> {
+  const parsed = fetchTeamRosterSchema.safeParse({ teamId: formData.get('teamId') })
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.errors[0]?.message ?? 'Invalid input' }
+  }
+
+  try {
+    const result = await fetchRoster(parsed.data.teamId)
+    if (result.players.length === 0) {
+      return { ok: false, error: 'No roster table found on that team\'s NCS page.' }
+    }
+    return {
+      ok: true,
+      rows: result.players,
+      teamName: result.teamName,
+      location: result.location,
+      division: result.division,
+      ncsTeamUrl: `https://www.playncs.com/fastpitch/Teams/Details/${parsed.data.teamId}`,
+    }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to fetch NCS roster.'
+    return { ok: false, error: message }
+  }
+}
 
 // ─── Roster: parse preview ────────────────────────────────────────────────────
 
