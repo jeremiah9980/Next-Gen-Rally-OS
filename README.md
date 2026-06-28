@@ -63,12 +63,24 @@ Postgres.
 
 ```bash
 pnpm install
-cp infra/.env.example .env      # fill in DATABASE_URL, NEXTAUTH_SECRET, etc.
+cp infra/.env.example .env      # then set a REAL DATABASE_URL + NEXTAUTH_SECRET
+
+# Load .env into the shell so every workspace sees it. Turbo passes these
+# variables through (see globalPassThroughEnv in turbo.json) but does NOT read
+# .env files itself, so source it once per shell:
+set -a && source .env && set +a
+
 pnpm db:generate                # generate the Prisma client
 pnpm db:push                    # sync schema to your database
-pnpm db:seed                    # create a demo org + coach login
+pnpm db:seed                    # create a demo org + coach login (prints credentials)
 pnpm dev                        # run the apps via turbo
 ```
+
+> **Env loading.** This is a pnpm + Turbo monorepo: neither Prisma (runs under
+> `packages/core-data`) nor Next (runs under each `apps/*`) auto-loads the root
+> `.env`. `set -a && source .env && set +a` exports it into your shell, and
+> Turbo forwards the whitelisted variables to every task. A direnv `.envrc` of
+> `dotenv` does the same automatically.
 
 ### Root scripts
 
