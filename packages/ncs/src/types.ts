@@ -12,6 +12,8 @@ export interface ParsedRosterRow {
   fullName?: string
   jerseyNumber?: string
   position?: string
+  bats?: string
+  throws?: string
   gradYear?: string
   /** The raw column values as parsed, preserved for snapshot storage. */
   raw: Record<string, string>

@@ -7,9 +7,11 @@ import {
   importNcsPlayers,
   rediffNcsRoster,
   resolveNcsChangeReview,
+  searchNcsTeams,
+  fetchNcsTeamRoster,
 } from '../actions/ncs'
 import type { PreviewRosterResult } from '../actions/ncs'
-import type { ParsedRosterRow } from '@rally/ncs'
+import type { ParsedRosterRow, NcsTeamResult } from '@rally/ncs'
 
 type NcsPlayerSourceRow = {
   id: string
@@ -46,6 +48,50 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
   const [rediffText, setRediffText] = useState('')
   const [rediffResult, setRediffResult] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+
+  // ── Step 1: Search NCS teams ────────────────────────────────────────────────
+
+  const [sourceMode, setSourceMode] = useState<'paste' | 'search'>('search')
+  const [searchResults, setSearchResults] = useState<NcsTeamResult[] | null>(null)
+  const [searchError, setSearchError] = useState<string | null>(null)
+  const [loadingTeamId, setLoadingTeamId] = useState<string | null>(null)
+  const [pickedTeamLabel, setPickedTeamLabel] = useState<string | null>(null)
+
+  function handleSearchTeams(formData: FormData) {
+    setSearchError(null)
+    startTransition(async () => {
+      const result = await searchNcsTeams(formData)
+      if (result.ok) {
+        setSearchResults(result.teams)
+        if (result.teams.length === 0) setSearchError('No NCS teams matched that search.')
+      } else {
+        setSearchResults(null)
+        setSearchError(result.error)
+      }
+    })
+  }
+
+  function handlePickTeam(team: NcsTeamResult) {
+    setSearchError(null)
+    setLoadingTeamId(team.id)
+    const formData = new FormData()
+    formData.set('teamId', team.id)
+    startTransition(async () => {
+      const result = await fetchNcsTeamRoster(formData)
+      setLoadingTeamId(null)
+      if (result.ok) {
+        setNcsTeamUrl(result.ncsTeamUrl)
+        setPickedTeamLabel(
+          [result.teamName, result.division, result.location].filter(Boolean).join(' · '),
+        )
+        setPreviewResult({ ok: true, rows: result.rows, parseMode: 'header', warnings: [] })
+        setSelectedIndices(new Set(result.rows.map((_, i) => i)))
+        setStep('preview')
+      } else {
+        setSearchError(result.error)
+      }
+    })
+  }
 
   // ── Step 1: Preview ────────────────────────────────────────────────────────
 
@@ -131,10 +177,99 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
         </p>
       </Card>
 
-      {/* Step 1 — Paste form */}
+      {/* Step 1 — Search or paste */}
       {step === 'form' && (
         <Card className="space-y-4">
-          <h3 className="text-lg font-semibold text-text-primary">1. Paste NCS Roster</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-text-primary">1. Find a Roster</h3>
+            <div className="flex gap-1 rounded-lg border border-border p-1">
+              <button
+                onClick={() => setSourceMode('search')}
+                className={`rounded-md px-3 py-1 text-sm ${sourceMode === 'search' ? 'bg-accent-lime/20 text-accent-lime' : 'text-text-muted hover:text-text-primary'}`}
+              >
+                Search NCS Teams
+              </button>
+              <button
+                onClick={() => setSourceMode('paste')}
+                className={`rounded-md px-3 py-1 text-sm ${sourceMode === 'paste' ? 'bg-accent-lime/20 text-accent-lime' : 'text-text-muted hover:text-text-primary'}`}
+              >
+                Paste Text
+              </button>
+            </div>
+          </div>
+
+          {sourceMode === 'search' && (
+            <div className="space-y-4">
+              <p className="text-sm text-text-muted">
+                Search the live NCS Fastpitch portal by team name, city, or state, then pick your
+                team to pull its roster directly.
+              </p>
+              <form action={handleSearchTeams} className="flex flex-wrap gap-3">
+                <input
+                  name="teamName"
+                  type="text"
+                  placeholder="Team name"
+                  className="flex-1 min-w-[160px] rounded-xl border border-border bg-background px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent-lime"
+                />
+                <input
+                  name="city"
+                  type="text"
+                  placeholder="City"
+                  className="flex-1 min-w-[120px] rounded-xl border border-border bg-background px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent-lime"
+                />
+                <input
+                  name="state"
+                  type="text"
+                  placeholder="State (e.g. TX)"
+                  maxLength={2}
+                  className="w-32 rounded-xl border border-border bg-background px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent-lime"
+                />
+                <Button type="submit" disabled={isPending}>
+                  {isPending && !loadingTeamId ? 'Searching…' : 'Search'}
+                </Button>
+              </form>
+
+              {searchError && <p className="text-sm text-red-400">{searchError}</p>}
+
+              {searchResults && searchResults.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border text-left text-text-muted">
+                        <th className="pb-2 pr-4 font-medium">Team</th>
+                        <th className="pb-2 pr-4 font-medium">Division</th>
+                        <th className="pb-2 pr-4 font-medium">Location</th>
+                        <th className="pb-2 pr-4 font-medium">Record</th>
+                        <th className="pb-2 pr-4 font-medium" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {searchResults.map((team) => (
+                        <tr key={team.id} className="border-b border-border/50">
+                          <td className="py-2 pr-4 text-text-primary">{team.name}</td>
+                          <td className="py-2 pr-4 text-text-muted">{team.division || '—'}</td>
+                          <td className="py-2 pr-4 text-text-muted">{team.location || '—'}</td>
+                          <td className="py-2 pr-4 text-text-muted">{team.record || '—'}</td>
+                          <td className="py-2 pr-4 text-right">
+                            <Button
+                              variant="secondary"
+                              className="text-xs px-3 py-1"
+                              disabled={isPending}
+                              onClick={() => handlePickTeam(team)}
+                            >
+                              {loadingTeamId === team.id ? 'Pulling roster…' : 'Pick This Team'}
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {sourceMode === 'paste' && (
           <form action={handlePreview} className="space-y-4">
             <label className="block space-y-1 text-sm text-text-muted">
               <span>NCS Team URL (optional – for source tracking)</span>
@@ -157,7 +292,7 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
                 rows={8}
                 className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm font-mono text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent-lime"
                 placeholder={
-                  'ID\tFirst Name\tLast Name\tJersey\tPosition\tGrad Year\n101\tAlice\tSmith\t12\tP\t2026'
+                  'ID\tFirst Name\tLast Name\tJersey\tPosition\tBats\tThrows\tGrad Year\n101\tAlice\tSmith\t12\tP\tR\tR\t2026'
                 }
               />
             </label>
@@ -166,6 +301,7 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
               {isPending ? 'Parsing…' : 'Preview Roster'}
             </Button>
           </form>
+          )}
         </Card>
       )}
 
@@ -175,12 +311,18 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-text-primary">2. Select Players to Import</h3>
             <button
-              onClick={() => { setStep('form'); setPreviewResult(null) }}
+              onClick={() => { setStep('form'); setPreviewResult(null); setPickedTeamLabel(null) }}
               className="text-sm text-text-muted hover:text-text-primary"
             >
               ← Back
             </button>
           </div>
+
+          {pickedTeamLabel && (
+            <p className="text-sm text-text-muted">
+              Pulled live from NCS: <span className="text-accent-lime">{pickedTeamLabel}</span>
+            </p>
+          )}
 
           {previewResult.warnings.length > 0 && (
             <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-3 text-sm text-yellow-300">
@@ -222,6 +364,8 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
                   <th className="pb-2 pr-4 font-medium">#</th>
                   <th className="pb-2 pr-4 font-medium">Name</th>
                   <th className="pb-2 pr-4 font-medium">Position</th>
+                  <th className="pb-2 pr-4 font-medium">Bats</th>
+                  <th className="pb-2 pr-4 font-medium">Throws</th>
                   <th className="pb-2 pr-4 font-medium">Grad Year</th>
                   <th className="pb-2 pr-4 font-medium">NCS ID</th>
                 </tr>
@@ -249,6 +393,8 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
                         '—'}
                     </td>
                     <td className="py-2 pr-4 text-text-muted">{row.position ?? '—'}</td>
+                    <td className="py-2 pr-4 text-text-muted">{row.bats ?? '—'}</td>
+                    <td className="py-2 pr-4 text-text-muted">{row.throws ?? '—'}</td>
                     <td className="py-2 pr-4 text-text-muted">{row.gradYear ?? '—'}</td>
                     <td className="py-2 pr-4 font-mono text-text-muted">{row.ncsExternalId ?? '—'}</td>
                   </tr>
@@ -281,7 +427,7 @@ export function NcsRosterDashboard({ teamSeasonId, teamSeasonName, sources, chan
               <>, {importResult.skipped} skipped</>
             )}.
           </p>
-          <Button variant="secondary" onClick={() => { setStep('form'); setImportResult(null); setPreviewResult(null) }}>
+          <Button variant="secondary" onClick={() => { setStep('form'); setImportResult(null); setPreviewResult(null); setPickedTeamLabel(null); setNcsTeamUrl('') }}>
             Import More
           </Button>
         </Card>
