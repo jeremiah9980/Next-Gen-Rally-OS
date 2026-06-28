@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { Avatar, Nav } from '@rally/ui'
+import { Avatar } from '@rally/ui'
 import { getActiveTeamSeasonSummary } from '../lib/portal-data'
-import { navItems } from '../lib/nav-items'
+import { PortalNav } from '../components/portal-nav'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="bg-background text-text-primary">
         <div className="flex min-h-screen bg-background">
-          <Nav items={navItems} />
+          <PortalNav />
           <div className="flex min-h-screen flex-1 flex-col">
             <header className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-surface/95 px-4 py-4 backdrop-blur md:px-8">
               <div>
