@@ -83,7 +83,7 @@ export function defaultSiteConfig(input: {
       tournaments: true,
       practice_plans: true,
       player_development: true,
-      gamechanger_stats: true,
+      gamechanger_stats: false,
       social_media_hub: true,
       fundraising: true,
     },
