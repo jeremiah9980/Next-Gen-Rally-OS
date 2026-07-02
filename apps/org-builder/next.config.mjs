@@ -4,6 +4,7 @@ const nextConfig = {
     '@rally/ui',
     '@rally/core-data',
     '@rally/config',
+    '@rally/org-kit',
     '@rally/site-template',
     '@rally/projection',
   ],

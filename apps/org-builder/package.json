@@ -16,6 +16,7 @@
     "@prisma/client": "^6.11.1",
     "@rally/config": "workspace:*",
     "@rally/core-data": "workspace:*",
+    "@rally/org-kit": "workspace:*",
     "@rally/projection": "workspace:*",
     "@rally/site-template": "workspace:*",
     "@rally/ui": "workspace:*",
