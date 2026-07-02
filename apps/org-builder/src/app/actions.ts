@@ -1,12 +1,12 @@
 'use server'
 
-import { parseSiteConfigYaml } from '@rally/config'
+import { parseSiteConfigYaml, type SiteConfig } from '@rally/config'
 import { enabledModules } from '@rally/site-template'
 import { buildPublishedProjection } from '@rally/projection'
 import { provisionFromConfig } from '../lib/provision'
 
 export type PreviewResult =
-  | { ok: true; organization: string; team: string; modules: string[]; target: string; domain: string }
+  | { ok: true; organization: string; team: string; modules: string[]; target: string; domain: string; config: SiteConfig }
   | { ok: false; error: string }
 
 export async function previewConfigAction(yaml: string): Promise<PreviewResult> {
@@ -19,6 +19,7 @@ export async function previewConfigAction(yaml: string): Promise<PreviewResult> 
     modules: enabledModules(parsed.config),
     target: parsed.config.publish.target,
     domain: parsed.config.publish.domain,
+    config: parsed.config,
   }
 }
 

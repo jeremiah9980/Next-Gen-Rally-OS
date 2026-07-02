@@ -1,0 +1,17 @@
+{
+  "name": "@rally/org-kit",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "echo 'No lint configured for @rally/org-kit'",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rally/config": "workspace:*"
+  }
+}

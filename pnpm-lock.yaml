@@ -29,6 +29,9 @@ importers:
       '@rally/core-data':
         specifier: workspace:*
         version: link:../../packages/core-data
+      '@rally/org-kit':
+        specifier: workspace:*
+        version: link:../../packages/org-kit
       '@rally/projection':
         specifier: workspace:*
         version: link:../../packages/projection
@@ -266,6 +269,12 @@ importers:
       vitest:
         specifier: ^3.2.6
         version: 3.2.6(@types/node@24.13.2)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)
+
+  packages/org-kit:
+    dependencies:
+      '@rally/config':
+        specifier: workspace:*
+        version: link:../config
 
   packages/projection:
     dependencies:
