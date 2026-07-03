@@ -157,6 +157,120 @@ export async function getDashboardData() {
 }
 
 /**
+ * Operational counts for the active TeamSeason — pending NCS change reviews,
+ * attached tournaments, NCS-linked players. Drives the dashboard ops strip.
+ */
+export async function getOpsSnapshot() {
+  noStore()
+
+  const teamSeason = await getActiveTeamSeasonSummary()
+  if (!teamSeason) {
+    return { pendingReviews: 0, tournaments: 0, ncsLinkedPlayers: 0 }
+  }
+
+  try {
+    const [pendingReviews, tournaments, ncsLinkedPlayers] = await Promise.all([
+      prisma.ncsChangeReview.count({
+        where: {
+          teamSeasonId: teamSeason.id,
+          status: { in: ['change_detected', 'pending_review'] },
+        },
+      }),
+      prisma.ncsTournamentEntry.count({ where: { teamSeasonId: teamSeason.id } }),
+      prisma.ncsPlayerSource.count({ where: { teamSeasonId: teamSeason.id } }),
+    ])
+    return { pendingReviews, tournaments, ncsLinkedPlayers }
+  } catch {
+    return { pendingReviews: 0, tournaments: 0, ncsLinkedPlayers: 0 }
+  }
+}
+
+/**
+ * Full roster for the active TeamSeason with NCS source linkage, for the
+ * Roster page table.
+ */
+export async function getRosterPageData() {
+  noStore()
+
+  const teamSeason = await getActiveTeamSeasonSummary()
+  if (!teamSeason) return { teamSeason: null, entries: [] as RosterPageEntry[] }
+
+  try {
+    const rosterEntries = await prisma.rosterEntry.findMany({
+      where: { teamSeasonId: teamSeason.id, isActive: true },
+      orderBy: [{ jerseyNumber: 'asc' }, { createdAt: 'asc' }],
+      include: { player: true, ncsPlayerSource: true },
+    })
+
+    const entries: RosterPageEntry[] = rosterEntries.map((entry) => {
+      const fullName = entry.player.fullName?.trim()
+      const name =
+        fullName && fullName.length > 0
+          ? fullName
+          : [entry.player.firstName, entry.player.lastName].filter(Boolean).join(' ') ||
+            'Unnamed Player'
+      return {
+        id: entry.id,
+        name,
+        jerseyNumber: entry.jerseyNumber,
+        position: entry.ncsPlayerSource?.rawPosition ?? null,
+        ncsLinked: entry.ncsPlayerSource != null,
+        lastPolledAt: entry.ncsPlayerSource?.lastPolledAt?.toISOString() ?? null,
+        addedAt: entry.createdAt.toISOString(),
+      }
+    })
+
+    return { teamSeason, entries }
+  } catch {
+    return { teamSeason, entries: [] as RosterPageEntry[] }
+  }
+}
+
+export type RosterPageEntry = {
+  id: string
+  name: string
+  jerseyNumber: string | null
+  position: string | null
+  ncsLinked: boolean
+  lastPolledAt: string | null
+  addedAt: string
+}
+
+/**
+ * All teams and their seasons for the signed-in coach's organization, for the
+ * Teams page.
+ */
+export async function getTeamsPageData() {
+  noStore()
+
+  const organizationId = await getCurrentOrganizationId()
+  if (!organizationId) return []
+
+  try {
+    return await prisma.team.findMany({
+      where: { organizationId },
+      orderBy: { createdAt: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        seasons: {
+          orderBy: [{ updatedAt: 'desc' }],
+          select: {
+            id: true,
+            season: true,
+            age_group: true,
+            isActive: true,
+            _count: { select: { rosterEntries: { where: { isActive: true } } } },
+          },
+        },
+      },
+    })
+  } catch {
+    return []
+  }
+}
+
+/**
  * Public, UNAUTHENTICATED projection of an active TeamSeason. The public site
  * reads through this path, so it never gates on a coach session — but it also
  * never exposes coach-private fields (coach_notes / coach_practice_version are

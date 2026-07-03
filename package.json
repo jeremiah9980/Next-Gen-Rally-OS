@@ -2,6 +2,7 @@
   "name": "next-gen-rally-os",
   "private": true,
   "scripts": {
+    "setup": "node scripts/setup.mjs",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",

@@ -1,8 +1,35 @@
+import Link from 'next/link'
 import { Avatar, Badge, Card, StatTile } from '@rally/ui'
-import { getDashboardData } from '../lib/portal-data'
+import { getDashboardData, getOpsSnapshot } from '../lib/portal-data'
+
+const QUICK_ACTIONS = [
+  {
+    href: '/ncs-roster-dashboard',
+    title: 'Import NCS Roster',
+    detail: 'Search NCS teams or paste roster text',
+  },
+  {
+    href: '/ncs-change-review',
+    title: 'Review Changes',
+    detail: 'Approve or dismiss detected NCS changes',
+  },
+  {
+    href: '/practice-planning',
+    title: 'Plan a Practice',
+    detail: 'Generate an AI practice plan',
+  },
+  {
+    href: '/ncs-tournament-tracker',
+    title: 'Track Tournaments',
+    detail: 'Attach and monitor NCS tournaments',
+  },
+] as const
 
 export async function HomeDashboard() {
-  const { teamSeason, athleteCount, roster } = await getDashboardData()
+  const [{ teamSeason, athleteCount, roster }, ops] = await Promise.all([
+    getDashboardData(),
+    getOpsSnapshot(),
+  ])
 
   return (
     <div className="space-y-8">
@@ -23,7 +50,34 @@ export async function HomeDashboard() {
           </div>
           <Badge>{athleteCount} Athletes</Badge>
         </div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <StatTile label="Active Roster" value={`${athleteCount}`} />
+          <StatTile label="Pending Reviews" value={`${ops.pendingReviews}`} />
+          <StatTile label="Tournaments" value={`${ops.tournaments}`} />
+          <StatTile label="NCS-Linked" value={`${ops.ncsLinkedPlayers}`} />
+        </div>
       </Card>
+
+      <div className="space-y-3">
+        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-accent-lime">
+          Quick Actions
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {QUICK_ACTIONS.map((action) => (
+            <Link key={action.href} href={action.href} className="group">
+              <Card className="h-full space-y-1 transition group-hover:border-accent-lime/50">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-text-primary">{action.title}</p>
+                  {action.href === '/ncs-change-review' && ops.pendingReviews > 0 ? (
+                    <Badge>{ops.pendingReviews}</Badge>
+                  ) : null}
+                </div>
+                <p className="text-sm text-text-muted">{action.detail}</p>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
 
       <div className="space-y-3">
         <div>
