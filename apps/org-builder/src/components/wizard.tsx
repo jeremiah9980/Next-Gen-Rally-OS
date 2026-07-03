@@ -61,14 +61,18 @@ export function Wizard() {
     })
   }
 
-  function handleCopy(text: string, key: string) {
-    void navigator.clipboard.writeText(text)
-    setCopied(key)
-    setTimeout(() => setCopied(null), 1800)
+  async function handleCopy(text: string, key: string) {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(key)
+      setTimeout(() => setCopied(null), 1800)
+    } catch {
+      // clipboard write failed; do not show "Copied" feedback
+    }
   }
 
   const kit: OrgKit | null = preview?.ok ? generateOrgKit(preview.config) : null
-  const step = provision?.ok ? 3 : preview?.ok ? 2 : 0
+  const step = provision?.ok ? 3 : preview?.ok ? 1 : 0
 
   return (
     <div className="space-y-6">
@@ -163,10 +167,12 @@ export function Wizard() {
 
           {/* Logo + palette */}
           <div className="flex flex-wrap items-start gap-6">
-            <div
+            <img
               className="flex-shrink-0"
-              dangerouslySetInnerHTML={{ __html: kit.svgLogo }}
-              aria-label={`${kit.initials} logo placeholder`}
+              src={`data:image/svg+xml;utf8,${encodeURIComponent(kit.svgLogo)}`}
+              alt={`${kit.initials} logo placeholder`}
+              width={120}
+              height={120}
             />
             <div className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-text-muted">
@@ -247,7 +253,7 @@ export function Wizard() {
             </div>
             <ol className="space-y-1 rounded-2xl border border-border bg-background p-4">
               {kit.setupChecklist.map((item, i) => (
-                <li key={i} className="font-mono text-xs text-text-muted">
+                <li key={i} className="whitespace-pre-wrap font-mono text-xs text-text-muted">
                   {item}
                 </li>
               ))}

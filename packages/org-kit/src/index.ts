@@ -50,6 +50,16 @@ function teamInitials(name: string): string {
   return (words[0] ?? 'T').slice(0, 2).toUpperCase()
 }
 
+/** Escape XML/HTML special characters to prevent injection in SVG markup. */
+function escapeXml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 /** Generate a starter branding kit from a SiteConfig. Pure, synchronous, no side effects. */
 export function generateOrgKit(config: SiteConfig): OrgKit {
   const hue = stringToHue(config.organization.slug)
@@ -70,7 +80,7 @@ export function generateOrgKit(config: SiteConfig): OrgKit {
     `  <circle cx="50" cy="50" r="47" fill="${palette.primary}" stroke="${palette.accent}" stroke-width="4"/>`,
     `  <text x="50" y="50" text-anchor="middle" dominant-baseline="central"`,
     `    font-family="system-ui,sans-serif" font-size="${fontSize}" font-weight="800"`,
-    `    letter-spacing="1" fill="${palette.text}">${initials}</text>`,
+    `    letter-spacing="1" fill="${palette.text}">${escapeXml(initials)}</text>`,
     `</svg>`,
   ].join('\n')
 
