@@ -199,6 +199,9 @@ if (await confirm('Push the schema to the database (pnpm db:push)?')) {
 if (dbReady && (await confirm('Seed demo data (demo org, team, coach login)?'))) {
   run('pnpm db:seed', { optional: true })
 }
+if (dbReady && (await confirm('Seed the predefined coaching content (120 drills + 48 practice plans)?'))) {
+  run('pnpm db:seed:content', { optional: true })
+}
 
 // 7. Done
 step(7, 'Done')

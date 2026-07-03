@@ -61,9 +61,13 @@ export async function generatePracticePlan(formData: FormData): Promise<Generate
         orderBy: { createdAt: 'desc' },
         take: 20,
       }),
+      // Team drills plus the global predefined library (teamSeasonId null),
+      // e.g. the seeded Elite Softball 4-Year Mastermind drill bank.
       prisma.drill.findMany({
-        where: { drillLibrary: { teamSeasonId: teamSeason.id } },
-        take: 50,
+        where: {
+          drillLibrary: { OR: [{ teamSeasonId: teamSeason.id }, { teamSeasonId: null }] },
+        },
+        take: 170,
       }),
     ])
 
@@ -89,7 +93,9 @@ export async function generatePracticePlan(formData: FormData): Promise<Generate
       recentPlayerNotes: notes.map((n) => n.body),
       availableCoaches,
       availablePlayers: rosterEntries.map((e) => playerName(e.player)),
-      drillLibrary: drills.map((d) => d.name),
+      drillLibrary: drills.map((d) =>
+        d.category ? `${d.name} (${d.category}${d.durationMinutes ? `, ${d.durationMinutes} min` : ''})` : d.name,
+      ),
     })
 
     // ── Persist the plan + both versions ──────────────────────────────────────
