@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Next-Gen Rally-OS — Product Suite Diagram</title>
+<style>
+  :root {
+    --bg: #FAFBF7;
+    --surface: #FFFFFF;
+    --border: #D8E0D1;
+    --text: #16211A;
+    --muted: #5C6E5F;
+    --lime: #5C8A12;
+    --lime-wire: #78B518;
+    --violet: #6D28D9;
+    --orange: #C2540A;
+    --node-app: #EAF3DA;
+    --node-svc: #EFE9FB;
+    --node-ext: #F1F3EF;
+    --node-db: #FBEEE2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #080D0A;
+      --surface: #101812;
+      --border: #24322A;
+      --text: #E8F0E9;
+      --muted: #8FA893;
+      --lime: #A8E63D;
+      --lime-wire: #A8E63D;
+      --violet: #A78BFA;
+      --orange: #FB923C;
+      --node-app: #16240F;
+      --node-svc: #1C1530;
+      --node-ext: #131A15;
+      --node-db: #2A1A0D;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #080D0A; --surface: #101812; --border: #24322A; --text: #E8F0E9;
+    --muted: #8FA893; --lime: #A8E63D; --lime-wire: #A8E63D; --violet: #A78BFA;
+    --orange: #FB923C; --node-app: #16240F; --node-svc: #1C1530;
+    --node-ext: #131A15; --node-db: #2A1A0D;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFBF7; --surface: #FFFFFF; --border: #D8E0D1; --text: #16211A;
+    --muted: #5C6E5F; --lime: #5C8A12; --lime-wire: #78B518; --violet: #6D28D9;
+    --orange: #C2540A; --node-app: #EAF3DA; --node-svc: #EFE9FB;
+    --node-ext: #F1F3EF; --node-db: #FBEEE2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+  .wrap { max-width: 1150px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.26em;
+    text-transform: uppercase; color: var(--lime); margin-bottom: 0.5rem;
+  }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800; letter-spacing: -0.025em; }
+  .sub { color: var(--muted); margin: 0.5rem 0 1.75rem; max-width: 70ch; font-size: 0.92rem; }
+
+  .canvas {
+    border: 1px solid var(--border); border-radius: 18px;
+    background: var(--surface); overflow-x: auto; padding: 0.5rem;
+  }
+  svg { display: block; min-width: 980px; width: 100%; height: auto; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1rem;
+    font-size: 0.75rem; color: var(--muted); align-items: center;
+  }
+  .legend .k { display: flex; align-items: center; gap: 0.45rem; }
+  .legend .sw { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid var(--border); }
+
+  /* SVG text + node styling via classes */
+  .node { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; rx: 12; }
+  .n-app { fill: var(--node-app); stroke: var(--lime); }
+  .n-svc { fill: var(--node-svc); stroke: var(--violet); }
+  .n-ext { fill: var(--node-ext); stroke: var(--border); stroke-dasharray: 4 3; }
+  .n-db  { fill: var(--node-db);  stroke: var(--orange); }
+
+  .t-title { font-size: 14px; font-weight: 750; fill: var(--text); }
+  .t-kind  { font-size: 8.5px; font-weight: 700; letter-spacing: 1.6px; fill: var(--muted); }
+  .t-desc  { font-size: 9.5px; fill: var(--muted); }
+  .t-wire  { font-size: 9px; font-weight: 650; fill: var(--muted); }
+  .t-lane  { font-size: 9px; font-weight: 800; letter-spacing: 2.2px; fill: var(--muted); }
+  .t-gov   { font-size: 9.5px; font-weight: 700; fill: var(--orange); }
+
+  .wire { stroke: var(--lime-wire); stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+  .wire.flow { stroke-dasharray: 6 5; animation: dash 1.4s linear infinite; }
+  .wire.gc { stroke: var(--violet); }
+  .wire.warn { stroke: var(--orange); }
+  .lane-line { stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 5; }
+  .pkg { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
+  .t-pkg { font-size: 9.5px; font-weight: 650; fill: var(--text); font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+
+  @keyframes dash { to { stroke-dashoffset: -22; } }
+  @media (prefers-reduced-motion: reduce) { .wire.flow { animation: none; } }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Next-Gen Rally-OS</p>
+  <h1>Product Suite — System Diagram</h1>
+  <p class="sub">
+    One monorepo, one database, one direction of flow: NCS intelligence in on the left,
+    a governed system of record in the middle, and a published team site out on the right.
+  </p>
+
+  <div class="canvas">
+  <svg viewBox="0 0 1150 640" role="img" aria-label="Rally-OS product suite architecture diagram">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="var(--lime-wire)"/>
+      </marker>
+    </defs>
+
+    <!-- lane headers -->
+    <text x="95"  y="30" class="t-lane" text-anchor="middle">SOURCES</text>
+    <text x="360" y="30" class="t-lane" text-anchor="middle">INTELLIGENCE</text>
+    <text x="620" y="30" class="t-lane" text-anchor="middle">SYSTEM OF RECORD</text>
+    <text x="985" y="30" class="t-lane" text-anchor="middle">PUBLISH</text>
+    <line x1="215" y1="40" x2="215" y2="490" class="lane-line"/>
+    <line x1="490" y1="40" x2="490" y2="490" class="lane-line"/>
+    <line x1="830" y1="40" x2="830" y2="490" class="lane-line"/>
+
+    <!-- SOURCES -->
+    <rect x="20" y="60" width="160" height="64" rx="12" class="node n-ext"/>
+    <text x="36" y="82" class="t-kind">EXTERNAL</text>
+    <text x="36" y="100" class="t-title">playncs.com</text>
+    <text x="36" y="114" class="t-desc">NCS Fastpitch portal</text>
+
+    <rect x="20" y="220" width="160" height="64" rx="12" class="node n-ext"/>
+    <text x="36" y="242" class="t-kind">EXTERNAL</text>
+    <text x="36" y="260" class="t-title">GameChanger</text>
+    <text x="36" y="274" class="t-desc">Stats · schedule (read-only)</text>
+
+    <rect x="20" y="380" width="160" height="64" rx="12" class="node n-ext"/>
+    <text x="36" y="402" class="t-kind">EXTERNAL</text>
+    <text x="36" y="420" class="t-title">Claude API</text>
+    <text x="36" y="434" class="t-desc">Anthropic · practice plans</text>
+
+    <!-- INTELLIGENCE -->
+    <rect x="255" y="52" width="200" height="80" rx="12" class="node n-svc"/>
+    <text x="271" y="74" class="t-kind">SERVICE · CRON</text>
+    <text x="271" y="93" class="t-title">ncs-worker</text>
+    <text x="271" y="108" class="t-desc">Polls team pages, diffs against</text>
+    <text x="271" y="120" class="t-desc">snapshots, queues changes</text>
+
+    <rect x="255" y="180" width="200" height="92" rx="12" class="node n-app"/>
+    <text x="271" y="202" class="t-kind">IN-APP TOOLS</text>
+    <text x="271" y="221" class="t-title">NCS Toolset</text>
+    <text x="271" y="236" class="t-desc">Live team search · roster import</text>
+    <text x="271" y="248" class="t-desc">tournament tracker · re-diff</text>
+    <text x="271" y="260" class="t-desc">change review queue</text>
+
+    <rect x="255" y="380" width="200" height="64" rx="12" class="node n-svc"/>
+    <text x="271" y="402" class="t-kind">PACKAGE</text>
+    <text x="271" y="420" class="t-title">@rally/ai</text>
+    <text x="271" y="434" class="t-desc">Coach + player plan versions</text>
+
+    <!-- SYSTEM OF RECORD -->
+    <rect x="530" y="120" width="270" height="120" rx="14" class="node n-app"/>
+    <text x="548" y="144" class="t-kind">APP · NEXT.JS</text>
+    <text x="548" y="166" class="t-title">Rally-OS Coach Portal</text>
+    <text x="548" y="183" class="t-desc">Dashboard · roster · team info · standards</text>
+    <text x="548" y="196" class="t-desc">practice planning · NCS review · GameChanger</text>
+    <text x="548" y="209" class="t-desc">org-scoped auth (next-auth) · Server Actions</text>
+    <text x="548" y="228" class="t-gov">⛨ Changes require explicit coach approval</text>
+
+    <rect x="565" y="330" width="200" height="76" rx="12" class="node n-db"/>
+    <text x="581" y="352" class="t-kind">DATA · POSTGRES + PRISMA</text>
+    <text x="581" y="371" class="t-title">core-data</text>
+    <text x="581" y="386" class="t-desc">23 models · migrations · seed</text>
+    <text x="581" y="398" class="t-desc">single source of truth</text>
+
+    <!-- PUBLISH -->
+    <rect x="870" y="90" width="230" height="86" rx="12" class="node n-app"/>
+    <text x="886" y="112" class="t-kind">APP · WIZARD + CLI</text>
+    <text x="886" y="131" class="t-title">Org Builder</text>
+    <text x="886" y="146" class="t-desc">SiteConfig YAML → validate → preview</text>
+    <text x="886" y="158" class="t-desc">→ provision TeamSeason → Org Kit</text>
+    <text x="886" y="170" class="t-desc">(palette · logo · social · deploy list)</text>
+
+    <rect x="870" y="290" width="230" height="86" rx="12" class="node n-app"/>
+    <text x="886" y="312" class="t-kind">APP · ONE DEPLOY PER TEAM</text>
+    <text x="886" y="331" class="t-title">Public Team Site</text>
+    <text x="886" y="346" class="t-desc">13 config-driven modules rendered</text>
+    <text x="886" y="358" class="t-desc">from the privacy-filtered projection</text>
+    <text x="886" y="370" class="t-desc">PUBLIC_SITE_ORG_SLUG per team</text>
+
+    <!-- WIRES -->
+    <!-- playncs → worker -->
+    <path d="M 180 92 C 220 92, 215 92, 253 92" class="wire flow"/>
+    <text x="217" y="84" class="t-wire" text-anchor="middle">scrape</text>
+    <!-- playncs → ncs toolset (live search) -->
+    <path d="M 180 110 C 230 130, 220 200, 253 214" class="wire flow"/>
+    <text x="204" y="160" class="t-wire" text-anchor="middle">live search</text>
+    <!-- worker → portal (review queue) -->
+    <path d="M 455 92 C 505 92, 500 140, 528 152" class="wire warn"/>
+    <text x="497" y="102" class="t-wire" text-anchor="middle">review queue</text>
+    <!-- ncs toolset → portal -->
+    <path d="M 455 226 C 495 226, 495 200, 528 190" class="wire"/>
+    <text x="493" y="240" class="t-wire" text-anchor="middle">import (gated)</text>
+    <!-- gamechanger → portal -->
+    <path d="M 180 252 C 350 300, 440 260, 528 210" class="wire gc"/>
+    <text x="352" y="296" class="t-wire" text-anchor="middle">read-only stats</text>
+    <!-- claude → ai -->
+    <path d="M 180 412 C 215 412, 218 412, 253 412" class="wire gc"/>
+    <!-- ai → portal -->
+    <path d="M 455 400 C 510 380, 520 280, 610 242" class="wire gc"/>
+    <text x="512" y="330" class="t-wire" text-anchor="middle">structured plans</text>
+    <!-- portal ↔ db -->
+    <path d="M 665 240 C 665 275, 665 295, 665 328" class="wire"/>
+    <text x="705" y="288" class="t-wire" text-anchor="middle">server actions</text>
+    <!-- db → org-builder (provision) -->
+    <path d="M 765 340 C 850 300, 850 220, 890 178" class="wire"/>
+    <text x="856" y="252" class="t-wire" text-anchor="middle">provision</text>
+    <!-- org-builder → public site -->
+    <path d="M 985 176 C 985 220, 985 245, 985 288" class="wire flow"/>
+    <text x="1032" y="236" class="t-wire" text-anchor="middle">deploy per team</text>
+    <!-- db → public site (projection) -->
+    <path d="M 765 380 C 830 400, 820 340, 868 332" class="wire flow"/>
+    <text x="820" y="404" class="t-wire" text-anchor="middle">projection · coach-private stripped</text>
+
+    <!-- packages strip -->
+    <line x1="20" y1="500" x2="1100" y2="500" class="lane-line"/>
+    <text x="20" y="525" class="t-lane">SHARED PACKAGES</text>
+    <g>
+      <rect x="20"  y="540" width="92"  height="30" rx="8" class="pkg"/><text x="66"  y="559" class="t-pkg" text-anchor="middle">core-data</text>
+      <rect x="122" y="540" width="62"  height="30" rx="8" class="pkg"/><text x="153" y="559" class="t-pkg" text-anchor="middle">ncs</text>
+      <rect x="194" y="540" width="96"  height="30" rx="8" class="pkg"/><text x="242" y="559" class="t-pkg" text-anchor="middle">ncs-parser</text>
+      <rect x="300" y="540" width="112" height="30" rx="8" class="pkg"/><text x="356" y="559" class="t-pkg" text-anchor="middle">gamechanger</text>
+      <rect x="422" y="540" width="46"  height="30" rx="8" class="pkg"/><text x="445" y="559" class="t-pkg" text-anchor="middle">ai</text>
+      <rect x="478" y="540" width="70"  height="30" rx="8" class="pkg"/><text x="513" y="559" class="t-pkg" text-anchor="middle">config</text>
+      <rect x="558" y="540" width="98"  height="30" rx="8" class="pkg"/><text x="607" y="559" class="t-pkg" text-anchor="middle">projection</text>
+      <rect x="666" y="540" width="118" height="30" rx="8" class="pkg"/><text x="725" y="559" class="t-pkg" text-anchor="middle">site-template</text>
+      <rect x="794" y="540" width="76"  height="30" rx="8" class="pkg"/><text x="832" y="559" class="t-pkg" text-anchor="middle">org-kit</text>
+      <rect x="880" y="540" width="46"  height="30" rx="8" class="pkg"/><text x="903" y="559" class="t-pkg" text-anchor="middle">ui</text>
+    </g>
+    <text x="20" y="605" class="t-desc">Layering: apps → packages → core-data. Packages never import from apps; only core-data touches the database.</text>
+  </svg>
+  </div>
+
+  <div class="legend">
+    <span class="k"><span class="sw" style="background:var(--node-app);border-color:var(--lime)"></span> Apps (Next.js)</span>
+    <span class="k"><span class="sw" style="background:var(--node-svc);border-color:var(--violet)"></span> Services / AI packages</span>
+    <span class="k"><span class="sw" style="background:var(--node-db);border-color:var(--orange)"></span> Data layer</span>
+    <span class="k"><span class="sw" style="background:var(--node-ext);border-style:dashed"></span> External systems</span>
+    <span class="k" style="color:var(--orange)">⛨ governance gate — nothing auto-applied</span>
+  </div>
+</div>
+
+</html>

@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4-Year Development Roadmap — Rally-OS Docs</title>
+<style>
+  :root {
+    --bg: #FAFBF7; --surface: #FFFFFF; --card: #F2F5EE; --border: #DDE5D6;
+    --text: #1A241C; --muted: #5C6E5F; --lime: #5C8A12; --lime-soft: #EAF3DA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0A0F0B; --surface: #101812; --card: #16211A; --border: #24322A;
+      --text: #E8F0E9; --muted: #8FA893; --lime: #A8E63D; --lime-soft: #1B2A14;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A0F0B; --surface: #101812; --card: #16211A; --border: #24322A;
+    --text: #E8F0E9; --muted: #8FA893; --lime: #A8E63D; --lime-soft: #1B2A14;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFBF7; --surface: #FFFFFF; --card: #F2F5EE; --border: #DDE5D6;
+    --text: #1A241C; --muted: #5C6E5F; --lime: #5C8A12; --lime-soft: #EAF3DA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  nav.side {
+    width: 250px; flex-shrink: 0; border-right: 1px solid var(--border);
+    background: var(--surface); padding: 1.5rem 1rem; position: sticky;
+    top: 0; height: 100vh; overflow-y: auto;
+  }
+  nav.side .brand {
+    font-weight: 800; letter-spacing: -0.02em; text-decoration: none;
+    color: var(--text); display: block; margin-bottom: 1.5rem; font-size: 1rem;
+  }
+  nav.side .brand span { color: var(--lime); }
+  nav.side .grp {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted); margin: 1.2rem 0 0.4rem;
+  }
+  nav.side a.pg {
+    display: block; padding: 0.4rem 0.65rem; border-radius: 8px;
+    text-decoration: none; color: var(--muted); font-size: 0.85rem;
+  }
+  nav.side a.pg:hover { color: var(--text); background: var(--card); }
+  nav.side a.pg.active { color: var(--lime); background: var(--lime-soft); font-weight: 600; }
+  main { flex: 1; min-width: 0; padding: 3rem clamp(1.25rem, 5vw, 4rem); }
+  main .doc { max-width: 800px; }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; line-height: 1.25; }
+  h1 { font-size: 2rem; margin-top: 0; }
+  h2 { margin-top: 2.2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+  a { color: var(--lime); }
+  code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.1em 0.35em;
+  }
+  pre {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.55;
+  }
+  pre code { background: none; border: none; padding: 0; font-size: 0.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; font-size: 0.88rem; text-align: left; }
+  th { background: var(--card); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  blockquote { border-left: 3px solid var(--lime); margin: 1rem 0; padding: 0.2rem 1rem; color: var(--muted); }
+  img { max-width: 100%; }
+  @media (max-width: 760px) {
+    .layout { flex-direction: column; }
+    nav.side { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="side"><a class="brand" href="index.html">Rally-<span>OS</span> Docs</a><p class="grp">Product</p><a class="pg" href="pitch-deck.html">Pitch Deck</a><a class="pg" href="user-guide.html">User Guide & Manual</a><a class="pg" href="suite-diagram.html">Product Suite Diagram</a><p class="grp">Engineering</p><a class="pg" href="overview.html">Overview & Quickstart</a><a class="pg" href="architecture.html">Architecture & Handoff</a><a class="pg" href="ncs-integration.html">NCS Integration</a><a class="pg" href="gamechanger-integration.html">GameChanger Integration</a><a class="pg" href="database.html">Database Workflows</a><a class="pg" href="deployment.html">Vercel Deployment</a><p class="grp">Coaching</p><a class="pg" href="coaching-content.html">Coaching Content Package</a><a class="pg active" href="development-roadmap.html">4-Year Development Roadmap</a></nav>
+<main><div class="doc"><h1>4-Year Elite Softball Development Roadmap</h1>
+<p>10U Foundation to 13U/14U Elite Transition
+Built as a high-rep, station-based, long-term player development system for 10U through 13U/14U transition softball.</p>
+<h2>How This System Is Built</h2>
+<p>This package uses a long-term athlete development mindset: build athletes first, then layer softball complexity in a deliberate progression.
+The practice model is station-based because young players need repetition, movement, and immediate feedback more than long lectures.
+Every month includes individual skill, team defense, baserunning pressure, offensive execution, and a measurable standard so development is visible over time.
+Safety note: follow league rules and medical guidance. Pitching workload, heat exposure, and pain should be managed conservatively with parent/medical input.</p>
+<h2>Research-Informed Coaching Principles</h2>
+<p>Principle
+Application in this plan
+Coach education and structure
+Use clear practice plans, diagrams, safety standards, and positive instruction.
+Long-term development
+Avoid chasing short-term wins at the expense of movement quality, confidence, recovery, or love of the game.
+High repetition practice design
+Run small stations, score drills, and minimize standing in lines.
+Pitching and arm care caution
+Track workload, mechanics, soreness, and multiple-team participation. Command and mechanics come before volume.
+Heat and emergency readiness
+Use hydration breaks, acclimatization, weather monitoring, and an emergency action plan in hot conditions.
+Positive culture
+A player who is confident, resilient, and communicative will learn faster and handle pressure better.</p>
+<h2>Four-Year Outcome Standards</h2>
+<p>Year
+Age/Stage
+Theme
+Exit Standard
+Year 1
+10U Foundation
+Fundamental movement, clean mechanics, simple signs, and confidence under pressure
+Players know where to go, how to move their feet, and how to make routine plays without panic.
+Year 2
+11U Build
+Speed, pressure, efficient throws, command pitching, and situational awareness
+Players begin to execute with tempo and understand why the play is being called.
+Year 3
+12U Execute
+Advanced situations, bunt/slap packages, pickoffs, 1st/3rd defense, and game IQ
+Players recognize situations before the pitch and execute defensive/offensive packages at speed.
+Year 4
+13U/14U Transition
+Elite transition into larger-game demands: scouting, leadership, strength, and complete game management
+Players become self-correcting, communicate like leaders, and understand game plans by count, runner, and hitter profile.</p>
+<h2>Skill Progression Matrix</h2>
+<p>Skill
+Year 1
+Year 2
+Year 3
+Year 4
+Baserunning
+Learn vocabulary, body position, and safe basic reps for baserunning.
+Add speed, competition, and decision-making to baserunning.
+Execute baserunning within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for baserunning.
+Fielding
+Learn vocabulary, body position, and safe basic reps for fielding.
+Add speed, competition, and decision-making to fielding.
+Execute fielding within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for fielding.
+Throwing
+Learn vocabulary, body position, and safe basic reps for throwing.
+Add speed, competition, and decision-making to throwing.
+Execute throwing within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for throwing.
+Batting
+Learn vocabulary, body position, and safe basic reps for batting.
+Add speed, competition, and decision-making to batting.
+Execute batting within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for batting.
+Catching
+Learn vocabulary, body position, and safe basic reps for catching.
+Add speed, competition, and decision-making to catching.
+Execute catching within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for catching.
+Pitching
+Learn vocabulary, body position, and safe basic reps for pitching.
+Add speed, competition, and decision-making to pitching.
+Execute pitching within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for pitching.
+Bunting
+Learn vocabulary, body position, and safe basic reps for bunting.
+Add speed, competition, and decision-making to bunting.
+Execute bunting within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for bunting.
+Slapping
+Learn vocabulary, body position, and safe basic reps for slapping.
+Add speed, competition, and decision-making to slapping.
+Execute slapping within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for slapping.
+Pickoff Plays
+Learn vocabulary, body position, and safe basic reps for pickoff plays.
+Add speed, competition, and decision-making to pickoff plays.
+Execute pickoff plays within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for pickoff plays.
+Team Defense
+Learn vocabulary, body position, and safe basic reps for team defense.
+Add speed, competition, and decision-making to team defense.
+Execute team defense within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for team defense.
+Outfield
+Learn vocabulary, body position, and safe basic reps for outfield.
+Add speed, competition, and decision-making to outfield.
+Execute outfield within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for outfield.
+Mental/Leadership
+Learn vocabulary, body position, and safe basic reps for mental/leadership.
+Add speed, competition, and decision-making to mental/leadership.
+Execute mental/leadership within bunt/slap/pickoff/game situations.
+Player-led corrections, scouting adjustments, and role-specific mastery for mental/leadership.</p>
+<h2>48-Month Curriculum Map</h2>
+<h3>Year 1 - 10U Foundation</h3>
+<p>Month
+Primary Focus
+Practice Template
+Benchmark
+Month 1
+Movement + throwing base
+Athletic Foundation + Throwing Standard
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 2
+Ground ball footwork
+Ground Ball Footwork + Routine Outs
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 3
+Contact through middle
+Offense Signs + Bunt Basics
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 4
+Basic signs
+Baserunning Pressure 101
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 5
+Home-to-first
+Catching/Pitching Foundation
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 6
+Catcher receive
+Outfield Basics + Backups
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 7
+Pitching balance
+Bunt Defense Standard
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 8
+Bunt stance
+Contact Hitting + Two-Strike Protect
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 9
+Team language
+Intro Slap + Lefty Pressure
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 10
+Positive habits
+Rundowns + Tag Plays
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 11
+Baseline testing
+Situational Mini-Scrimmage
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 12
+Family standards
+10U Combine + Review
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.</p>
+<h3>Year 2 - 11U Build</h3>
+<p>Month
+Primary Focus
+Practice Template
+Benchmark
+Month 1
+Arm care + exchange
+Fast Feet + Quick Exchange
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 2
+Hop reads
+Hop Management + Throws on Run
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 3
+Zone hitting
+Directional Bunting + Sac Execution
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 4
+Leads + steals
+Leads, Steals, Delayed Reads
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 5
+Bunt defense
+Battery Command + Blocks
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 6
+Pitch command
+Slap Intro + Defense Reads
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 7
+Catcher block
+Cutoffs/Relays + OF Angles
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 8
+Slap intro
+Hit Behind Runner + RBI Contact
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 9
+Cutoffs
+Basic Pickoffs + Sign 5 Intro
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 10
+Sliding
+1st/3rd Introduction
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 11
+Pressure competitions
+Competitive Situations
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 12
+Midyear audit
+11U Evaluation + Standards
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.</p>
+<h3>Year 3 - 12U Execute</h3>
+<p>Month
+Primary Focus
+Practice Template
+Benchmark
+Month 1
+Quick release
+Elite Warmup + Ball Security
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 2
+Backhand/forehand
+Bunt/Slap Defensive Rotations
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 3
+Situational hitting
+Cross Play + Back Picks
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 4
+Bunt direction
+Advanced Baserunning Reads
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 5
+Slap defense
+Pitch Sequencing + Catcher Leadership
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 6
+Pickoff intro
+Situational Hitting by Count
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 7
+1st/3rd basics
+1st/3rd Defense Menu
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 8
+Rundowns
+Rundown Funnel + Trail System
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 9
+Outfield backups
+Outfield Communication + Backups
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 10
+Pitch sequencing
+Pressure Offense Package
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 11
+Live scrimmage
+Tournament Simulation
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 12
+Year-end combine
+12U Combine + Leadership
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.</p>
+<h3>Year 4 - 13U/14U Transition</h3>
+<p>Month
+Primary Focus
+Practice Template
+Benchmark
+Month 1
+Leadership warmups
+Player-Led Practice Standards
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 2
+Scouting reports
+Scouting-Based Hitting Plans
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 3
+Advanced counts
+Advanced Pitch Calling + Sequencing
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 4
+Pitch mix plans
+Catcher Controls Running Game
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 5
+Catcher game control
+Slap/Bunt/Slash Package
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 6
+Slap/bunt combos
+Defensive Disguise Packages
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 7
+Defensive disguises
+Advanced 1st/3rd + Reads
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 8
+Relay systems
+Strength, Mobility + Arm Care
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 9
+Mental reset
+Game-Speed Transition Practice
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 10
+Tournament prep
+Tournament Prep + Role Clarity
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 11
+Player-led reps
+College-Style Team Practice
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.
+Month 12
+Transition review
+Final 4-Year Evaluation
+Benchmark: player can explain the job, execute at practice speed, then execute once under pressure.</p>
+<h2>Season Periodization Framework</h2>
+<p>Phase
+Emphasis
+Coaching Guardrail
+Offseason / Winter
+Movement quality, strength basics, throwing build-up, hitting mechanics, pitcher/catcher skill blocks
+Lower total throwing volume; more mechanics and athleticism.
+Preseason
+Signs, bunt defense, team systems, game-speed baserunning, situational offense
+Add controlled live reps; chart execution.
+In Season
+Sharpen packages, role clarity, confidence, recovery, game-day adjustments
+Keep practices crisp; reduce grind.
+Postseason / Fall
+Skill experiments, new positions, leadership, honest development review
+Rebuild fundamentals and address gaps.</p>
+<h2>Research Sources Used</h2>
+<p>USA Softball ACE Coach Training: <a href="https://www.usasoftball.com/resources/ace-coach-training/">https://www.usasoftball.com/resources/ace-coach-training/</a>
+Coach education framework from national softball body.
+Little League Coach Pitch Program: <a href="https://www.littleleague.org/university/articles/the-little-league-coach-pitch-program/">https://www.littleleague.org/university/articles/the-little-league-coach-pitch-program/</a>
+Example of weekly practice plan structure with diagrams and PCA tips.
+Little League Four Corner Drill: <a href="https://www.littleleague.org/university/articles/softball-drills-four-corner-drill/">https://www.littleleague.org/university/articles/softball-drills-four-corner-drill/</a>
+Reference for fast-moving throwing/exchange drill design.
+NFHS - Is it Time for Pitch Counts in High School Softball?: <a href="https://nfhs.org/stories/is-it-time-for-pitch-counts-in-high-school-softball">https://nfhs.org/stories/is-it-time-for-pitch-counts-in-high-school-softball</a>
+Softball pitching injury context and workload awareness.
+NFHS - Reducing Pitching Injuries: <a href="https://nfhs.org/stories/reducing-pitching-injuries-count-pitches-don-t-count-on-surgery">https://nfhs.org/stories/reducing-pitching-injuries-count-pitches-don-t-count-on-surgery</a>
+Technique and long-term mechanics emphasis.
+Fastpitch Softball Injuries: Epidemiology, Biomechanics, and Injury Prevention: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10917712/">https://pmc.ncbi.nlm.nih.gov/articles/PMC10917712/</a>
+Recent review on softball injury patterns and underhand pitching considerations.
+Caregiver Awareness of Safe Pitching Recommendations in Youth Fastpitch Softball: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10226313/">https://pmc.ncbi.nlm.nih.gov/articles/PMC10226313/</a>
+Youth fastpitch workload and specialization awareness.
+NATA Prevention of Pediatric Overuse Injuries: <a href="https://www.nata.org/sites/default/files/2025-08/prevention_of_pediatric_overuse_injuries.pdf">https://www.nata.org/sites/default/files/2025-08/prevention_of_pediatric_overuse_injuries.pdf</a>
+Overuse injury prevention principles and delayed specialization.
+AAP Overuse Injury, Overtraining, Burnout: <a href="https://www.healthychildren.org/English/news/Pages/AAP-calls-out-causes-of-injury-overtraining-and-burnout-in-youth-sports.aspx">https://www.healthychildren.org/English/news/Pages/AAP-calls-out-causes-of-injury-overtraining-and-burnout-in-youth-sports.aspx</a>
+Pediatric overuse and burnout guidance.
+CDC Heat and Athletes: <a href="https://www.cdc.gov/heat-health/risk-factors/heat-and-athletes.html">https://www.cdc.gov/heat-health/risk-factors/heat-and-athletes.html</a>
+Heat safety education for coaches and athletes.
+NATA Exertional Heat Illnesses: <a href="https://www.nata.org/sites/default/files/2025-08/exertional_heat_illnesses.pdf">https://www.nata.org/sites/default/files/2025-08/exertional_heat_illnesses.pdf</a>
+Emergency action planning and exertional heat illness recognition.
+USA Baseball Long-Term Athlete Development Plan: <a href="https://www.usabaseball.com/news/usa-baseball-releases-long-term-athlete-development-plan-255218542">https://www.usabaseball.com/news/usa-baseball-releases-long-term-athlete-development-plan-255218542</a>
+Developmentally appropriate long-term athlete model used as a cross-sport framework.
+Positive Coaching Alliance: <a href="https://positivecoach.org/the-power-of-positive/">https://positivecoach.org/the-power-of-positive/</a>
+Positive coaching culture and youth sport retention framework.</p>
+</div></main>
+</div>
+</body>
+</html>

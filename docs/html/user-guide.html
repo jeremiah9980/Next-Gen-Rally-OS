@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rally-OS — User Guide &amp; Manual</title>
+<style>
+  :root {
+    --bg: #FAFBF7;
+    --surface: #FFFFFF;
+    --card: #F2F5EE;
+    --border: #DDE5D6;
+    --text: #1A241C;
+    --muted: #5C6E5F;
+    --lime: #5C8A12;
+    --lime-bright: #78B518;
+    --lime-soft: #EAF3DA;
+    --violet: #6D28D9;
+    --violet-soft: #EFE9FB;
+    --orange: #C2540A;
+    --orange-soft: #FBEEE2;
+    --chrome: #E7ECE1;
+    --shadow: 0 1px 3px rgba(26,36,28,0.08), 0 4px 16px rgba(26,36,28,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0A0F0B;
+      --surface: #101812;
+      --card: #16211A;
+      --border: #24322A;
+      --text: #E8F0E9;
+      --muted: #8FA893;
+      --lime: #A8E63D;
+      --lime-bright: #A8E63D;
+      --lime-soft: #1B2A14;
+      --violet: #A78BFA;
+      --violet-soft: #221A38;
+      --orange: #FB923C;
+      --orange-soft: #331E10;
+      --chrome: #1A2620;
+      --shadow: none;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0A0F0B;
+    --surface: #101812;
+    --card: #16211A;
+    --border: #24322A;
+    --text: #E8F0E9;
+    --muted: #8FA893;
+    --lime: #A8E63D;
+    --lime-bright: #A8E63D;
+    --lime-soft: #1B2A14;
+    --violet: #A78BFA;
+    --violet-soft: #221A38;
+    --orange: #FB923C;
+    --orange-soft: #331E10;
+    --chrome: #1A2620;
+    --shadow: none;
+  }
+
+  :root[data-theme="light"] {
+    --bg: #FAFBF7;
+    --surface: #FFFFFF;
+    --card: #F2F5EE;
+    --border: #DDE5D6;
+    --text: #1A241C;
+    --muted: #5C6E5F;
+    --lime: #5C8A12;
+    --lime-bright: #78B518;
+    --lime-soft: #EAF3DA;
+    --violet: #6D28D9;
+    --violet-soft: #EFE9FB;
+    --orange: #C2540A;
+    --orange-soft: #FBEEE2;
+    --chrome: #E7ECE1;
+    --shadow: 0 1px 3px rgba(26,36,28,0.08), 0 4px 16px rgba(26,36,28,0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+  /* ── masthead ── */
+  .masthead {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 22px 22px;
+    opacity: 0.5;
+    mask-image: linear-gradient(105deg, transparent 55%, black 100%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--lime); margin-bottom: 0.6rem;
+  }
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.8rem); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance;
+  }
+  .masthead p.lede { margin-top: 0.9rem; color: var(--muted); max-width: 58ch; }
+
+  /* ── TOC ── */
+  .toc {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem; margin-bottom: 3.5rem;
+  }
+  .toc a {
+    display: flex; align-items: baseline; gap: 0.7rem;
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--surface); padding: 0.8rem 1rem;
+    text-decoration: none; color: var(--text);
+    font-size: 0.85rem; font-weight: 600;
+    transition: border-color 0.15s;
+  }
+  .toc a:hover { border-color: var(--lime); }
+  .toc .n {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.7rem; color: var(--lime); font-weight: 700;
+  }
+
+  /* ── sections ── */
+  section { margin-bottom: 4rem; scroll-margin-top: 1.5rem; }
+  .sec-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.5rem; }
+  .sec-num {
+    width: 2.2rem; height: 2.2rem; border-radius: 10px; flex-shrink: 0;
+    background: var(--lime-soft); color: var(--lime);
+    display: grid; place-items: center;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-weight: 700; font-size: 0.9rem;
+  }
+  h2 { font-size: 1.5rem; font-weight: 750; letter-spacing: -0.02em; }
+  .sec-intro { color: var(--muted); max-width: 62ch; margin-bottom: 1.5rem; }
+  h3 { font-size: 1.02rem; font-weight: 700; margin: 1.75rem 0 0.6rem; }
+
+  /* ── step rail ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 1.25rem 0; }
+  .step { display: flex; gap: 1rem; position: relative; padding-bottom: 1.4rem; }
+  .step:last-child { padding-bottom: 0; }
+  .step::before {
+    content: ''; position: absolute; left: 13px; top: 30px; bottom: 2px;
+    width: 2px; background: var(--border);
+  }
+  .step:last-child::before { display: none; }
+  .step .dot {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    background: var(--lime); color: var(--bg);
+    display: grid; place-items: center;
+    font-size: 0.75rem; font-weight: 800;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    position: relative; z-index: 1;
+  }
+  .step .body { padding-top: 0.15rem; }
+  .step .body strong { display: block; font-size: 0.92rem; margin-bottom: 0.15rem; }
+  .step .body p { font-size: 0.86rem; color: var(--muted); max-width: 58ch; }
+
+  /* ── mock UI frames ── */
+  .frame {
+    border: 1px solid var(--border); border-radius: 14px;
+    background: var(--surface); box-shadow: var(--shadow);
+    overflow: hidden; margin: 1.25rem 0;
+  }
+  .frame .bar {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--chrome); padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .frame .bar .b { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+  .frame .bar .url {
+    flex: 1; margin-left: 0.5rem;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.68rem; color: var(--muted);
+    background: var(--surface); border-radius: 6px; padding: 0.2rem 0.7rem;
+    border: 1px solid var(--border);
+  }
+  .frame .screen { padding: 1.1rem; }
+
+  /* mock UI atoms */
+  .m-row { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+  .m-card {
+    flex: 1; min-width: 130px;
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.7rem 0.9rem; background: var(--card);
+  }
+  .m-label {
+    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .m-value { font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .m-value.lime { color: var(--lime); }
+  .m-value.orange { color: var(--orange); }
+  .m-btn {
+    display: inline-block; background: var(--lime); color: var(--bg);
+    font-size: 0.7rem; font-weight: 700; border-radius: 8px;
+    padding: 0.4rem 0.9rem; letter-spacing: 0.04em;
+  }
+  .m-btn.ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .m-input {
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--muted);
+    font-size: 0.72rem; padding: 0.42rem 0.7rem; flex: 1; min-width: 110px;
+  }
+  .m-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; margin-top: 0.7rem; }
+  .m-table th {
+    text-align: left; font-size: 0.58rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border);
+  }
+  .m-table td { padding: 0.42rem 0.6rem; border-bottom: 1px solid var(--border); }
+  .m-table tr:last-child td { border-bottom: none; }
+  .chip {
+    display: inline-block; font-size: 0.6rem; font-weight: 700;
+    border-radius: 999px; padding: 0.12rem 0.55rem;
+    background: var(--lime-soft); color: var(--lime);
+  }
+  .chip.violet { background: var(--violet-soft); color: var(--violet); }
+  .chip.orange { background: var(--orange-soft); color: var(--orange); }
+
+  .caption {
+    font-size: 0.75rem; color: var(--muted); text-align: center;
+    margin: -0.6rem 0 1.25rem; font-style: italic;
+  }
+
+  /* ── callouts ── */
+  .callout {
+    display: flex; gap: 0.8rem; border-radius: 12px;
+    padding: 0.9rem 1.1rem; margin: 1.25rem 0;
+    font-size: 0.86rem; border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .callout.tip { border-color: color-mix(in srgb, var(--lime) 40%, var(--border)); background: var(--lime-soft); }
+  .callout.warn { border-color: color-mix(in srgb, var(--orange) 40%, var(--border)); background: var(--orange-soft); }
+  .callout .ico { font-size: 1rem; line-height: 1.4; }
+  .callout p { color: var(--text); }
+  .callout strong { font-weight: 700; }
+
+  /* ── status pipeline ── */
+  .pipeline {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 0.35rem; margin: 1.25rem 0; row-gap: 0.8rem;
+  }
+  .state {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.68rem; font-weight: 600;
+    border-radius: 999px; padding: 0.4rem 0.9rem;
+    border: 1.5px solid var(--border); background: var(--surface);
+  }
+  .state.start { border-color: var(--orange); color: var(--orange); }
+  .state.mid { border-color: var(--violet); color: var(--violet); }
+  .state.good { border-color: var(--lime); color: var(--lime); background: var(--lime-soft); }
+  .state.end { color: var(--muted); }
+  .pipe-arrow { color: var(--muted); font-size: 0.85rem; }
+
+  /* ── two-path grid ── */
+  .paths { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+  @media (max-width: 640px) { .paths { grid-template-columns: 1fr; } }
+  .path {
+    border: 1px solid var(--border); border-radius: 14px;
+    background: var(--surface); padding: 1.25rem; box-shadow: var(--shadow);
+  }
+  .path .tag {
+    display: inline-block; font-size: 0.6rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 0.5rem;
+  }
+  .path h4 { font-size: 0.98rem; margin-bottom: 0.4rem; }
+  .path p { font-size: 0.82rem; color: var(--muted); }
+  .path ol { margin: 0.7rem 0 0 1.1rem; font-size: 0.82rem; color: var(--muted); }
+  .path ol li { margin-bottom: 0.25rem; }
+  .path.recommended { border-color: var(--lime); }
+  .path.recommended .rec {
+    float: right; font-size: 0.58rem; font-weight: 700;
+    background: var(--lime); color: var(--bg);
+    border-radius: 6px; padding: 0.15rem 0.5rem; letter-spacing: 0.08em;
+  }
+
+  /* ── kbd / code ── */
+  kbd, code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.8em; background: var(--card);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.1rem 0.4rem;
+  }
+  pre {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.2rem;
+    overflow-x: auto; margin: 1rem 0;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.78rem; line-height: 1.7;
+  }
+  pre code { background: none; border: none; padding: 0; }
+  .cmt { color: var(--muted); }
+
+  /* ── reference table ── */
+  .ref { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+  .ref th {
+    text-align: left; font-size: 0.62rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--border);
+  }
+  .ref td { padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .ref td:first-child { white-space: nowrap; }
+  .table-scroll { overflow-x: auto; }
+
+  a { color: var(--lime); }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Rally-OS · User Guide &amp; Manual</p>
+    <h1>Run your team from one place.</h1>
+    <p class="lede">
+      Everything a coach needs to go from an empty database to a live public team
+      site: import your NCS roster, review changes, plan practices with AI, and
+      publish. Ten minutes, start to finish.
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <a href="#setup"><span class="n">01</span> First-time setup</a>
+    <a href="#login"><span class="n">02</span> Signing in</a>
+    <a href="#dashboard"><span class="n">03</span> The dashboard</a>
+    <a href="#roster"><span class="n">04</span> Importing your roster</a>
+    <a href="#reviews"><span class="n">05</span> Reviewing NCS changes</a>
+    <a href="#tournaments"><span class="n">06</span> Tournaments</a>
+    <a href="#practice"><span class="n">07</span> AI practice planning</a>
+    <a href="#publish"><span class="n">08</span> Publishing your team site</a>
+    <a href="#reference"><span class="n">09</span> Quick reference</a>
+  </nav>
+
+  <!-- 01 SETUP -->
+  <section id="setup">
+    <div class="sec-head"><div class="sec-num">01</div><h2>First-time setup</h2></div>
+    <p class="sec-intro">
+      One command configures everything — environment file, database, AI key,
+      and demo data. Run it from the repository root.
+    </p>
+    <pre><code><span class="cmt"># requires Node 20+ and pnpm</span>
+pnpm install
+pnpm run setup</code></pre>
+    <div class="steps">
+      <div class="step"><div class="dot">1</div><div class="body">
+        <strong>Prerequisites check</strong>
+        <p>The installer verifies Node 20+ and pnpm, and stops with a fix-it hint if either is missing.</p>
+      </div></div>
+      <div class="step"><div class="dot">2</div><div class="body">
+        <strong>Database connection</strong>
+        <p>Paste your PostgreSQL connection string (local Postgres, Neon, or Railway). The installer saves it to <code>.env</code> and pushes the schema.</p>
+      </div></div>
+      <div class="step"><div class="dot">3</div><div class="body">
+        <strong>AI key (optional)</strong>
+        <p>Paste an Anthropic API key to enable practice-plan generation and player-trend suggestions. The installer validates it live against the API before saving. Skip it and everything else still works.</p>
+      </div></div>
+      <div class="step"><div class="dot">4</div><div class="body">
+        <strong>Seed demo data</strong>
+        <p>Say yes to seeding and you get a demo organization, team, season, and a coach login to explore with.</p>
+      </div></div>
+    </div>
+    <div class="callout tip"><span class="ico">💡</span>
+      <p><strong>CI or scripted installs:</strong> <code>pnpm run setup -- --yes</code> accepts every default and keeps existing values — no prompts.</p>
+    </div>
+  </section>
+
+  <!-- 02 LOGIN -->
+  <section id="login">
+    <div class="sec-head"><div class="sec-num">02</div><h2>Signing in</h2></div>
+    <p class="sec-intro">
+      Start the portal with <code>pnpm --filter @rally/rally-os dev</code> and open
+      <code>http://localhost:3000</code>. Every portal page requires a signed-in coach.
+    </p>
+    <div class="frame">
+      <div class="bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="url">localhost:3000/login</span></div>
+      <div class="screen">
+        <div style="max-width:300px;margin:0.5rem auto;display:flex;flex-direction:column;gap:0.5rem;">
+          <p class="m-label" style="text-align:center;margin-bottom:0.3rem;">Rally-OS · Coach Sign-in</p>
+          <span class="m-input">coach@example.com</span>
+          <span class="m-input">••••••••••••</span>
+          <span class="m-btn" style="text-align:center;">Sign In</span>
+        </div>
+      </div>
+    </div>
+    <p class="caption">The demo coach created by the seed: <code>coach@example.com</code> / <code>password123</code></p>
+    <div class="callout warn"><span class="ico">🔒</span>
+      <p><strong>Production:</strong> override the demo credentials by setting <code>SEED_COACH_EMAIL</code> and <code>SEED_COACH_PASSWORD</code> before seeding, or create real users and skip the demo seed entirely.</p>
+    </div>
+  </section>
+
+  <!-- 03 DASHBOARD -->
+  <section id="dashboard">
+    <div class="sec-head"><div class="sec-num">03</div><h2>The dashboard</h2></div>
+    <p class="sec-intro">
+      Home base. The ops strip tells you what needs attention; quick actions jump
+      straight into the four core workflows.
+    </p>
+    <div class="frame">
+      <div class="bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="url">localhost:3000 — Coach Dashboard</span></div>
+      <div class="screen">
+        <p class="m-label" style="margin-bottom:0.6rem;">Demo Team · 2026 Spring · 12U</p>
+        <div class="m-row">
+          <div class="m-card"><p class="m-label">Active Roster</p><p class="m-value">12</p></div>
+          <div class="m-card"><p class="m-label">Pending Reviews</p><p class="m-value orange">3</p></div>
+          <div class="m-card"><p class="m-label">Tournaments</p><p class="m-value">2</p></div>
+          <div class="m-card"><p class="m-label">NCS-Linked</p><p class="m-value lime">12</p></div>
+        </div>
+        <div class="m-row" style="margin-top:0.7rem;">
+          <div class="m-card" style="border-color:var(--lime);"><p class="m-label">Quick Action</p><p style="font-size:0.78rem;font-weight:700;">Import NCS Roster</p></div>
+          <div class="m-card"><p class="m-label">Quick Action</p><p style="font-size:0.78rem;font-weight:700;">Review Changes <span class="chip orange">3</span></p></div>
+          <div class="m-card"><p class="m-label">Quick Action</p><p style="font-size:0.78rem;font-weight:700;">Plan a Practice</p></div>
+          <div class="m-card"><p class="m-label">Quick Action</p><p style="font-size:0.78rem;font-weight:700;">Track Tournaments</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="caption">The orange badge on Review Changes means detected NCS changes are waiting for you.</p>
+    <p class="sec-intro" style="margin-bottom:0;">
+      The left sidebar reaches every module: Roster, Team Info, Standards, Practice
+      Planning, the three NCS tools, GameChanger, and Teams. Modules marked
+      “Planned” describe what's coming and link to the pages that cover that
+      workflow today.
+    </p>
+  </section>
+
+  <!-- 04 ROSTER -->
+  <section id="roster">
+    <div class="sec-head"><div class="sec-num">04</div><h2>Importing your roster</h2></div>
+    <p class="sec-intro">
+      Open <strong>NCS Roster Dashboard</strong> in the sidebar. There are two ways
+      in — both land in the same preview, and nothing is written until you click
+      Import.
+    </p>
+
+    <div class="paths">
+      <div class="path recommended">
+        <span class="rec">Fastest</span>
+        <span class="tag">Path A</span>
+        <h4>Search NCS Teams</h4>
+        <p>Pull your roster live from playncs.com — no copying.</p>
+        <ol>
+          <li>Enter team name, city, and/or state → <strong>Search</strong></li>
+          <li>Find your team in the results table</li>
+          <li>Click <strong>Pick This Team</strong></li>
+          <li>The live roster drops into the preview</li>
+        </ol>
+      </div>
+      <div class="path">
+        <span class="tag">Path B</span>
+        <h4>Paste Text</h4>
+        <p>For anything the live search doesn't cover.</p>
+        <ol>
+          <li>Copy roster table rows from any NCS page</li>
+          <li>Paste into the text area → <strong>Preview Roster</strong></li>
+          <li>The parser maps columns by header — or by pattern (jersey #, position, grad year) when there's no header</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="url">localhost:3000/ncs-roster-dashboard — Step 2 · Preview</span></div>
+      <div class="screen">
+        <p class="m-label" style="margin-bottom:0.2rem;">Pulled live from NCS: <span style="color:var(--lime)">Lightning Bolts · 12U C · Leander, TX</span></p>
+        <table class="m-table">
+          <tr><th>✓</th><th>#</th><th>Player</th><th>Pos</th><th>Bats</th><th>Throws</th><th>Grad</th></tr>
+          <tr><td>☑</td><td>12</td><td>Alice Smith</td><td>P</td><td>R</td><td>R</td><td>2026</td></tr>
+          <tr><td>☑</td><td>7</td><td>Bob Jones</td><td>C</td><td>L</td><td>R</td><td>2025</td></tr>
+          <tr><td>☑</td><td>9</td><td>Carlos Rivera</td><td>SS</td><td>R</td><td>R</td><td>2027</td></tr>
+        </table>
+        <div style="margin-top:0.8rem;"><span class="m-btn">Import 3 Players</span> <span class="m-btn ghost">Back</span></div>
+      </div>
+    </div>
+    <p class="caption">Uncheck anyone you don't want. Import creates the player, roster entry, and NCS source link in one step.</p>
+
+    <div class="callout tip"><span class="ico">🛡️</span>
+      <p><strong>Governance:</strong> imports match existing players by NCS ID first, then normalized name, then jersey — so re-importing never duplicates your roster. And nothing is ever written without your explicit Import click.</p>
+    </div>
+  </section>
+
+  <!-- 05 CHANGE REVIEW -->
+  <section id="reviews">
+    <div class="sec-head"><div class="sec-num">05</div><h2>Reviewing NCS changes</h2></div>
+    <p class="sec-intro">
+      The background worker polls your team's NCS page on a schedule and diffs it
+      against your last import. Every difference — a new player, a jersey change,
+      a removal — lands in the <strong>Change Review Queue</strong>. You decide
+      what's real.
+    </p>
+    <div class="pipeline" role="img" aria-label="Change review status flow">
+      <span class="state start">change_detected</span>
+      <span class="pipe-arrow">→</span>
+      <span class="state mid">pending_review</span>
+      <span class="pipe-arrow">→</span>
+      <span class="state good">accepted</span>
+      <span style="margin:0 0.4rem;color:var(--muted);font-size:0.75rem;">or</span>
+      <span class="state end">ignored</span>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="dot">1</div><div class="body">
+        <strong>Open NCS Change Review</strong>
+        <p>Each card shows the change type (add / remove / update), the player, and the before → after values.</p>
+      </div></div>
+      <div class="step"><div class="dot">2</div><div class="body">
+        <strong>Flag for review (optional)</strong>
+        <p>Not sure yet? Move it to <code>pending_review</code> and come back after talking to the family or the association.</p>
+      </div></div>
+      <div class="step"><div class="dot">3</div><div class="body">
+        <strong>Accept or ignore</strong>
+        <p>Accept applies the change to your canonical roster and advances the baseline. Ignore dismisses it. Both are final — the queue stays clean.</p>
+      </div></div>
+    </div>
+    <div class="callout tip"><span class="ico">🔁</span>
+      <p><strong>Manual re-diff:</strong> you don't have to wait for the worker. Paste a fresh roster into the Re-Diff panel on the Roster Dashboard any time to generate change reviews on demand.</p>
+    </div>
+  </section>
+
+  <!-- 06 TOURNAMENTS -->
+  <section id="tournaments">
+    <div class="sec-head"><div class="sec-num">06</div><h2>Tournaments</h2></div>
+    <p class="sec-intro">
+      The <strong>NCS Tournament Tracker</strong> works like the roster paste flow:
+      copy a tournament listing from NCS, preview the parsed table, and attach the
+      events you're entering.
+    </p>
+    <div class="frame">
+      <div class="bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="url">localhost:3000/ncs-tournament-tracker</span></div>
+      <div class="screen">
+        <table class="m-table">
+          <tr><th>✓</th><th>Tournament</th><th>Date</th><th>Location</th><th>Ages</th></tr>
+          <tr><td>☑</td><td>Spring Invitational</td><td>Mar 15</td><td>San Jose, CA</td><td><span class="chip">10U · 12U</span></td></tr>
+          <tr><td>☐</td><td>Summer Classic</td><td>Jun 20</td><td>Sacramento, CA</td><td><span class="chip">14U</span></td></tr>
+        </table>
+        <div style="margin-top:0.8rem;"><span class="m-btn">Attach 1 Tournament</span></div>
+      </div>
+    </div>
+    <p class="caption">Attached tournaments are monitored — registration changes appear in the same review queue.</p>
+  </section>
+
+  <!-- 07 PRACTICE -->
+  <section id="practice">
+    <div class="sec-head"><div class="sec-num">07</div><h2>AI practice planning</h2></div>
+    <p class="sec-intro">
+      Tell the planner when, where, and what to focus on — it drafts a complete,
+      age-appropriate session in two versions.
+    </p>
+    <div class="steps">
+      <div class="step"><div class="dot">1</div><div class="body">
+        <strong>Fill in the practice form</strong>
+        <p>Date, duration, location, and the team focus (e.g. “first-and-third defense, two-strike hitting”). Recent game stats and player notes are pulled in automatically as context.</p>
+      </div></div>
+      <div class="step"><div class="dot">2</div><div class="body">
+        <strong>Generate</strong>
+        <p>Claude drafts a full schedule in timed blocks, with drill instructions, player groupings, coach assignments, equipment, and a weather contingency plan.</p>
+      </div></div>
+      <div class="step"><div class="dot">3</div><div class="body">
+        <strong>Two versions, automatically</strong>
+        <p>The <strong>coach version</strong> includes private player notes and development focuses. The <strong>player version</strong> strips all of that — safe to share with the team and families.</p>
+      </div></div>
+    </div>
+    <div class="callout warn"><span class="ico">🔐</span>
+      <p><strong>Privacy by design:</strong> private coach notes can never leak — the player version is a separate document generated without them, and the public site only ever sees the player version.</p>
+    </div>
+  </section>
+
+  <!-- 08 PUBLISH -->
+  <section id="publish">
+    <div class="sec-head"><div class="sec-num">08</div><h2>Publishing your team site</h2></div>
+    <p class="sec-intro">
+      The Org Builder turns a short YAML config into a provisioned team and a
+      publish-ready site. Start it with
+      <code>pnpm --filter @rally/org-builder dev</code>.
+    </p>
+    <div class="steps">
+      <div class="step"><div class="dot">1</div><div class="body">
+        <strong>Edit the SiteConfig</strong>
+        <p>Organization name and slug, team name, season, age group, and which of the 13 site modules to enable (roster, schedule, tournaments, stats, fundraising…).</p>
+      </div></div>
+      <div class="step"><div class="dot">2</div><div class="body">
+        <strong>Validate &amp; preview</strong>
+        <p>Instant validation with a preview of exactly which modules will render and the publish target/domain.</p>
+      </div></div>
+      <div class="step"><div class="dot">3</div><div class="body">
+        <strong>Provision</strong>
+        <p>Creates the Organization → Team → TeamSeason records (idempotent — safe to run again after edits).</p>
+      </div></div>
+      <div class="step"><div class="dot">4</div><div class="body">
+        <strong>Org Kit</strong>
+        <p>A starter brand kit generated from your config: a color palette derived from your org, an SVG logo with your team initials, four ready-to-paste social posts, and a Vercel deploy checklist with your slug and domain pre-filled. Everything is click-to-copy.</p>
+      </div></div>
+      <div class="step"><div class="dot">5</div><div class="body">
+        <strong>Deploy the public site</strong>
+        <p>Follow the checklist: one Vercel project per team, root directory <code>apps/public-site</code>, set <code>PUBLIC_SITE_ORG_SLUG</code>, point your domain. Re-deploy whenever you accept NCS changes or update team info.</p>
+      </div></div>
+    </div>
+    <div class="frame">
+      <div class="bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="url">org-builder — Step 4 · Org Kit</span></div>
+      <div class="screen">
+        <div class="m-row" style="align-items:center;">
+          <div style="width:54px;height:54px;border-radius:50%;background:var(--violet);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.1rem;border:3px solid var(--lime);">DT</div>
+          <div class="m-card" style="flex:2;"><p class="m-label">Palette</p>
+            <div style="display:flex;gap:0.4rem;margin-top:0.3rem;">
+              <span style="width:18px;height:18px;border-radius:50%;background:#7C3AED;"></span>
+              <span style="width:18px;height:18px;border-radius:50%;background:#A8E63D;"></span>
+              <span style="width:18px;height:18px;border-radius:50%;background:#14101F;border:1px solid var(--border);"></span>
+              <span style="width:18px;height:18px;border-radius:50%;background:#F4F2F8;border:1px solid var(--border);"></span>
+            </div>
+          </div>
+          <div class="m-card" style="flex:3;"><p class="m-label">Social Template · Announcement</p>
+            <p style="font-size:0.68rem;color:var(--muted);margin-top:0.2rem;">Introducing Demo Team — 12U for 2026 Spring! 🏆 Follow our journey at demo-org.example.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="caption">Every org gets a unique palette — deterministically generated from its slug.</p>
+  </section>
+
+  <!-- 09 REFERENCE -->
+  <section id="reference">
+    <div class="sec-head"><div class="sec-num">09</div><h2>Quick reference</h2></div>
+
+    <h3>Commands</h3>
+    <div class="table-scroll">
+    <table class="ref">
+      <tr><th>Command</th><th>What it does</th></tr>
+      <tr><td><code>pnpm run setup</code></td><td>Interactive installer — env, database, AI key, seed</td></tr>
+      <tr><td><code>pnpm --filter @rally/rally-os dev</code></td><td>Start the coach portal (localhost:3000)</td></tr>
+      <tr><td><code>pnpm --filter @rally/org-builder dev</code></td><td>Start the Org Builder wizard</td></tr>
+      <tr><td><code>pnpm --filter @rally/public-site dev</code></td><td>Preview the public team site locally</td></tr>
+      <tr><td><code>pnpm db:seed</code></td><td>(Re)seed demo org, team, and coach — idempotent</td></tr>
+      <tr><td><code>pnpm test</code></td><td>Run the full test suite</td></tr>
+    </table>
+    </div>
+
+    <h3>Demo login</h3>
+    <div class="table-scroll">
+    <table class="ref">
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Email</td><td><code>coach@example.com</code></td></tr>
+      <tr><td>Password</td><td><code>password123</code></td></tr>
+    </table>
+    </div>
+
+    <h3>Glossary</h3>
+    <div class="table-scroll">
+    <table class="ref">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td><strong>TeamSeason</strong></td><td>One team in one season — the container everything else (roster, plans, tournaments) hangs off. One is active at a time.</td></tr>
+      <tr><td><strong>NCS source</strong></td><td>The stored snapshot linking a player to the NCS page they were imported from; the baseline future diffs compare against.</td></tr>
+      <tr><td><strong>Change review</strong></td><td>A detected difference between NCS and your roster, waiting for your accept/ignore decision.</td></tr>
+      <tr><td><strong>Projection</strong></td><td>The public, privacy-filtered copy of your team data that the public site renders. Coach notes never enter it.</td></tr>
+      <tr><td><strong>Org Kit</strong></td><td>The generated starter branding bundle: palette, logo, social templates, deploy checklist.</td></tr>
+    </table>
+    </div>
+  </section>
+
+</div>
+
+</html>
