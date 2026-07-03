@@ -12,6 +12,7 @@
     "db:migrate": "prisma migrate deploy --schema ./prisma/schema.prisma",
     "db:migrate:dev": "prisma migrate dev --schema ./prisma/schema.prisma",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed:content": "tsx prisma/seed-content.ts",
     "lint": "echo 'No lint configured for @rally/core-data'",
     "typecheck": "tsc --noEmit"
   },
