@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture & Handoff — Rally-OS Docs</title>
+<style>
+  :root {
+    --bg: #FAFBF7; --surface: #FFFFFF; --card: #F2F5EE; --border: #DDE5D6;
+    --text: #1A241C; --muted: #5C6E5F; --lime: #5C8A12; --lime-soft: #EAF3DA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0A0F0B; --surface: #101812; --card: #16211A; --border: #24322A;
+      --text: #E8F0E9; --muted: #8FA893; --lime: #A8E63D; --lime-soft: #1B2A14;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A0F0B; --surface: #101812; --card: #16211A; --border: #24322A;
+    --text: #E8F0E9; --muted: #8FA893; --lime: #A8E63D; --lime-soft: #1B2A14;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFBF7; --surface: #FFFFFF; --card: #F2F5EE; --border: #DDE5D6;
+    --text: #1A241C; --muted: #5C6E5F; --lime: #5C8A12; --lime-soft: #EAF3DA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  nav.side {
+    width: 250px; flex-shrink: 0; border-right: 1px solid var(--border);
+    background: var(--surface); padding: 1.5rem 1rem; position: sticky;
+    top: 0; height: 100vh; overflow-y: auto;
+  }
+  nav.side .brand {
+    font-weight: 800; letter-spacing: -0.02em; text-decoration: none;
+    color: var(--text); display: block; margin-bottom: 1.5rem; font-size: 1rem;
+  }
+  nav.side .brand span { color: var(--lime); }
+  nav.side .grp {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted); margin: 1.2rem 0 0.4rem;
+  }
+  nav.side a.pg {
+    display: block; padding: 0.4rem 0.65rem; border-radius: 8px;
+    text-decoration: none; color: var(--muted); font-size: 0.85rem;
+  }
+  nav.side a.pg:hover { color: var(--text); background: var(--card); }
+  nav.side a.pg.active { color: var(--lime); background: var(--lime-soft); font-weight: 600; }
+  main { flex: 1; min-width: 0; padding: 3rem clamp(1.25rem, 5vw, 4rem); }
+  main .doc { max-width: 800px; }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; line-height: 1.25; }
+  h1 { font-size: 2rem; margin-top: 0; }
+  h2 { margin-top: 2.2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+  a { color: var(--lime); }
+  code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.1em 0.35em;
+  }
+  pre {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.55;
+  }
+  pre code { background: none; border: none; padding: 0; font-size: 0.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; font-size: 0.88rem; text-align: left; }
+  th { background: var(--card); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  blockquote { border-left: 3px solid var(--lime); margin: 1rem 0; padding: 0.2rem 1rem; color: var(--muted); }
+  img { max-width: 100%; }
+  @media (max-width: 760px) {
+    .layout { flex-direction: column; }
+    nav.side { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="side"><a class="brand" href="index.html">Rally-<span>OS</span> Docs</a><p class="grp">Product</p><a class="pg" href="pitch-deck.html">Pitch Deck</a><a class="pg" href="user-guide.html">User Guide & Manual</a><a class="pg" href="suite-diagram.html">Product Suite Diagram</a><p class="grp">Engineering</p><a class="pg" href="overview.html">Overview & Quickstart</a><a class="pg active" href="architecture.html">Architecture & Handoff</a><a class="pg" href="ncs-integration.html">NCS Integration</a><a class="pg" href="gamechanger-integration.html">GameChanger Integration</a><a class="pg" href="database.html">Database Workflows</a><a class="pg" href="deployment.html">Vercel Deployment</a><p class="grp">Coaching</p><a class="pg" href="coaching-content.html">Coaching Content Package</a><a class="pg" href="development-roadmap.html">4-Year Development Roadmap</a></nav>
+<main><div class="doc"><h1>Next-Gen-Rally-OS — Architecture &amp; Production Handoff</h1>
+<p>Audience: an engineering team taking this codebase to production (self-hosted
+SaaS, white-label, or per-customer deployments). Everything a new team needs
+to build, extend, package, and operate the product is either in this document
+or linked from it.</p>
+<hr>
+<h2>1. Product overview</h2>
+<p>One system that takes a youth-sports team from <strong>concept → public team-site →
+full coaching operations</strong>. It consolidates five legacy products (rallyiq,
+ncs-monitor, NCS-DASH, venom, rally-org-builder) into a single Turborepo
+monorepo with one database and one design system.</p>
+<p>Three user-facing surfaces share one Postgres database:</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Audience</th>
+<th>Auth</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>apps/rally-os</code> — coach portal</td>
+<td>Coaches / team staff</td>
+<td>next-auth (credentials + email), org-scoped</td>
+</tr>
+<tr>
+<td><code>apps/org-builder</code> — provisioning wizard</td>
+<td>Operators / onboarding</td>
+<td>none today (deploy behind SSO / internal network)</td>
+</tr>
+<tr>
+<td><code>apps/public-site</code> — generated team site</td>
+<td>Public (parents, recruiters)</td>
+<td>none (read-only projection)</td>
+</tr>
+</tbody></table>
+<p>One background service: <code>services/ncs-worker</code> — scheduled NCS polling and diff
+detection.</p>
+<h2>2. System topology</h2>
+<pre><code>                    ┌────────────────────────────┐
+   playncs.com ───► │ services/ncs-worker (cron) │──┐  writes NcsChangeReview only
+                    └────────────────────────────┘  │
+                                                    ▼
+┌──────────────────┐   Server Actions   ┌──────────────────────┐
+│ apps/rally-os    │◄──────────────────►│ PostgreSQL (Prisma)  │
+│ coach portal     │                    │ packages/core-data   │
+└──────────────────┘                    └──────────────────────┘
+        ▲                                     ▲            ▲
+        │ Claude API (packages/ai)            │            │ read-only projection
+┌──────────────────┐                  ┌───────────────┐ ┌──────────────────┐
+│ Anthropic        │                  │ apps/         │ │ apps/public-site │
+└──────────────────┘                  │ org-builder   │ │ (per team)       │
+                                      └───────────────┘ └──────────────────┘
+</code></pre>
+<p>Data flows one direction: <strong>NCS (intelligence) → Rally-OS (record) →
+Org-Builder (publish) → public site</strong>, with GameChanger as read-only stats
+enrichment into Rally-OS.</p>
+<h2>3. Workspace map</h2>
+<pre><code>apps/
+  rally-os/       Coach operations portal. Next.js App Router, next-auth,
+                  Server Actions only (no app/api routes except next-auth).
+  org-builder/    SiteConfig (YAML) wizard: validate → preview → provision
+                  TeamSeason → Org Kit (branding starter). Also a CLI
+                  (cli/rally-os.ts) for headless provisioning.
+  public-site/    Renders the published projection through
+                  packages/site-template. One deployment per team, selected
+                  by PUBLIC_SITE_ORG_SLUG.
+
+packages/
+  core-data/      Prisma schema, client singleton, migrations, seed. The only
+                  package that talks to the database.
+  config/         SiteConfig zod schema + YAML parse/serialize + defaults.
+  ncs/            Domain-level NCS: paste parser, roster/tournament diff,
+                  live playncs.com search + roster scrape (scrape.ts/client.ts),
+                  public payload projection. Used by rally-os + ncs-worker.
+  ncs-parser/     Lower-level parsing/matching primitives (ID→name→jersey).
+  gamechanger/    GC team/player mapping, stat import, approval-gated
+                  schedule push.
+  ai/             Claude-powered practice-plan builder + player-trend
+                  suggestions. Zod-validated structured outputs.
+  projection/     buildPublishedProjection(orgId, config) — the ONLY path from
+                  coach data to public output. Strips coach-private fields.
+  site-template/  13 toggleable public-site modules + SiteRenderer.
+  org-kit/        Pure branding-kit generator (palette, SVG logo, social
+                  templates, deploy checklist) from a SiteConfig.
+  ui/             Shared design system (Card, Badge, Button, Nav, StatTile,
+                  Avatar) + Tailwind preset (dark theme, accent-lime).
+
+services/
+  ncs-worker/     node-cron poller: fetch NCS pages → parse → diff vs
+                  sourceSnapshot → create NcsChangeReview rows. Never writes
+                  canonical records.
+
+infra/            .env.example (env contract), Vercel manifests, cron
+                  definitions, smoke-test script, db workflows (see
+                  infra/db/README.md).
+scripts/setup.mjs Interactive installer — `pnpm run setup` (see §9).
+</code></pre>
+<p>Layering rule: <code>apps → packages → core-data</code>. Packages never import from
+apps. Only <code>core-data</code> owns Prisma; other packages receive data or the
+client through explicit entry points.</p>
+<h2>4. Data model (Prisma, 23 models)</h2>
+<p>Full schema: <code>packages/core-data/prisma/schema.prisma</code>. Migrations are
+committed (<code>prisma/migrations/</code>) — production applies with
+<code>prisma migrate deploy</code>.</p>
+<p>Core graph:</p>
+<pre><code>Organization ─┬─ User (role: COACH | ADMIN)          [next-auth models:
+              └─ Team ── TeamSeason (isActive)        Account, Session,
+                              │                       VerificationToken]
+     ┌────────────┬───────────┼──────────────┬─────────────────┐
+RosterEntry   ScheduleGame  PracticePlan  NcsTournamentEntry  CoachNote
+     │             │             │              │
+  Player   SchedulePushRequest  PracticePlanVersion   NcsTournament
+     │                          (coach | player)
+     ├─ NcsPlayerSource   (source snapshot + ncsExternalId + ncsTeamUrl)
+     ├─ GameChangerStatSnapshot
+     ├─ NcsChangeReview   (status machine, payload = structured diff)
+     └─ DevelopmentFocus / CoachNote
+
+DrillLibrary ── Drill          PracticeTemplate
+</code></pre>
+<p>Key invariants:</p>
+<ul>
+<li><strong>Tenancy</strong>: every portal query goes through
+<code>apps/rally-os/src/lib/portal-data.ts</code>, which scopes by
+<code>team.organizationId</code> from the session. Never query <code>TeamSeason</code> in the
+portal without the org filter.</li>
+<li><strong><code>NcsPlayerSource.sourceSnapshot</code> (Json)</strong> is the diff baseline — the full
+parsed row (including fields with no first-class column: position, bats,
+throws, grad year).</li>
+<li><strong><code>NcsChangeStatus</code></strong> machine: <code>change_detected → pending_review → accepted | ignored</code> (and <code>change_detected → ignored</code>). Terminal states are
+never reopened.</li>
+<li><strong>PracticePlanVersion</strong> is split <code>coach</code> / <code>player</code> — the player version
+must never contain private coach notes (enforced by separate zod schemas in
+<code>packages/ai/src/types.ts</code>).</li>
+</ul>
+<h2>5. Governance rules (non-negotiable product invariants)</h2>
+<ol>
+<li><strong>NCS changes are never auto-applied.</strong> The worker and re-diff actions only
+create <code>NcsChangeReview</code> rows; a coach explicitly accepts or ignores each.</li>
+<li><strong>GameChanger games are never auto-pushed.</strong> NCS-detected games become
+drafts (<code>SchedulePushRequest</code>) the coach approves; returned <code>gcGameId</code> is
+stored.</li>
+<li><strong>Matching priority is always <code>ncsExternalId → normalized name → jersey</code>.</strong>
+Never name-only when an ID is present. Implemented in <code>packages/ncs</code>
+diff + import and <code>packages/ncs-parser</code>.</li>
+<li><strong>Coach-private data never reaches the public site.</strong> The only path to
+public output is <code>packages/projection</code>, which strips <code>coach_notes</code> and the
+coach practice version. Do not add a second path.</li>
+</ol>
+<p>Any feature PR that weakens one of these should be rejected in review.</p>
+<h2>6. Request/data flows</h2>
+<h3>Roster import (both entry points converge)</h3>
+<ol>
+<li><strong>Live search</strong>: <code>searchNcsTeams</code> / <code>fetchNcsTeamRoster</code> server actions →
+<code>packages/ncs/client.ts</code> fetches playncs.com → <code>scrape.ts</code> parses HTML →
+<code>ParsedRosterRow[]</code>.</li>
+<li><strong>Paste</strong>: textarea → <code>parseNcsRosterText</code> (header detection or
+order-independent positional heuristics).</li>
+<li>Both land in the same preview → coach selects rows → <code>importNcsPlayers</code>
+creates/matches <code>Player</code> + <code>RosterEntry</code> + <code>NcsPlayerSource</code> in one
+transaction.</li>
+</ol>
+<h3>Change detection</h3>
+<p><code>ncs-worker</code> (cron) or manual re-diff → parse current state → diff against
+<code>sourceSnapshot</code> per matching priority → <code>NcsChangeReview(change_detected)</code> →
+coach resolves in the portal → on accept, canonical records update and the
+snapshot baseline advances.</p>
+<h3>Publish</h3>
+<p>Org-builder wizard (or CLI) → <code>parseSiteConfigYaml</code> → <code>provisionFromConfig</code>
+(idempotent upserts, slug-derived IDs) → <code>buildPublishedProjection</code> →
+<code>apps/public-site</code> renders <code>SiteRenderer</code> with enabled modules. Re-publish =
+re-deploy the public-site project.</p>
+<h3>AI practice plan</h3>
+<p>Portal form → <code>packages/ai</code> builds prompt from team focus, roster, recent
+stats/notes → Claude → zod-parse into <code>PracticePlanResult</code> (coach + player
+versions + reusable drills + template) → stored as <code>PracticePlan</code> +
+<code>PracticePlanVersion</code> rows.</p>
+<h2>7. Environment contract</h2>
+<p>Single source of truth: <code>infra/.env.example</code>. Summary:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Consumer</th>
+<th>Required in prod</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DATABASE_URL</code></td>
+<td>everything via core-data</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>NEXTAUTH_URL</code>, <code>NEXTAUTH_SECRET</code></td>
+<td>rally-os</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>EMAIL_SERVER</code>, <code>EMAIL_FROM</code></td>
+<td>rally-os (magic-link)</td>
+<td>for email login</td>
+</tr>
+<tr>
+<td><code>ANTHROPIC_API_KEY</code></td>
+<td>packages/ai</td>
+<td>for AI features</td>
+</tr>
+<tr>
+<td><code>NCS_POLL_CRON</code></td>
+<td>ncs-worker</td>
+<td>optional (one-shot if unset)</td>
+</tr>
+<tr>
+<td><code>PUBLIC_SITE_ORG_SLUG</code></td>
+<td>public-site</td>
+<td>yes, per team deployment</td>
+</tr>
+<tr>
+<td><code>VERCEL_TOKEN</code></td>
+<td>org-builder deploy</td>
+<td>for automated publish</td>
+</tr>
+<tr>
+<td><code>SEED_COACH_EMAIL/PASSWORD/NAME</code></td>
+<td>seed script</td>
+<td>optional</td>
+</tr>
+</tbody></table>
+<p>Turbo passes these through via <code>globalPassThroughEnv</code> in <code>turbo.json</code> — add
+new env vars there or builds won&#39;t see them.</p>
+<h2>8. Deployment topology</h2>
+<p>Reference: <code>infra/vercel/README.md</code> (project settings tables) and
+<code>infra/SMOKE_TEST.md</code>.</p>
+<ul>
+<li><strong>rally-os</strong>: one Vercel project (root <code>apps/rally-os</code>). Build:
+<code>pnpm db:generate &amp;&amp; pnpm --filter @rally/rally-os build</code>.</li>
+<li><strong>public-site</strong>: one Vercel project <strong>per team</strong>
+(<code>public-site-&lt;team-slug&gt;</code>), differing only in <code>PUBLIC_SITE_ORG_SLUG</code> and
+custom domain. The org-kit deploy checklist pre-fills these values.</li>
+<li><strong>org-builder</strong>: internal deployment (or run locally by operators).</li>
+<li><strong>ncs-worker</strong>: any Node host with cron (<code>infra/cron/ncs-worker.crontab</code>)
+or a scheduled container. Needs only <code>DATABASE_URL</code> (+ <code>NCS_POLL_CRON</code>).</li>
+<li><strong>Database</strong>: Postgres (Neon/Railway/RDS). <code>prisma migrate deploy</code> on
+release; never <code>db push</code> in production.</li>
+</ul>
+<p>A Cloudflare Workers Git integration also builds from this repo
+(<code>next-gen-rally-os</code> project). It is not the reference deployment; Vercel
+manifests in <code>infra/</code> are.</p>
+<h2>9. Local development &amp; onboarding</h2>
+<pre><code class="language-bash">pnpm install
+pnpm run setup        # interactive installer: env, DB, Anthropic key, seed
+pnpm --filter @rally/rally-os dev
+</code></pre>
+<p><code>pnpm run setup -- --yes</code> is the non-interactive/CI path. Demo login after
+seeding: <code>coach@example.com</code> / <code>password123</code>.</p>
+<p>Day-to-day: <code>pnpm dev</code> (all apps via turbo), <code>pnpm test</code>, <code>pnpm typecheck</code>,
+<code>pnpm lint</code>, <code>pnpm build</code>. DB workflows: <code>infra/db/README.md</code>.</p>
+<h2>10. Testing &amp; CI</h2>
+<ul>
+<li><strong>Vitest</strong> suites live next to source (<code>src/__tests__/</code>): NCS parser (32),
+diff (26), scrape (10), AI parse, projection/public-site. All parsers are
+pure functions — no network or DB needed in tests.</li>
+<li><strong>CI</strong> (<code>.github/workflows/ci.yml</code>): install → prisma generate → typecheck
+→ lint → build on every PR. Build uses placeholder auth/db env vars.</li>
+<li>Turbo caches typecheck/build/test by input hash; <code>db:*</code> tasks are uncached.</li>
+</ul>
+<p>When adding scraping features, follow the established pattern: pure
+HTML-in/data-out functions in a package (unit-testable), <code>fetch</code> isolated in
+a thin client module.</p>
+<h2>11. Productization checklist (gap analysis for sale-ready)</h2>
+<p>Honest current-state list a buyer&#39;s team should know:</p>
+<ul>
+<li><input disabled="" type="checkbox"> <strong>org-builder has no auth</strong> — gate it (SSO/basic auth) before exposing.</li>
+<li><input disabled="" type="checkbox"> <strong>Billing/subscription</strong> — not present; integrate Stripe or similar at
+the Organization level.</li>
+<li><input disabled="" type="checkbox"> <strong>Multi-team orgs</strong>: schema supports many teams per org; the portal UX
+assumes one active TeamSeason (see <code>getActiveTeamSeason</code>). Add a
+season/team switcher for multi-team customers.</li>
+<li><input disabled="" type="checkbox"> <strong>Publish automation</strong>: public-site deploys are manual/Vercel-Git today;
+the <code>VERCEL_TOKEN</code> + <code>infra/vercel/*.json</code> scaffolding exists for a
+programmatic pipeline.</li>
+<li><input disabled="" type="checkbox"> <strong>Planned modules</strong> (marked in-app): Player Profiles, Integrations Hub,
+Fundraising, Coach bios, Social Media Hub.</li>
+<li><input disabled="" type="checkbox"> <strong>Observability</strong>: add error tracking (Sentry) + uptime checks;
+<code>infra/SMOKE_TEST.md</code> covers manual verification.</li>
+<li><input disabled="" type="checkbox"> <strong>NCS scraping resilience</strong>: parsers are regex-based against current
+playncs.com markup; add monitoring for parse-failure rates (worker
+already warns on empty results).</li>
+<li><input disabled="" type="checkbox"> <strong>Rate-limiting / abuse</strong> on public-site and login.</li>
+</ul>
+<h2>12. Extension points</h2>
+<ul>
+<li><strong>New public-site module</strong>: add toggle to <code>siteConfigSchema</code> → component in
+<code>packages/site-template/src/modules.tsx</code> → register in <code>MODULES</code> (site.tsx)
+→ extend projection if it needs new data.</li>
+<li><strong>New roster source</strong> (e.g. another association): new package mirroring
+<code>packages/ncs</code> (client + scrape + parser), reuse the same import actions and
+governance queue.</li>
+<li><strong>New AI feature</strong>: add input/output zod schemas in <code>packages/ai/src/types.ts</code>,
+a builder module beside <code>practice-plan.ts</code>, and a server action.</li>
+</ul>
+<h2>13. Related docs</h2>
+<ul>
+<li><code>README.md</code> — quickstart + workspace summary</li>
+<li><code>docs/ncs-integration.md</code> — NCS operational guide (import, re-diff, worker)</li>
+<li><code>docs/gamechanger-integration.md</code> — GC mapping and push approval</li>
+<li><code>infra/db/README.md</code> — migration &amp; seed workflows</li>
+<li><code>infra/vercel/README.md</code> — per-project deploy settings</li>
+<li><code>infra/SMOKE_TEST.md</code> — manual release verification</li>
+</ul>
+</div></main>
+</div>
+</body>
+</html>

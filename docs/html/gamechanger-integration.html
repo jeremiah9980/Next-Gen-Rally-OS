@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GameChanger Integration — Rally-OS Docs</title>
+<style>
+  :root {
+    --bg: #FAFBF7; --surface: #FFFFFF; --card: #F2F5EE; --border: #DDE5D6;
+    --text: #1A241C; --muted: #5C6E5F; --lime: #5C8A12; --lime-soft: #EAF3DA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0A0F0B; --surface: #101812; --card: #16211A; --border: #24322A;
+      --text: #E8F0E9; --muted: #8FA893; --lime: #A8E63D; --lime-soft: #1B2A14;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A0F0B; --surface: #101812; --card: #16211A; --border: #24322A;
+    --text: #E8F0E9; --muted: #8FA893; --lime: #A8E63D; --lime-soft: #1B2A14;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFBF7; --surface: #FFFFFF; --card: #F2F5EE; --border: #DDE5D6;
+    --text: #1A241C; --muted: #5C6E5F; --lime: #5C8A12; --lime-soft: #EAF3DA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  nav.side {
+    width: 250px; flex-shrink: 0; border-right: 1px solid var(--border);
+    background: var(--surface); padding: 1.5rem 1rem; position: sticky;
+    top: 0; height: 100vh; overflow-y: auto;
+  }
+  nav.side .brand {
+    font-weight: 800; letter-spacing: -0.02em; text-decoration: none;
+    color: var(--text); display: block; margin-bottom: 1.5rem; font-size: 1rem;
+  }
+  nav.side .brand span { color: var(--lime); }
+  nav.side .grp {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted); margin: 1.2rem 0 0.4rem;
+  }
+  nav.side a.pg {
+    display: block; padding: 0.4rem 0.65rem; border-radius: 8px;
+    text-decoration: none; color: var(--muted); font-size: 0.85rem;
+  }
+  nav.side a.pg:hover { color: var(--text); background: var(--card); }
+  nav.side a.pg.active { color: var(--lime); background: var(--lime-soft); font-weight: 600; }
+  main { flex: 1; min-width: 0; padding: 3rem clamp(1.25rem, 5vw, 4rem); }
+  main .doc { max-width: 800px; }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; line-height: 1.25; }
+  h1 { font-size: 2rem; margin-top: 0; }
+  h2 { margin-top: 2.2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+  a { color: var(--lime); }
+  code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.1em 0.35em;
+  }
+  pre {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.55;
+  }
+  pre code { background: none; border: none; padding: 0; font-size: 0.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; font-size: 0.88rem; text-align: left; }
+  th { background: var(--card); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  blockquote { border-left: 3px solid var(--lime); margin: 1rem 0; padding: 0.2rem 1rem; color: var(--muted); }
+  img { max-width: 100%; }
+  @media (max-width: 760px) {
+    .layout { flex-direction: column; }
+    nav.side { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="side"><a class="brand" href="index.html">Rally-<span>OS</span> Docs</a><p class="grp">Product</p><a class="pg" href="pitch-deck.html">Pitch Deck</a><a class="pg" href="user-guide.html">User Guide & Manual</a><a class="pg" href="suite-diagram.html">Product Suite Diagram</a><p class="grp">Engineering</p><a class="pg" href="overview.html">Overview & Quickstart</a><a class="pg" href="architecture.html">Architecture & Handoff</a><a class="pg" href="ncs-integration.html">NCS Integration</a><a class="pg active" href="gamechanger-integration.html">GameChanger Integration</a><a class="pg" href="database.html">Database Workflows</a><a class="pg" href="deployment.html">Vercel Deployment</a><p class="grp">Coaching</p><a class="pg" href="coaching-content.html">Coaching Content Package</a><a class="pg" href="development-roadmap.html">4-Year Development Roadmap</a></nav>
+<main><div class="doc"><h1>GameChanger Integration — Governance and Workflow</h1>
+<h2>System boundaries</h2>
+<p>Rally-OS is the system of record.</p>
+<p>Data flow remains one-way:</p>
+<p>NCS -&gt; Rally-OS -&gt; Rally-Org-Builder -&gt; Public Site</p>
+<p>GameChanger enriches Rally-OS with read-only stat snapshots, except explicitly approved schedule push.</p>
+<h2>Governance guarantees enforced</h2>
+<ol>
+<li>NCS roster changes are never auto-applied.</li>
+<li>NCS-detected schedule games are never auto-pushed.</li>
+<li>Player matching precedence for external stat rows is always:<ul>
+<li><code>gcPlayerId</code></li>
+<li>normalized name</li>
+<li>jersey</li>
+</ul>
+</li>
+<li>If an external ID column exists, unmatched IDs never fall back to name-only matching.</li>
+<li>Coach-private fields (<code>coach_notes</code>, <code>coach_practice_version</code>) are excluded from public payload serializer helpers.</li>
+<li>GameChanger write-back only occurs in approved schedule push action.</li>
+<li>Stat import requires explicit <code>result</code> and <code>score</code> entry.</li>
+</ol>
+<h2>Setup and operations</h2>
+<ol>
+<li>Open <code>/gamechanger</code> in Rally-OS portal.</li>
+<li>Link the active TeamSeason using <code>gcTeamId</code>.</li>
+<li>Map each roster player to a <code>gcPlayerId</code> (manual and auto-updated when importing rows containing IDs).</li>
+<li>Import box score snapshots (JSON rows) with required result/score.</li>
+<li>Generate schedule drafts from NCS-detected tournaments.</li>
+<li>Review and edit drafts (<code>opponent</code>, <code>date</code>, <code>time</code>, <code>field</code>, <code>location</code>, <code>game_type</code>).</li>
+<li>Approve selected/all drafts, reject when needed.</li>
+<li>Push approved drafts only; push results persist returned <code>gcGameId</code> on <code>SchedulePushRequest</code>.</li>
+</ol>
+<h2>Schedule state machine</h2>
+<p><code>ncs_detected -&gt; draft_created -&gt; pending_coach_approval -&gt; approved -&gt; pushed_to_gamechanger | rejected</code></p>
+<p>Invalid transitions are rejected by shared workflow helpers and tests.</p>
+</div></main>
+</div>
+</body>
+</html>
