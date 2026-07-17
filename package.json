@@ -14,6 +14,7 @@
     "db:seed": "pnpm --filter @rally/core-data run db:seed",
     "db:seed:content": "pnpm --filter @rally/core-data run db:seed:content",
     "docs:build": "node scripts/build-docs-site.mjs",
+    "cms:validate": "node scripts/validate-cms-content.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,md,json,yaml}\" --ignore-path .gitignore"
   },
   "devDependencies": {

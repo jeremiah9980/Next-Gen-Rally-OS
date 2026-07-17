@@ -1,0 +1,47 @@
+{
+  "demoMode": true,
+  "apiBaseUrl": "https://primetime-integrations.jeremiahcargill.workers.dev",
+  "activeTeam": "nextgen-10u",
+  "ncs": {
+    "baseSearchUrl": "https://playncs.com/fastpitch/Teams",
+    "seasonId": "33",
+    "query": "",
+    "division": "",
+    "country": "US",
+    "state": "TX"
+  },
+  "sync": {
+    "intervalMinutes": 15,
+    "timezone": "America/Chicago",
+    "enabled": false
+  },
+  "policy": {
+    "requireManualMatchApproval": true,
+    "preserveManualEdits": true,
+    "publishStats": true,
+    "archiveRemovedPlayers": true
+  },
+  "teams": {
+    "nextgen-10u": {
+      "players": [],
+      "tournamentTeamIds": [],
+      "events": [],
+      "ncsTeamId": "",
+      "gamechanger": { "teamId": "", "seasonId": "", "visibility": "public" }
+    },
+    "nextgen-12u": {
+      "players": [],
+      "tournamentTeamIds": [],
+      "events": [],
+      "ncsTeamId": "",
+      "gamechanger": { "teamId": "", "seasonId": "", "visibility": "public" }
+    },
+    "nextgen-elite-12u": {
+      "players": [],
+      "tournamentTeamIds": [],
+      "events": [],
+      "ncsTeamId": "",
+      "gamechanger": { "teamId": "", "seasonId": "", "visibility": "public" }
+    }
+  }
+}
