@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vercel Deployment — NextGen Rally-OS Docs</title>
+<title>CMS & Integration Center — NextGen Rally-OS Docs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -207,77 +207,141 @@ footer{border-top:1px solid var(--line);padding:44px 0 36px;background:color-mix
 </button>
 </div></nav>
 <div class="layout">
-<aside class="side"><p class="grp">Product</p><a class="pg" href="pitch-deck.html">Pitch Deck</a><a class="pg" href="user-guide.html">User Guide & Manual</a><a class="pg" href="suite-diagram.html">Product Suite Diagram</a><p class="grp">Engineering</p><a class="pg" href="overview.html">Overview & Quickstart</a><a class="pg" href="architecture.html">Architecture & Handoff</a><a class="pg" href="ncs-integration.html">NCS Integration</a><a class="pg" href="gamechanger-integration.html">GameChanger Integration</a><a class="pg" href="cms.html">CMS & Integration Center</a><a class="pg" href="database.html">Database Workflows</a><a class="pg active" href="deployment.html">Vercel Deployment</a><p class="grp">Coaching</p><a class="pg" href="coaching-content.html">Coaching Content Package</a><a class="pg" href="development-roadmap.html">4-Year Development Roadmap</a></aside>
-<main class="doc-main"><div class="doc"><h1>Vercel deployment</h1>
-<p>Two kinds of Vercel projects:</p>
+<aside class="side"><p class="grp">Product</p><a class="pg" href="pitch-deck.html">Pitch Deck</a><a class="pg" href="user-guide.html">User Guide & Manual</a><a class="pg" href="suite-diagram.html">Product Suite Diagram</a><p class="grp">Engineering</p><a class="pg" href="overview.html">Overview & Quickstart</a><a class="pg" href="architecture.html">Architecture & Handoff</a><a class="pg" href="ncs-integration.html">NCS Integration</a><a class="pg" href="gamechanger-integration.html">GameChanger Integration</a><a class="pg active" href="cms.html">CMS & Integration Center</a><a class="pg" href="database.html">Database Workflows</a><a class="pg" href="deployment.html">Vercel Deployment</a><p class="grp">Coaching</p><a class="pg" href="coaching-content.html">Coaching Content Package</a><a class="pg" href="development-roadmap.html">4-Year Development Roadmap</a></aside>
+<main class="doc-main"><div class="doc"><h1>CMS &amp; Integration Center</h1>
+<p>A lightweight, no-backend content system incorporated from the organization&#39;s
+<code>primetime-org</code> site hub, rebranded for NextGen Rally-OS. It lets board
+members and coaches edit org/team content and pull live NCS + GameChanger data
+without touching code.</p>
+<h2>Pieces</h2>
 <table>
 <thead>
 <tr>
-<th>Project</th>
-<th>App</th>
-<th>Notes</th>
+<th>Path</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>rally-os</code></td>
-<td><code>apps/rally-os</code></td>
-<td>The coach operations app (one shared project).</td>
+<td><code>cms/content/nextgen-site.json</code></td>
+<td>Single source of truth for editable content: org info, board, teams (incl. rosters, coach info, GameChanger/NCS links), fundraising/sponsors, docs, policies, bylaws, finances, SEO.</td>
 </tr>
 <tr>
-<td><code>public-site-&lt;team-slug&gt;</code></td>
-<td><code>apps/public-site</code></td>
-<td>One project <strong>per team</strong> — set <code>PUBLIC_SITE_ORG_SLUG</code> and the custom domain from <code>publish.domain</code>.</td>
+<td><code>cms/schema/nextgen-site.schema.json</code></td>
+<td>JSON Schema describing the shape of that file.</td>
+</tr>
+<tr>
+<td><code>cms/admin/index.html</code></td>
+<td>Form-based dashboard for editing the content file.</td>
+</tr>
+<tr>
+<td><code>cms/admin/integrations.html</code></td>
+<td><strong>Integration Center</strong> — live NCS team search, roster import, event sync, and GameChanger stat matching.</td>
+</tr>
+<tr>
+<td><code>cms/content/nextgen-integrations.json</code></td>
+<td>Integration Center config: API base URL, active team, NCS search defaults, sync policy, per-team NCS/GameChanger mappings.</td>
+</tr>
+<tr>
+<td><code>services/integrations-worker/</code></td>
+<td>Cloudflare Worker backing the Integration Center&#39;s live mode.</td>
+</tr>
+<tr>
+<td><code>scripts/validate-cms-content.mjs</code></td>
+<td>Content validator — required fields, duplicate team ids, leftover <code>[ENTER ...]</code> placeholders. Run with <code>pnpm cms:validate</code>.</td>
 </tr>
 </tbody></table>
-<h2>Project settings (monorepo)</h2>
-<p>For each project, point Vercel at the app directory and use the pnpm/turbo build:</p>
-<table>
-<thead>
-<tr>
-<th>Setting</th>
-<th>rally-os</th>
-<th>public-site</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Root Directory</td>
-<td><code>apps/rally-os</code></td>
-<td><code>apps/public-site</code></td>
-</tr>
-<tr>
-<td>Framework Preset</td>
-<td>Next.js</td>
-<td>Next.js</td>
-</tr>
-<tr>
-<td>Install Command</td>
-<td><code>pnpm install</code></td>
-<td><code>pnpm install</code></td>
-</tr>
-<tr>
-<td>Build Command</td>
-<td><code>pnpm db:generate &amp;&amp; pnpm --filter @rally/rally-os build</code></td>
-<td><code>pnpm db:generate &amp;&amp; pnpm --filter @rally/public-site build</code></td>
-</tr>
-</tbody></table>
-<p>The committed <code>*.vercel.json</code> files in this directory capture the install/build
-commands. Copy one into the app&#39;s project root (as <code>vercel.json</code>) or paste the
-values into the Vercel dashboard.</p>
-<h2>Required environment variables (per project)</h2>
-<ul>
-<li><strong>rally-os</strong>: <code>DATABASE_URL</code>, <code>NEXTAUTH_URL</code>, <code>NEXTAUTH_SECRET</code>, <code>EMAIL_SERVER</code>,
-<code>EMAIL_FROM</code>, <code>ANTHROPIC_API_KEY</code>.</li>
-<li><strong>public-site-<team></strong>: <code>DATABASE_URL</code>, <code>PUBLIC_SITE_ORG_SLUG</code>.</li>
-</ul>
-<h2>Per-team publish flow</h2>
+<h2>Editing workflow</h2>
 <ol>
-<li>Coach completes the org-builder wizard (or <code>rally-os build &lt;config.yaml&gt;</code>).</li>
-<li>Create a <code>public-site-&lt;slug&gt;</code> Vercel project, set <code>PUBLIC_SITE_ORG_SLUG=&lt;slug&gt;</code>
-and the domain from <code>publish.domain</code>.</li>
-<li><code>make deploy-public-site</code> (or the Vercel Git integration) builds the site from
-the published projection.</li>
-<li>Re-publish (re-deploy) whenever approved NCS changes land.</li>
+<li><p>Serve the repo root over HTTP (pages <code>fetch()</code> the JSON, so opening from
+disk won&#39;t load content):</p>
+<pre><code class="language-bash">npx serve .
+</code></pre>
+</li>
+<li><p>Open <code>http://localhost:3000/cms/admin/</code>.</p>
+</li>
+<li><p>Edit any tab (Org Info, Board, Teams, Roster, Fundraising, Docs, Policies,
+Bylaws, Finances, SEO).</p>
+</li>
+<li><p>Click <strong>Validate</strong> to catch mistakes before publishing.</p>
+</li>
+<li><p>Click <strong>Export for GitHub</strong> — downloads an updated <code>nextgen-site.json</code>.</p>
+</li>
+<li><p>Replace <code>cms/content/nextgen-site.json</code> with the downloaded file, commit,
+and push. <code>pnpm cms:validate</code> checks the file in CI-friendly fashion.</p>
+</li>
 </ol>
+<h2>Integration Center</h2>
+<p><code>cms/admin/integrations.html</code> is the live half of the CMS. It talks to the
+integrations Worker to:</p>
+<ul>
+<li>Search NCS (playncs.com) teams by name/division/state and link a team.</li>
+<li>Import an NCS roster (with real NCS player ids) into the content file.</li>
+<li>Sync registered tournament events for linked teams.</li>
+<li>Cross-reference players against the <code>gc_stats</code> database for GameChanger
+season stats (exact NCS-id joins first, then normalized name + jersey
+matching).</li>
+</ul>
+<p>It ships in <strong>demo mode</strong> (<code>demoMode: true</code> in
+<code>cms/content/nextgen-integrations.json</code>) so the UI works offline with sample
+data. Set <code>demoMode: false</code> to go live against the Worker.</p>
+<h2>Integrations Worker</h2>
+<p>playncs.com has no JSON API and no CORS headers, so the browser can&#39;t read it
+directly. <code>services/integrations-worker/</code> fetches the public NCS pages
+server-side, parses the HTML, and returns JSON with CORS enabled.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET /api/health?adapter=health|ncs|gamechanger</code></td>
+<td>Connection tests for Diagnostics</td>
+</tr>
+<tr>
+<td><code>GET /api/ncs/meta</code></td>
+<td>Season / age / class option ids from the NCS search form</td>
+</tr>
+<tr>
+<td><code>GET /api/ncs/teams?q=&amp;division=&amp;state=…</code></td>
+<td>Team search</td>
+</tr>
+<tr>
+<td><code>GET /api/ncs/teams/:id/roster</code></td>
+<td>Roster with real NCS player ids (<code>:id</code> accepts a pasted team URL)</td>
+</tr>
+<tr>
+<td><code>GET /api/ncs/teams/:id/events</code></td>
+<td>Upcoming events for one team</td>
+</tr>
+<tr>
+<td><code>POST /api/ncs/events/sync</code></td>
+<td>Merged registered events for several teams</td>
+</tr>
+<tr>
+<td><code>POST /api/gamechanger/sync</code></td>
+<td>Cross-reference + stats from the <code>gc_stats</code> D1 database</td>
+</tr>
+<tr>
+<td><code>POST /api/gcstats/match</code></td>
+<td>Match website players to <code>gc_stats</code> records</td>
+</tr>
+</tbody></table>
+<p>Deploy your own instance and point <code>apiBaseUrl</code> at it:</p>
+<pre><code class="language-bash">cd services/integrations-worker
+npx wrangler deploy
+</code></pre>
+<p>Until then, <code>apiBaseUrl</code> defaults to the organization&#39;s already-deployed
+Worker. If NCS changes its page markup, the regex parsers in
+<code>services/integrations-worker/src/index.js</code> are the only thing that needs
+updating.</p>
+<h2>Relationship to the Rally-OS apps</h2>
+<p>The Rally-OS portal (<code>apps/rally-os</code>) has its own first-class NCS pipeline
+(<code>packages/ncs</code>) and GameChanger workflow backed by Prisma. The CMS is the
+zero-infrastructure counterpart for static org/team sites (see
+<code>packages/site-template</code>): one JSON file, a static admin, and an optional
+Worker — no database or auth required.</p>
 </div></main>
 </div>
 <footer><div class="wrap foot-in">
