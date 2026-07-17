@@ -1,0 +1,14 @@
+// Cloudflare Workers configuration for the `next-gen-rally-os` project.
+//
+// This Worker serves the static documentation site (docs/html — regenerate
+// with `pnpm docs:build`). The Workers Builds Git integration deploys it with
+// `npx wrangler deploy` on every push. App deployments (rally-os,
+// public-site) live on Vercel — see infra/vercel/README.md.
+{
+  "name": "next-gen-rally-os",
+  "compatibility_date": "2026-07-05",
+  "assets": {
+    "directory": "./docs/html",
+    "html_handling": "auto-trailing-slash"
+  }
+}
