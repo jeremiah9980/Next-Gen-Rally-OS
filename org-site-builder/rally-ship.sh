@@ -3,7 +3,7 @@
 #  rally-ship.sh — Portal export  →  live GitHub Pages site, in one command.
 #
 #  Takes the four files the Rally-ORG Builder Portal exports
-#  (org.config.json, theme.tokens.json, intake.json, <slug>-logo.png),
+#  (org.config.json, theme.tokens.json, intake.json, <slug>-logo.png/.svg),
 #  drops them into a clean copy of the engine, names a new repo from the org,
 #  creates it, pushes, turns Pages on (Actions build), and waits for the
 #  deploy — surfacing the live URL.
@@ -89,8 +89,8 @@ CFG="$FROM/org.config.json"; TOK="$FROM/theme.tokens.json"; INTAKE="$FROM/intake
 [ -f "$CFG" ] || die "missing org.config.json in $FROM"
 [ -f "$TOK" ] || die "missing theme.tokens.json in $FROM"
 [ -f "$INTAKE" ] || warn "no intake.json in $FROM (kept for provenance only — continuing)."
-# logo: the portal exports <slug>-logo.png; accept any *-logo.png / logo.png
-LOGO="$(ls "$FROM"/*-logo.png "$FROM"/logo.png 2>/dev/null | head -1 || true)"
+# logo: the portal exports <slug>-logo.png or .svg; accept any *-logo.* / logo.*
+LOGO="$(ls "$FROM"/*-logo.png "$FROM"/*-logo.svg "$FROM"/logo.png "$FROM"/logo.svg 2>/dev/null | head -1 || true)"
 [ -n "$LOGO" ] && ok "logo: $(basename "$LOGO")" || warn "no logo found in $FROM (site will use a wordmark fallback)."
 
 # validate JSON early so we fail before touching GitHub
