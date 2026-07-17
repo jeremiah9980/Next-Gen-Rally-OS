@@ -1,6 +1,8 @@
-/* roster.js — GameChanger-style player cards. Profile links activate
-   only when a player is marked live:true (i.e. a signed media release
-   is on file) — a privacy-by-default pattern from the reference sites. */
+/* roster.js — GameChanger-style player cards. Profile links AND photos
+   activate only when a player is marked live:true (i.e. a signed media
+   release is on file) — a privacy-by-default pattern from the reference
+   sites. Bridged configs pre-emit photo paths for every player, so the
+   path alone must never be treated as consent. */
 export function render(config, ctx) {
   const { esc, asset } = ctx;
   const r = config.roster || {};
@@ -11,7 +13,7 @@ export function render(config, ctx) {
   const liveCount = players.filter((p) => p.live).length;
   const cards = players.map((p) => {
     const live = !!p.live;
-    const hasPhoto = !!p.photo;
+    const hasPhoto = live && !!p.photo;
     const photo = hasPhoto
       ? `<img src="${asset(p.photo)}" alt="${esc(p.photoAlt || '')}" loading="lazy" onerror="this.style.display='none';this.closest('.roster-card').classList.add('no-photo')">`
       : '';
