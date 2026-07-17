@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" data-ui-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Rally-ORG · Builder Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  (function(){ try{ var s=localStorage.getItem('rally-portal-ui-theme'); if(s==='light'||s==='dark') document.documentElement.setAttribute('data-ui-theme',s); }catch(e){} })();
+</script>
+<style>
+  /* NextGen design tokens — mirrored from https://next-gen-team.site/ */
+  :root, [data-ui-theme="dark"]{
+    --ink:#070B16; --ink2:#0A0F1E; --panel:#111827; --panel2:#151D30;
+    --line:#232C40; --text:#F1F5F9; --muted:#94A3B8; --faint:#64748B;
+    --org:#38BDF8; --org2:#8B5CF6; --iq:#FBBF24; --ok:#34D399; --bad:#FB7185;
+    --header-bg:rgba(7,11,22,.88);
+    --r:12px;
+  }
+  [data-ui-theme="light"]{
+    --ink:#F6F8FC; --ink2:#EDF1F8; --panel:#FFFFFF; --panel2:#F3F6FC;
+    --line:#D9DFEA; --text:#0B1220; --muted:#44506B; --faint:#68748F;
+    --org:#2563EB; --org2:#7C3AED; --iq:#D97706; --ok:#0F9D6B; --bad:#DC2626;
+    --header-bg:rgba(255,255,255,.9);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--ink); color:var(--text);
+    font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--org2)}
+  /* header */
+  header{
+    position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:14px;
+    padding:14px 22px; background:var(--header-bg); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .mark{display:flex; gap:6px; align-items:center}
+  .dm{width:14px; height:14px; transform:rotate(45deg); border-radius:2px}
+  .brand{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; letter-spacing:-.01em; font-size:16px}
+  .brand .o{color:var(--org)} .brand .i{color:var(--iq)}
+  .tag{color:var(--muted); font-size:12px; display:flex; align-items:center; gap:8px}
+  @media(max-width:680px){ .tag span:last-child{display:none} }
+  .pill{font-family:'JetBrains Mono',monospace; border:1px solid var(--line); border-radius:999px; padding:4px 10px; color:var(--muted); font-size:10px; letter-spacing:.14em}
+  /* editor UI theme toggle */
+  .uitog{margin-left:auto; display:flex; align-items:center; gap:8px}
+  .uitog .lab{font-size:11px; letter-spacing:.5px; color:var(--faint); text-transform:uppercase; font-weight:700}
+  .uiseg{display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--ink)}
+  .uiseg button{background:transparent; color:var(--muted); border:0; padding:6px 12px; cursor:pointer; font-size:12px; font-family:inherit; display:flex; align-items:center; gap:5px}
+  .uiseg button.on{background:var(--org); color:#0B0E14; font-weight:700}
+  .tag{margin-left:18px}
+  /* layout */
+  .wrap{display:grid; grid-template-columns:1fr 460px; gap:0; align-items:start}
+  @media(max-width:980px){ .wrap{grid-template-columns:1fr} .preview{position:static !important; border-left:none !important; border-top:1px solid var(--line)} }
+  .form{padding:22px 26px 80px; min-width:0}
+  .preview{
+    position:sticky; top:57px; height:calc(100vh - 57px); overflow:auto;
+    padding:20px 22px 40px; background:var(--ink2); border-left:1px solid var(--line);
+  }
+  /* form sections */
+  details{border:1px solid var(--line); border-radius:var(--r); margin-bottom:14px; background:var(--panel); overflow:hidden}
+  details[open]{background:var(--panel)}
+  summary{
+    cursor:pointer; list-style:none; padding:14px 16px; font-weight:700; font-size:15px;
+    display:flex; align-items:center; gap:10px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .chev{margin-left:auto; color:var(--faint); transition:transform .15s}
+  details[open] summary .chev{transform:rotate(90deg)}
+  summary .sd{width:10px;height:10px;transform:rotate(45deg);border-radius:1px;background:var(--org)}
+  .sec-body{padding:4px 16px 18px}
+  .req{color:var(--org); font-size:11px; font-weight:700; margin-left:6px}
+  .hint{color:var(--faint); font-size:12px; margin:2px 0 14px}
+  /* fields */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px}
+  @media(max-width:560px){ .grid2,.grid3{grid-template-columns:1fr} }
+  label{display:block; font-size:12px; color:var(--muted); margin:0 0 5px; font-weight:600; letter-spacing:.2px}
+  label .star{color:var(--org)}
+  input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{
+    width:100%; padding:9px 11px; background:var(--ink); color:var(--text);
+    border:1px solid var(--line); border-radius:9px; font-size:14px; font-family:inherit;
+  }
+  input:focus,select:focus,textarea:focus{outline:none; border-color:var(--org)}
+  textarea{resize:vertical; min-height:64px}
+  .field{margin-bottom:12px}
+  /* color row */
+  .colorrow{display:flex; gap:8px; align-items:center}
+  .colorrow input[type=color]{width:46px; height:40px; padding:0; border:1px solid var(--line); border-radius:9px; background:var(--ink); cursor:pointer}
+  /* segmented + chips */
+  .seg{display:inline-flex; border:1px solid var(--line); border-radius:9px; overflow:hidden}
+  .seg button{background:var(--ink); color:var(--muted); border:0; padding:8px 14px; cursor:pointer; font-size:13px; font-family:inherit}
+  .seg button.on{background:var(--org); color:#0B0E14; font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{border:1px solid var(--line); background:var(--ink); color:var(--muted); border-radius:999px; padding:7px 13px; cursor:pointer; font-size:13px; font-family:inherit}
+  .chip.on{border-color:var(--iq); color:var(--iq); background:rgba(34,211,238,.10)}
+  /* dynamic rows */
+  .rows{display:flex; flex-direction:column; gap:8px}
+  .row{display:grid; gap:8px; align-items:center; background:var(--ink); border:1px solid var(--line); border-radius:9px; padding:8px}
+  .row .x{justify-self:end; background:transparent; border:0; color:var(--faint); cursor:pointer; font-size:18px; line-height:1; padding:0 4px}
+  .row .x:hover{color:var(--bad)}
+  .addbtn{margin-top:10px; background:transparent; border:1px dashed var(--line); color:var(--muted); border-radius:9px; padding:9px; width:100%; cursor:pointer; font-family:inherit; font-size:13px}
+  .addbtn:hover{border-color:var(--org); color:var(--org)}
+  /* logo dropzone */
+  .drop{
+    border:1.5px dashed var(--line); border-radius:var(--r); padding:18px; text-align:center; cursor:pointer;
+    color:var(--muted); transition:border-color .15s,background .15s;
+  }
+  .drop.hot{border-color:var(--org); background:rgba(255,90,31,.06)}
+  .drop strong{color:var(--text)}
+  .logoprev{display:flex; align-items:center; gap:12px; margin-top:10px}
+  .logoprev img{width:54px; height:54px; object-fit:contain; background:var(--ink); border:1px solid var(--line); border-radius:9px}
+  .linkbtn{background:transparent;border:0;color:var(--faint);cursor:pointer;text-decoration:underline;font-size:12px;font-family:inherit}
+  /* preview rail */
+  .pv-h{font-size:12px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 10px}
+  .pv-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:14px; margin-bottom:16px}
+  .pv-toggle{display:flex; gap:8px; margin-bottom:14px}
+  .pv-toggle button{flex:1; background:var(--ink); border:1px solid var(--line); color:var(--muted); border-radius:9px; padding:8px; cursor:pointer; font-family:inherit; font-size:13px}
+  .pv-toggle button.on{background:var(--panel2); color:var(--text); border-color:var(--org)}
+  .foundation{display:flex; align-items:baseline; gap:8px; margin-bottom:12px; flex-wrap:wrap}
+  .foundation b{color:var(--org)}
+  .mock{border-radius:10px; overflow:hidden; border:1px solid var(--line); margin-bottom:16px}
+  .mock .bar{height:26px; display:flex; align-items:center; gap:6px; padding:0 10px; background:var(--panel2)}
+  .mock .dot{width:9px; height:9px; border-radius:50%; background:var(--line)}
+  .mock .url{margin-left:6px; font-size:10px; color:var(--muted)}
+  .mock .hero{padding:22px 16px; text-align:center}
+  .mock .hero img{max-height:46px; max-width:120px; object-fit:contain; margin-bottom:8px}
+  .mock .hero .tn{font-size:24px; font-weight:800; letter-spacing:1px; margin:2px 0}
+  .mock .hero .tl{font-size:13px; font-style:italic; margin:0}
+  .mock .hero .meta{font-size:10px; letter-spacing:1px; margin-top:8px; opacity:.85}
+  .swatches{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:16px}
+  .sw{height:46px; border-radius:8px; border:1px solid var(--line); position:relative}
+  .sw span{position:absolute; bottom:-16px; left:0; right:0; text-align:center; font-size:9px; color:var(--faint)}
+  .swwrap{display:grid; grid-template-columns:repeat(5,1fr); gap:8px 8px; margin-bottom:26px}
+  .swwrap > div{margin-bottom:14px}
+  .aa-row{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px}
+  .aa-row:last-child{border-bottom:0}
+  .aa-name{flex:1; color:var(--muted)}
+  .aa-ratio{font-variant-numeric:tabular-nums; color:var(--text); width:46px; text-align:right}
+  .badge{font-size:10px; font-weight:800; letter-spacing:.5px; padding:3px 8px; border-radius:999px}
+  .badge.ok{background:rgba(52,211,153,.14); color:var(--ok)}
+  .badge.bad{background:rgba(248,113,113,.14); color:var(--bad)}
+  .vstat{font-size:13px; padding:10px 12px; border-radius:9px; margin-bottom:12px}
+  .vstat.ok{background:rgba(52,211,153,.10); color:var(--ok); border:1px solid rgba(52,211,153,.3)}
+  .vstat.bad{background:rgba(248,113,113,.10); color:var(--bad); border:1px solid rgba(248,113,113,.3)}
+  .exports{display:grid; gap:8px}
+  .btn{display:flex; align-items:center; justify-content:center; gap:8px; padding:11px; border-radius:9px; border:1px solid var(--line); background:var(--panel); color:var(--text); cursor:pointer; font-family:inherit; font-size:13px; font-weight:600}
+  .btn:hover{border-color:var(--org)}
+  .btn.primary{background:var(--org); color:#0B0E14; border-color:var(--org)}
+  .btn.primary:hover{background:var(--org2)}
+  .btn:disabled{opacity:.45; cursor:not-allowed; border-color:var(--line)}
+  .btn.iq:hover{border-color:var(--iq)}
+  .steps{font-size:12.5px; color:var(--muted); line-height:1.6}
+  .steps code{background:var(--ink); border:1px solid var(--line); border-radius:5px; padding:1px 6px; color:var(--text); font-size:12px}
+  .toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--panel2); border:1px solid var(--org); color:var(--text); padding:10px 18px; border-radius:999px; opacity:0; transition:.2s; z-index:50; font-size:13px}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header>
+  <div class="mark"><span class="dm" style="background:var(--org)"></span><span class="dm" style="background:var(--iq)"></span></div>
+  <div class="brand"><span class="o">NextGen</span> Rally<span class="i">-ORG</span> <span style="color:var(--faint);font-weight:500">Builder Portal</span></div>
+  <div class="uitog">
+    <span class="lab">Editor</span>
+    <div class="uiseg" id="uitheme">
+      <button type="button" data-v="dark" class="on">☾ Dark</button>
+      <button type="button" data-v="light">☀ Light</button>
+    </div>
+  </div>
+  <div class="tag"><span class="pill">RUNS IN YOUR BROWSER</span><span>Nothing is uploaded — you export the files.</span></div>
+</header>
+
+<div class="wrap">
+  <!-- ============ FORM ============ -->
+  <div class="form" id="form">
+
+    <details open>
+      <summary><span class="sd"></span>Identity <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="hint">The basics that headline the site. Fields marked <span class="req">required</span> must be filled to export a build.</div>
+        <div class="grid2">
+          <div class="field"><label>Team name <span class="star">*</span></label><input type="text" id="team_name" placeholder="Lonestar Reign"></div>
+          <div class="field"><label>Tagline</label><input type="text" id="tagline" maxlength="80" placeholder="Earn the crown."></div>
+        </div>
+        <div class="grid3">
+          <div class="field"><label>Sport <span class="star">*</span></label>
+            <select id="sport">
+              <option>softball</option><option>baseball</option><option>soccer</option>
+              <option>basketball</option><option>volleyball</option><option>lacrosse</option><option>other</option>
+            </select></div>
+          <div class="field"><label>Age division <span class="star">*</span></label><input type="text" id="age_division" placeholder="14U"></div>
+          <div class="field"><label>Founded</label><input type="text" id="founded" placeholder="2024"></div>
+        </div>
+        <div class="grid3">
+          <div class="field"><label>City <span class="star">*</span></label><input type="text" id="city" placeholder="Round Rock"></div>
+          <div class="field"><label>State <span class="star">*</span></label><input type="text" id="state" placeholder="TX"></div>
+          <div class="field"><label>Voice</label>
+            <select id="voice">
+              <option value="elite">elite</option><option value="pro-style">pro-style</option>
+              <option value="grit">grit</option><option value="underdog">underdog</option>
+              <option value="scrappy">scrappy</option><option value="family">family</option>
+              <option value="fun">fun</option><option value="custom">custom</option>
+            </select></div>
+        </div>
+        <div class="field"><label>Sanctioning <span style="color:var(--faint);font-weight:400">(comma separated)</span></label><input type="text" id="sanctioning" placeholder="USSSA, NCS, PGF"></div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span class="sd"></span>Brand &amp; Logo <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="hint">Your voice picks the typographic foundation; your colors are run through contrast-aware math. Watch the AA checks on the right update live.</div>
+        <div class="grid2">
+          <div class="field"><label>Primary color <span class="star">*</span></label>
+            <div class="colorrow"><input type="color" id="primary_pick" value="#9B1B30"><input type="text" id="primary_color" value="#9B1B30"></div></div>
+          <div class="field"><label>Accent color <span class="star">*</span></label>
+            <div class="colorrow"><input type="color" id="accent_pick" value="#C9CDD6"><input type="text" id="accent_color" value="#C9CDD6"></div></div>
+        </div>
+        <div class="field"><label>Background mood <span class="star">*</span></label>
+          <div class="seg" id="mood">
+            <button type="button" data-v="light">Light</button>
+            <button type="button" data-v="dark" class="on">Dark</button>
+            <button type="button" data-v="split">Split</button>
+          </div>
+        </div>
+        <div class="field"><label>Logo</label>
+          <div class="drop" id="drop">
+            <strong>Click to upload</strong> or drag a PNG/SVG here<br>
+            <span style="font-size:12px">Transparent PNG looks best. Exported as <code style="background:transparent;border:0;color:var(--muted)">&lt;slug&gt;-logo.png</code>.</span>
+          </div>
+          <input type="file" id="logofile" accept="image/*" hidden>
+          <div class="logoprev" id="logoprev" style="display:none">
+            <img id="logoimg" alt="logo preview">
+            <div><div id="logoname" style="font-size:13px;color:var(--text)"></div>
+            <button class="linkbtn" id="logoclear">remove</button></div>
+          </div>
+        </div>
+        <div class="field"><label>Logo description <span style="color:var(--faint);font-weight:400">(if still being designed)</span></label>
+          <input type="text" id="logo_description" placeholder="A crowned star inside a home-plate shield"></div>
+        <div class="field"><label>Brand partners <span style="color:var(--faint);font-weight:400">(comma separated)</span></label><input type="text" id="partners" placeholder="Marucci, Mizuno"></div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span class="sd"></span>Platform (Rally-IQ) <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="grid2">
+          <div class="field"><label>Platform page</label>
+            <select id="page_type"><option value="rallyiq">Powered by Rally-IQ</option><option value="tech_stack">Tech Stack</option></select></div>
+          <div class="field"><label>Stats app</label><input type="text" id="stats_app" placeholder="GameChanger"></div>
+        </div>
+        <div class="field"><label>Communication app</label><input type="text" id="comm_app" placeholder="BAND"></div>
+        <div class="field"><label>Rally-IQ modules</label>
+          <div class="chips" id="modules">
+            <button type="button" class="chip on" data-v="Coach">Coach</button>
+            <button type="button" class="chip on" data-v="Teams">Teams</button>
+            <button type="button" class="chip on" data-v="Profiles">Profiles</button>
+            <button type="button" class="chip on" data-v="Fundraise">Fundraise</button>
+            <button type="button" class="chip on" data-v="Scout">Scout</button>
+            <button type="button" class="chip on" data-v="Org">Org</button>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="sd"></span>Governance <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="hint">The four-tier model. Leave blank to fall back to defaults.</div>
+        <label>Co-directors (Tier 1)</label>
+        <div class="rows" id="directors"></div>
+        <button class="addbtn" data-add="director">+ Add director</button>
+        <div class="grid2" style="margin-top:16px">
+          <div class="field"><label>Board seat count</label><input type="number" id="seat_count" min="0" max="9" placeholder="3"></div>
+          <div class="field"><label>Voting cadence</label><input type="text" id="voting_cadence" placeholder="Monthly"></div>
+        </div>
+        <div class="field"><label>Quorum</label><input type="text" id="quorum" placeholder="2 of 3 voting members present"></div>
+        <label>Board seats (Tier 2)</label>
+        <div class="rows" id="seats"></div>
+        <button class="addbtn" data-add="seat">+ Add seat</button>
+        <div class="field" style="margin-top:16px"><label>Decision domains <span style="color:var(--faint);font-weight:400">(comma separated)</span></label>
+          <input type="text" id="decision_domains" placeholder="Dues changes, Coaching changes, Bylaws amendments"></div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="sd"></span>Coaching <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="field"><label>Model</label>
+          <select id="model"><option value="single_head">single_head</option><option value="co_head">co_head</option><option value="specialty_staff">specialty_staff</option></select></div>
+        <div class="field"><label>Philosophy</label><textarea id="philosophy" placeholder="At 14U we believe development beats short-term wins…"></textarea></div>
+        <label>Head coaches</label>
+        <div class="rows" id="head_coaches"></div>
+        <button class="addbtn" data-add="head">+ Add head coach</button>
+        <label style="margin-top:16px;display:block">Assistants</label>
+        <div class="rows" id="assistants"></div>
+        <button class="addbtn" data-add="asst">+ Add assistant</button>
+        <div class="grid2" style="margin-top:16px">
+          <div class="field"><label>Coaching firewall</label>
+            <select id="firewall_policy"><option value="default">Use default policy</option><option value="custom">Custom…</option></select></div>
+          <div class="field"><label>Family-first coverage</label>
+            <select id="family_first_policy"><option value="default">Use default policy</option><option value="custom">Custom…</option></select></div>
+        </div>
+        <div class="field" id="firewall_custom_wrap" style="display:none"><label>Custom firewall text</label><textarea id="firewall_custom_text"></textarea></div>
+        <div class="field" id="family_custom_wrap" style="display:none"><label>Custom family-first text</label><textarea id="family_first_custom_text"></textarea></div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="sd"></span>Finances <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="grid2">
+          <div class="field"><label>Annual dues</label><input type="text" id="annual_dues" placeholder="$2,400"></div>
+          <div class="field"><label>Coach waivers</label>
+            <select id="coach_waivers"><option value="default">Use default policy</option><option value="custom">Custom…</option></select></div>
+        </div>
+        <div class="field" id="waiver_custom_wrap" style="display:none"><label>Custom waiver text</label><textarea id="coach_waivers_custom"></textarea></div>
+        <div class="field"><label>Dues covers <span style="color:var(--faint);font-weight:400">(comma separated)</span></label>
+          <input type="text" id="dues_covers" placeholder="Uniform package, Tournament entry fees, Indoor facility"></div>
+        <label>Sponsorship tiers</label>
+        <div class="rows" id="tiers"></div>
+        <button class="addbtn" data-add="tier">+ Add sponsorship tier</button>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="sd"></span>Roster <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="hint">Privacy-first by default: public display is first name + last initial + number. Photos/profiles activate only with a signed media release.</div>
+        <div class="grid2">
+          <div class="field"><label>Media release status</label>
+            <select id="media_release_status"><option value="needs_drafting">Being drafted</option><option value="have">On file</option></select></div>
+          <div class="field"><label>Default display</label><input type="text" value="first name + last initial" disabled></div>
+        </div>
+        <div class="field"><label>Profile content scope <span style="color:var(--faint);font-weight:400">(unlocks per signed release)</span></label>
+          <div class="chips" id="scope">
+            <button type="button" class="chip on" data-v="stats">stats</button>
+            <button type="button" class="chip on" data-v="action_photos">action_photos</button>
+            <button type="button" class="chip" data-v="character_quotes">character_quotes</button>
+            <button type="button" class="chip" data-v="film_clips">film_clips</button>
+          </div>
+        </div>
+        <label>Players</label>
+        <div class="rows" id="players"></div>
+        <button class="addbtn" data-add="player">+ Add player</button>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span class="sd"></span>Contact <span class="chev">›</span></summary>
+      <div class="sec-body">
+        <div class="grid2">
+          <div class="field"><label>Primary name <span class="star">*</span></label><input type="text" id="primary_name" placeholder="D. Alvarez"></div>
+          <div class="field"><label>Primary email <span class="star">*</span></label><input type="email" id="primary_email" placeholder="hello@team.org"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Primary phone</label><input type="tel" id="primary_phone" placeholder="512-555-0142"></div>
+          <div class="field"><label>Public email</label><input type="email" id="public_email" placeholder="hello@team.org"></div>
+        </div>
+        <div class="field"><label>Tryouts / recruiting handler</label><input type="text" id="tryouts_handler" placeholder="Co-Director — not the head coach"></div>
+        <div class="grid2">
+          <div class="field"><label>Instagram</label><input type="text" id="instagram" placeholder="@team"></div>
+          <div class="field"><label>Facebook</label><input type="text" id="facebook" placeholder="TeamSoftball"></div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ============ PREVIEW RAIL ============ -->
+  <div class="preview">
+    <p class="pv-h">Live identity preview</p>
+    <div class="pv-toggle">
+      <button id="t-dark" class="on">Dark theme</button>
+      <button id="t-light">Light theme</button>
+    </div>
+    <div class="foundation">Base foundation: <b id="pv-preset">—</b><span style="color:var(--faint)" id="pv-font"></span></div>
+
+    <div class="mock" id="mock">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url" id="pv-url">team.org</span></div>
+      <div class="hero" id="pv-hero">
+        <img id="pv-logo" style="display:none">
+        <div class="tn" id="pv-name">YOUR TEAM</div>
+        <p class="tl" id="pv-tagline">Your tagline here.</p>
+        <div class="meta" id="pv-meta">14U · City, ST</div>
+      </div>
+    </div>
+
+    <p class="pv-h">Derived tokens</p>
+    <div class="swatches" id="swatches"></div>
+
+    <p class="pv-h" style="margin-top:8px">WCAG AA contrast — <span id="pv-theme-label">dark</span></p>
+    <div class="pv-card" id="aa"></div>
+
+    <div id="vstat" class="vstat"></div>
+
+    <p class="pv-h">Export</p>
+    <div class="exports">
+      <button class="btn primary" id="dl-intake">⬇ intake.json</button>
+      <button class="btn iq" id="dl-theme">⬇ theme.tokens.json</button>
+      <button class="btn iq" id="dl-config">⬇ org.config.json</button>
+      <button class="btn" id="dl-logo" disabled>⬇ logo file</button>
+      <button class="btn" id="copy">⧉ Copy intake JSON</button>
+    </div>
+
+    <details style="margin-top:16px;background:transparent;border:1px solid var(--line)">
+      <summary style="font-size:13px"><span class="sd" style="background:var(--iq)"></span>Where the files go <span class="chev">›</span></summary>
+      <div class="sec-body steps">
+        <p><b style="color:var(--text)">Fast path (no Node):</b> drop <code>theme.tokens.json</code> + <code>org.config.json</code> into the kit's <code>src/config/</code>, the logo into <code>public/images/logos/</code>, then <code>npx serve .</code></p>
+        <p><b style="color:var(--text)">Pipeline path:</b> save <code>intake.json</code> into <code>examples/</code>, then run <code>node scripts/intake-to-build.js examples/your-team.intake.json</code> — it writes the configs for you.</p>
+        <p>The logo file is named to match the slug the engine expects, so it resolves automatically once placed.</p>
+      </div>
+    </details>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   THEME + CONTENT ENGINE  — identical math to scripts/intake-to-build.js
+   ===================================================================== */
+const FONTS = {
+  aggressive:{display:"'Bebas Neue', sans-serif", body:"'Inter', sans-serif", href:"https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"},
+  clean:{display:"'Barlow Condensed', sans-serif", body:"'Barlow', sans-serif", href:"https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap"},
+  rounded:{display:"'Fredoka', sans-serif", body:"'Nunito Sans', sans-serif", href:"https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap"},
+  classic:{display:"'Oswald', sans-serif", body:"'Source Sans 3', sans-serif", href:"https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap"},
+};
+const SCALES = {
+  radius:{sm:'6px',md:'10px',lg:'16px',pill:'999px'},
+  shadow:{sm:'0 1px 2px rgba(0,0,0,0.06)',md:'0 8px 24px rgba(0,0,0,0.10)',lg:'0 20px 60px rgba(0,0,0,0.18)'},
+  type:{kicker:'11px',small:'13px',body:'16px',h3:'18px',h2:'clamp(26px, 4vw, 38px)',h1:'clamp(44px, 8vw, 80px)'},
+};
+const PRESETS = {
+  'aggressive-elite':{font:'aggressive',primary:'#DC2626',secondary:'#F5C400',dark:true},
+  'clean-modern':{font:'clean',primary:'#4F46E5',secondary:'#0EA5E9',dark:false},
+  'youth-development':{font:'rounded',primary:'#0D9488',secondary:'#F59E0B',dark:false},
+  'college-showcase':{font:'classic',primary:'#0B2C5E',secondary:'#C9A227',dark:false},
+  'dark-sports':{font:'aggressive',primary:'#00BFFF',secondary:'#00BFFF',dark:true},
+  'bright-family':{font:'rounded',primary:'#FF6B6B',secondary:'#FFD93D',dark:false},
+  'black-gold-premium':{font:'classic',primary:'#D4AF37',secondary:'#D4AF37',dark:true},
+  'red-black-battle':{font:'aggressive',primary:'#E11D2A',secondary:'#E11D2A',dark:true},
+  'blue-yellow-energy':{font:'clean',primary:'#1A56B0',secondary:'#F5C400',dark:false},
+};
+const hexToRgb=(hex)=>{const h=hex.replace('#','');const n=h.length===3?h.split('').map(c=>c+c).join(''):h;return [parseInt(n.slice(0,2),16),parseInt(n.slice(2,4),16),parseInt(n.slice(4,6),16)];};
+const mix=(hex,withHex,amt)=>{const a=hexToRgb(hex),b=hexToRgb(withHex);return '#'+a.map((c,i)=>Math.round(c+(b[i]-c)*amt)).map(c=>c.toString(16).padStart(2,'0')).join('');};
+const rgba=(hex,a)=>{const [r,g,b]=hexToRgb(hex);return `rgba(${r}, ${g}, ${b}, ${a})`;};
+const luminance=(hex)=>{const [r,g,b]=hexToRgb(hex).map(c=>{c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);});return 0.2126*r+0.7152*g+0.0722*b;};
+const readable=(bg)=>{const L=luminance(bg);return ((L+0.05)/0.05) >= ((1.05)/(L+0.05)) ? '#06090F' : '#FFFFFF';};
+const contrast=(c1,c2)=>{const L1=luminance(c1),L2=luminance(c2);const hi=Math.max(L1,L2),lo=Math.min(L1,L2);return (hi+0.05)/(lo+0.05);};
+
+function pickPreset(intake){
+  const voice=(intake.identity.voice||'elite').toLowerCase();
+  const mood=(intake.brand.background_mood||'split').toLowerCase();
+  const byVoice={elite:'black-gold-premium','pro-style':'college-showcase',grit:'red-black-battle',aggressive:'aggressive-elite',scrappy:'aggressive-elite',underdog:'red-black-battle',family:'bright-family',fun:'youth-development',custom:'clean-modern'};
+  let base=byVoice[voice]||'clean-modern';
+  if(mood==='light'&&PRESETS[base].dark) base='college-showcase';
+  return base;
+}
+function buildTokens(intake,presetOverride){
+  const name=presetOverride||pickPreset(intake);
+  const p=PRESETS[name];
+  const primary=intake.brand.primary_color&&intake.brand.primary_color.startsWith('#')?intake.brand.primary_color:p.primary;
+  const secondary=intake.brand.accent_color&&intake.brand.accent_color.startsWith('#')?intake.brand.accent_color:p.secondary;
+  const accent='#FFFFFF';
+  const font=FONTS[p.font];
+  const light={
+    primary,primaryStrong:mix(primary,'#000000',0.15),
+    secondary,secondaryStrong:mix(secondary,'#000000',0.12),
+    accent,text:'#161A22',textMuted:rgba('#161A22',0.66),
+    pageBg:mix(primary,'#FFFFFF',0.96),sectionSoft:rgba(primary,0.06),
+    card:'#FFFFFF',border:rgba('#161A22',0.12),
+    navBg:'rgba(255,255,255,0.92)',footerBg:primary,footerText:'rgba(255,255,255,0.72)',
+    heroBg:`linear-gradient(135deg, ${primary} 0%, ${mix(primary,'#000000',0.18)} 100%)`,
+    heroText:'#FFFFFF',heroAccent:secondary,glow:rgba(primary,0.18),
+    onPrimary:readable(primary),onSecondary:readable(secondary),
+  };
+  const darkPrimary=mix(primary,'#FFFFFF',0.18);
+  const dark={
+    primary:darkPrimary,primaryStrong:primary,
+    secondary,secondaryStrong:mix(secondary,'#000000',0.10),
+    accent,text:'#F4F6FB',textMuted:'rgba(244,246,251,0.70)',
+    pageBg:'#0A0E17',sectionSoft:rgba(primary,0.08),
+    card:'rgba(20,28,46,0.85)',border:rgba(primary,0.24),
+    navBg:'rgba(8,12,20,0.90)',footerBg:'#06090F',footerText:'rgba(255,255,255,0.62)',
+    heroBg:`linear-gradient(135deg, #0A0E17 0%, ${mix(primary,'#000000',0.55)} 50%, #0A0E17 100%)`,
+    heroText:'#FFFFFF',heroAccent:secondary,glow:rgba(primary,0.40),
+    onPrimary:readable(darkPrimary),onSecondary:readable(secondary),
+  };
+  return {
+    $comment:`Generated by Rally-ORG Builder Portal from ${intake.identity.team_name||'team'} (voice="${intake.identity.voice}", base preset="${name}"). Brand colors overridden from intake.brand.`,
+    preset:name,fonts:{display:font.display,body:font.body,googleFontsHref:font.href},
+    scales:SCALES,light,dark,
+  };
+}
+/* content mapping (governance-grade) */
+const FIREWALL_DEFAULT="Parents may not pressure coaches about playing time, lineup, or family absences. Non-coaching concerns route to the Co-Directors. Coaches are protected from politics — and from disputes that aren't softball. Both directions of the firewall are enforced.";
+const FAMILY_FIRST_DEFAULT="Coaches and staff are parents too. Their kids' lives don't compete with the team. When a coach has a family conflict, staff coverage keeps the field running. Schedules are surfaced monthly; absences are expected, planned for, and never criticized.";
+const COACH_WAIVER_DEFAULT="Head coach's children: dues fully waived. Assistant coaches' children: dues fully waived. One child per coach.";
+const VOICE_ABOUT={
+  elite:"We don't recruit for this season — we develop for the next level. Operations are owned by directors so coaches own the field, and every athlete gets a real plan she's held to with care.",
+  family:"We're a family-first organization with a serious standard. Coaches are protected to coach, families always know how the team is run, and every player is developed — not just rostered.",
+  grit:"Hard-nosed, accountable, and developed on purpose. Directors carry the operations so coaches carry the field, and every rep has a reason behind it.",
+  'pro-style':"Run like a small program, not a group text. Clear tiers, real development plans, and a governance model families can read top to bottom.",
+};
+function socialLinks(social){
+  const hosts={instagram:'instagram.com',facebook:'facebook.com',twitter:'x.com',x:'x.com',tiktok:'tiktok.com',youtube:'youtube.com'};
+  return Object.entries(social||{}).filter(([,v])=>v).map(([platform,v])=>{
+    const handle=String(v).trim();
+    const url=/^https?:\/\//i.test(handle)?handle:`https://${hosts[platform.toLowerCase()]||platform.toLowerCase()+'.com'}/${handle.replace(/^@/,'')}`;
+    return {platform:platform[0].toUpperCase()+platform.slice(1),url};
+  });
+}
+function mapConfig(intake,tokens){
+  const id=intake.identity,br=intake.brand,gov=intake.governance||{},co=intake.coaching||{},
+        ops=intake.operations||{},ros=intake.roster||{},plat=intake.platform||{},ct=intake.contact||{};
+  const slug=(id.team_name||'team').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const firewall=co.firewall_policy==='custom'?(co.firewall_custom_text||FIREWALL_DEFAULT):FIREWALL_DEFAULT;
+  const familyFirst=co.family_first_policy==='custom'?(co.family_first_custom_text||FAMILY_FIRST_DEFAULT):FAMILY_FIRST_DEFAULT;
+  const waivers=ops.coach_waivers==='custom'?(ops.coach_waivers_custom||COACH_WAIVER_DEFAULT):COACH_WAIVER_DEFAULT;
+  const yr=new Date().getFullYear();
+  return {
+    "$comment":"Generated by Rally-ORG Builder Portal. Governance-grade content from the intake, rendered by the softball engine.",
+    organization:{name:id.team_name,nickname:id.team_name,ageGroup:id.age_division,season:`${yr} Season`,tagline:id.tagline||"",location:`${id.city}, ${id.state}`,circuits:id.sanctioning||[]},
+    branding:{logo:br.logo_status==='provided'?`/images/logos/${slug}-logo.png`:"",logoFallbackWordmark:br.logo_status!=='provided',logoAlt:`${id.team_name} logo`,favicon:"",heroImage:"",heroImageAlt:`${id.team_name} on the field`,preset:tokens.preset,logoDescription:br.logo_description||""},
+    nav:{ctaLabel:"Recruiting / Tryouts",ctaHref:"#contact",links:[{label:"About",href:"#about"},{label:"Governance",href:"#governance"},{label:"Coaching",href:"#coaching"},{label:"Finances",href:"#finances"},{label:"Roster",href:"#roster"},{label:"Platform",href:"#platform"},{label:"Support",href:"#support"},{label:"Contact",href:"#contact"}]},
+    hero:{kicker:`${id.city}, ${id.state} • ${id.age_division} ${id.sport} • ${(id.sanctioning||[]).join(' / ')}`,title:id.team_name,subtitle:"How we run — in public.",primaryCta:{label:"Read the governance",href:"#governance"},secondaryCta:{label:"Recruiting / Tryouts",href:"#contact"}},
+    recruitingStrip:{enabled:true,items:[`${yr} Season`,"Coaches Protected","Family First","Players Developed"]},
+    about:{enabled:true,heading:id.tagline||"How we run",subtitle:`A governance-grade ${id.age_division} ${id.sport} organization in ${id.city}, ${id.state}.`,
+      body:[VOICE_ABOUT[id.voice]||VOICE_ABOUT.elite,"This site is a public governance document, not a marketing page. Every question a parent or sponsor might ask about how we operate has a page: who runs what, where the money goes, how your athlete is protected, and how to reach the right person."],
+      pillars:[{icon:"🛡️",title:"Coaches Coach",text:"Coaching authority is firewalled from administrative burden. Coaches own the field; directors own everything else."},{icon:"👪",title:"Family First",text:"Coaches are parents too. The org is built so a coach can attend her own kid's game without the team skipping a beat."},{icon:"📖",title:"Trust By Reading",text:"Every governance question has a page. Trust is built through transparency, not assurance."}]},
+    governance:{enabled:true,heading:"Governance",subtitle:"Four tiers. Two firewalls. Everything in public.",
+      tiers:[
+        {tier:"1 — Executive",body:"Co-Directors",owns:"Strategy, brand, finances, schedules, communications, sponsorships.",notOwns:"Lineups, playing time, on-field decisions.",people:(gov.executive?.directors||[]).map(d=>({name:d.name,detail:(d.domains||[]).join(' · ')}))},
+        {tier:"2 — Board of Directors",body:`${gov.board?.seat_count ?? 0} voting members`,owns:"Policy, governance, conflict resolution, formal votes, bylaws.",notOwns:"Day-to-day org operations.",people:(gov.board?.seats||[]).map(s=>({name:s.name,detail:s.represents}))},
+        {tier:"3 — Coaching Staff",body:"Head Coach + Assistants",owns:"Lineups, development, strategy, rotations. Final on-field authority.",notOwns:"Dues, paperwork, parent logistics, scheduling.",people:(co.head_coaches||[]).map(h=>({name:h.name,detail:"Head Coach"})).concat((co.assistants||[]).map(a=>({name:a.name,detail:a.focus})))},
+        {tier:"4 — Operations Staff",body:"Team ops",owns:"Game-day ops, GameChanger, travel, fundraising execution.",notOwns:"Voting, organizational direction.",people:(ops.ops_staff||[]).map(o=>({name:o.name,detail:o.role}))},
+      ],
+      board:{votingCadence:gov.board?.voting_cadence||"As-needed",quorum:gov.board?.quorum||"2 of 3 voting members present",decisionDomains:gov.board?.decision_domains||[]}},
+    coaching:{enabled:true,heading:"Coaching",model:co.model||"single_head",philosophy:co.philosophy||"",
+      staff:(co.head_coaches||[]).map(h=>({name:h.name,role:"Head Coach",bio:h.bio||"",background:h.background||"",years:h.years??null})).concat((co.assistants||[]).map(a=>({name:a.name,role:`Assistant — ${a.focus}`,bio:"",background:"",years:null}))),
+      firewall:{title:"The Coaching Firewall",text:firewall},familyFirst:{title:"The Family-First Coverage Policy",text:familyFirst}},
+    finances:{enabled:true,heading:"Finances",annualDues:ops.annual_dues||"TBD",duesCovers:ops.dues_covers||[],coachWaivers:waivers,note:"Where the money goes, who signs, and what it costs — on a public page, by design."},
+    roster:{enabled:true,format:"gamechanger",note:`Roster shown in GameChanger format (first name + last initial + jersey). Photos and individual profile pages activate per player ONLY when a signed parent media release scoped to public web display is on file. Media release status: ${ros.media_release_status==='have'?'on file':'being drafted before launch'}.`,
+      consentDefault:"first_name_last_initial",mediaReleaseStatus:ros.media_release_status||"needs_drafting",
+      players:(ros.players||[]).map(p=>({firstName:p.first,lastInitial:p.last_initial,number:String(p.number),slug:p.slug,positions:[],photo:`/images/players/${p.slug}.jpg`,photoAlt:"",live:false,profileUrl:""}))},
+    platform:{enabled:true,pageType:plat.page_type||"tech_stack",heading:plat.page_type==='rallyiq'?"Powered by Rally-IQ":"Tech Stack",statsApp:plat.stats_app||"",commApp:plat.comm_app||"",sanctioning:plat.sanctioning_platforms||[],
+      rallyiqModules:(plat.rallyiq_modules||[]).map(m=>({name:`Rally-IQ ${m}`,text:({Coach:"Practice planning, player notes, development summaries.",Teams:"Roster, schedule, tournaments, parent communication.",Profiles:"Athlete pages, video, recruiting snapshots.",Fundraise:"Sponsors, boosters, donation campaigns.",Scout:"Roster intelligence, competitor monitoring, tryout pipeline.",Org:"Multi-team dashboard, financial reporting, sponsor portal."})[m]||""}))},
+    support:{enabled:true,heading:"Support Us",subtitle:"How sponsors and supporters help — and what they get.",tiers:(ops.fundraising_tiers||[]).map(t=>({tier:t.tier,amount:t.amount,benefits:t.benefits||[]})),partners:br.partners||[]},
+    documents:{enabled:true,heading:"Documents",items:(intake.documents||[]).map(d=>({title:d.title,format:d.format,description:d.description}))},
+    contact:{enabled:true,heading:"Contact",note:"Parents → Co-Directors. Coaching questions → coaching staff. Tryouts/recruiting → the recruiting handler (not the head coach).",primaryName:ct.primary_name||"",primaryEmail:ct.primary_email||"",primaryPhone:ct.primary_phone||"",publicEmail:ct.public_email||"",tryoutsHandler:ct.tryouts_handler||"",social:socialLinks(ct.social)},
+    footer:{tagline:id.tagline||"",builtWith:"Built on Rally-ORG • Powered by Rally-IQ"},
+  };
+}
+
+/* =====================================================================
+   PORTAL UI
+   ===================================================================== */
+const $=(id)=>document.getElementById(id);
+const csv=(s)=>(s||'').split(',').map(x=>x.trim()).filter(Boolean);
+const slugify=(s)=>(s||'team').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const playerSlug=(first,li)=> (first||'').toLowerCase().replace(/[^a-z]/g,'') + '-' + (li||'').toLowerCase().replace(/[^a-z]/g,'');
+let logoDataUrl=null, logoName=null, pvTheme='dark';
+
+/* ---- dynamic row builders ---- */
+function mkRow(html){ const d=document.createElement('div'); d.className='row'; d.innerHTML=html+'<button type="button" class="x" title="remove">×</button>'; d.querySelector('.x').onclick=()=>{d.remove();render();}; d.querySelectorAll('input,textarea,select').forEach(el=>el.addEventListener('input',render)); return d; }
+const ROW={
+  director:()=>mkRow(`<div style="grid-template-columns:1fr 1.4fr;display:grid;gap:8px"><input type="text" data-k="name" placeholder="Director name"><input type="text" data-k="domains" placeholder="Domains: Strategy, Brand"></div>`),
+  seat:()=>mkRow(`<div style="grid-template-columns:1fr 1.4fr;display:grid;gap:8px"><input type="text" data-k="name" placeholder="Seat holder / 'Open Seat'"><input type="text" data-k="represents" placeholder="Represents (e.g. Team families)"></div>`),
+  head:()=>mkRow(`<input type="text" data-k="name" placeholder="Head coach name"><div style="grid-template-columns:1fr 90px;display:grid;gap:8px"><input type="text" data-k="background" placeholder="Background"><input type="number" data-k="years" placeholder="yrs"></div><textarea data-k="bio" placeholder="Short bio"></textarea>`),
+  asst:()=>mkRow(`<div style="grid-template-columns:1fr 1fr;display:grid;gap:8px"><input type="text" data-k="name" placeholder="Assistant / 'Open'"><input type="text" data-k="focus" placeholder="Focus (Hitting)"></div>`),
+  tier:()=>mkRow(`<div style="grid-template-columns:1fr 1fr;display:grid;gap:8px"><input type="text" data-k="tier" placeholder="Tier name"><input type="text" data-k="amount" placeholder="$ amount"></div><input type="text" data-k="benefits" placeholder="Benefits: comma, separated">`),
+  player:()=>mkRow(`<div style="grid-template-columns:1.4fr 60px 70px;display:grid;gap:8px"><input type="text" data-k="first" placeholder="First name"><input type="text" data-k="li" maxlength="1" placeholder="L"><input type="number" data-k="number" min="0" max="99" placeholder="#"></div>`),
+};
+document.querySelectorAll('.addbtn').forEach(b=>b.onclick=()=>{ $(({director:'directors',seat:'seats',head:'head_coaches',asst:'assistants',tier:'tiers',player:'players'})[b.dataset.add]).appendChild(ROW[b.dataset.add]()); render(); });
+
+function rowsData(id, map){ return [...$(id).querySelectorAll('.row')].map(r=>{ const o={}; r.querySelectorAll('[data-k]').forEach(el=>o[el.dataset.k]=el.value); return map(o); }); }
+
+/* ---- chips / segmented ---- */
+function chipGroup(id){ const wrap=$(id); wrap.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{c.classList.toggle('on');render();}); return ()=>[...wrap.querySelectorAll('.chip.on')].map(c=>c.dataset.v); }
+const getModules=chipGroup('modules');
+const getScope=chipGroup('scope');
+let mood='dark';
+$('mood').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('mood').querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mood=b.dataset.v;render();});
+
+/* ---- color sync ---- */
+function syncColor(pick,text){ $(pick).addEventListener('input',()=>{$(text).value=$(pick).value.toUpperCase();render();}); $(text).addEventListener('input',()=>{ if(/^#[0-9a-fA-F]{6}$/.test($(text).value)) $(pick).value=$(text).value; render();}); }
+syncColor('primary_pick','primary_color'); syncColor('accent_pick','accent_color');
+
+/* ---- custom-text reveals ---- */
+function reveal(sel,wrap){ $(sel).addEventListener('change',()=>{ $(wrap).style.display=$(sel).value==='custom'?'block':'none'; render();}); }
+reveal('firewall_policy','firewall_custom_wrap'); reveal('family_first_policy','family_custom_wrap'); reveal('coach_waivers','waiver_custom_wrap');
+
+/* ---- logo upload ---- */
+const drop=$('drop');
+drop.onclick=()=>$('logofile').click();
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop',ev=>{ const f=ev.dataTransfer.files[0]; if(f) readLogo(f); });
+$('logofile').addEventListener('change',e=>{ if(e.target.files[0]) readLogo(e.target.files[0]); });
+function readLogo(f){ const r=new FileReader(); r.onload=()=>{ logoDataUrl=r.result; logoName=f.name; $('logoimg').src=logoDataUrl; $('logoname').textContent=f.name; $('logoprev').style.display='flex'; $('dl-logo').disabled=false; render(); }; r.readAsDataURL(f); }
+$('logoclear').onclick=()=>{ logoDataUrl=null; logoName=null; $('logoprev').style.display='none'; $('logofile').value=''; $('dl-logo').disabled=true; render(); };
+
+/* ---- build the intake object from the DOM ---- */
+function buildIntake(){
+  const directors = rowsData('directors',o=>({name:o.name,domains:csv(o.domains)})).filter(d=>d.name);
+  const governance = {
+    board:{
+      seat_count: $('seat_count').value? parseInt($('seat_count').value,10):0,
+      seats: rowsData('seats',o=>({name:o.name,represents:o.represents})).filter(s=>s.name),
+      voting_cadence:$('voting_cadence').value.trim()||"As-needed",
+      quorum:$('quorum').value.trim()||"2 of 3 voting members present",
+      decision_domains:csv($('decision_domains').value),
+    },
+  };
+  if(directors.length) governance.executive={ directors };
+  const intake={
+    schema_version:"1.0",
+    identity:{
+      team_name:$('team_name').value.trim(), sport:$('sport').value, age_division:$('age_division').value.trim(),
+      city:$('city').value.trim(), state:$('state').value.trim(), sanctioning:csv($('sanctioning').value),
+      founded:$('founded').value.trim(), tagline:$('tagline').value.trim(), voice:$('voice').value,
+    },
+    brand:{
+      logo_status: logoDataUrl?'provided':'needs_design',
+      logo_description:$('logo_description').value.trim(),
+      primary_color:$('primary_color').value.trim(), accent_color:$('accent_color').value.trim(),
+      background_mood:mood, partners:csv($('partners').value),
+    },
+    governance,
+    coaching:{
+      model:$('model').value,
+      head_coaches: rowsData('head_coaches',o=>({name:o.name,bio:o.bio,years:o.years?parseInt(o.years,10):null,background:o.background})).filter(h=>h.name),
+      assistants: rowsData('assistants',o=>({name:o.name,focus:o.focus})).filter(a=>a.name),
+      philosophy:$('philosophy').value.trim(),
+      firewall_policy:$('firewall_policy').value, firewall_custom_text:$('firewall_custom_text').value.trim(),
+      family_first_policy:$('family_first_policy').value, family_first_custom_text:$('family_first_custom_text').value.trim(),
+    },
+    operations:{
+      annual_dues:$('annual_dues').value.trim(), dues_covers:csv($('dues_covers').value),
+      coach_waivers:$('coach_waivers').value, coach_waivers_custom:$('coach_waivers_custom').value.trim(),
+      ops_staff:[], fundraising_tiers: rowsData('tiers',o=>({tier:o.tier,amount:o.amount,benefits:csv(o.benefits)})).filter(t=>t.tier),
+    },
+    roster:{
+      size:0, players:[], default_privacy:"first_name_last_initial",
+      media_release_status:$('media_release_status').value, profile_content_scope:getScope(),
+    },
+    platform:{
+      page_type:$('page_type').value, stats_app:$('stats_app').value.trim(), comm_app:$('comm_app').value.trim(),
+      sanctioning_platforms:csv($('sanctioning').value), rallyiq_modules:getModules(), multi_team:false, teams:[],
+    },
+    contact:{
+      primary_name:$('primary_name').value.trim(), primary_email:$('primary_email').value.trim(),
+      primary_phone:$('primary_phone').value.trim(), public_email:$('public_email').value.trim(),
+      social:{ instagram:$('instagram').value.trim(), facebook:$('facebook').value.trim() },
+      tryouts_handler:$('tryouts_handler').value.trim(),
+    },
+  };
+  const players=rowsData('players',o=>({first:o.first,last_initial:(o.li||'').toUpperCase(),number:o.number?parseInt(o.number,10):0,slug:playerSlug(o.first,o.li)})).filter(p=>p.first);
+  intake.roster.players=players; intake.roster.size=players.length;
+  return intake;
+}
+
+/* ---- validation (required per schema) ---- */
+function validate(intake){
+  const miss=[];
+  const need={'Team name':intake.identity.team_name,'Age division':intake.identity.age_division,'City':intake.identity.city,'State':intake.identity.state,'Primary color':intake.brand.primary_color,'Accent color':intake.brand.accent_color,'Contact name':intake.contact.primary_name,'Contact email':intake.contact.primary_email};
+  for(const k in need){ if(!need[k]) miss.push(k); }
+  return miss;
+}
+
+/* ---- preview render ---- */
+let fontLink=null;
+function render(){
+  const intake=buildIntake();
+  const tokens=buildTokens(intake);
+  const t=tokens[pvTheme];
+
+  // foundation label
+  $('pv-preset').textContent=tokens.preset;
+  $('pv-font').textContent=' · '+tokens.fonts.display.replace(/'/g,'').split(',')[0];
+  // load preset display font for the mock hero
+  if(!fontLink){ fontLink=document.createElement('link'); fontLink.rel='stylesheet'; document.head.appendChild(fontLink); }
+  if(fontLink.href!==tokens.fonts.googleFontsHref) fontLink.href=tokens.fonts.googleFontsHref;
+
+  // mock hero
+  const hero=$('pv-hero');
+  hero.style.background=t.heroBg;
+  $('pv-name').style.color=t.heroText; $('pv-name').style.fontFamily=tokens.fonts.display;
+  $('pv-tagline').style.color=t.heroAccent;
+  $('pv-meta').style.color=t.heroText;
+  $('pv-name').textContent=(intake.identity.team_name||'YOUR TEAM').toUpperCase();
+  $('pv-tagline').textContent=intake.identity.tagline||'Your tagline here.';
+  $('pv-meta').textContent=`${intake.identity.age_division||'14U'} · ${intake.identity.city||'City'}, ${intake.identity.state||'ST'} · ${(intake.identity.sanctioning||[]).join(' / ')}`;
+  $('pv-url').textContent=(slugify(intake.identity.team_name)||'team')+'.org';
+  if(logoDataUrl){ $('pv-logo').src=logoDataUrl; $('pv-logo').style.display='inline-block'; } else { $('pv-logo').style.display='none'; }
+  $('mock').querySelector('.bar .dot').style.background=t.primary;
+
+  // swatches
+  const keys=['primary','primaryStrong','secondary','accent','pageBg','card','heroAccent','text','footerBg','border'];
+  $('swatches').innerHTML=keys.map(k=>`<div class="sw" style="background:${t[k]}" title="${k}: ${t[k]}"><span>${k}</span></div>`).join('');
+  $('swatches').className='swwrap';
+
+  // AA checks
+  const heroOn = pvTheme==='light'? t.primary : mix(intake.brand.primary_color&&intake.brand.primary_color.startsWith('#')?intake.brand.primary_color:'#888888','#000000',0.55);
+  const pairs=[
+    ['Body text on page', t.text, t.pageBg, 4.5],
+    ['Text on primary button', t.onPrimary, t.primary, 4.5],
+    ['Text on accent', t.onSecondary, t.secondary, 4.5],
+    ['Hero title on hero', t.heroText, t.primary, 3.0],
+  ];
+  $('aa').innerHTML=pairs.map(([name,fg,bg,thr])=>{
+    const r=contrast(fg,bg); const ok=r>=thr;
+    return `<div class="aa-row"><span class="aa-name">${name}</span><span class="aa-ratio">${r.toFixed(2)}</span><span class="badge ${ok?'ok':'bad'}">${ok?'AA':'FAIL'}</span></div>`;
+  }).join('');
+  $('pv-theme-label').textContent=pvTheme;
+
+  // validation
+  const miss=validate(intake);
+  const vs=$('vstat');
+  if(miss.length){ vs.className='vstat bad'; vs.textContent='Add to export a build: '+miss.join(', '); }
+  else { vs.className='vstat ok'; vs.textContent='✓ All required fields present — ready to export.'; }
+  $('dl-intake').disabled=miss.length>0; $('dl-config').disabled=miss.length>0;
+
+  return {intake,tokens};
+}
+
+/* ---- preview theme toggle (the generated SITE preview) ---- */
+$('t-dark').onclick=()=>{pvTheme='dark';$('t-dark').classList.add('on');$('t-light').classList.remove('on');render();};
+$('t-light').onclick=()=>{pvTheme='light';$('t-light').classList.add('on');$('t-dark').classList.remove('on');render();};
+
+/* ---- editor UI theme toggle (the PORTAL chrome) ---- */
+function setUiTheme(v){
+  document.documentElement.setAttribute('data-ui-theme', v);
+  try{ localStorage.setItem('rally-portal-ui-theme', v); }catch(e){}
+  $('uitheme').querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.v===v));
+}
+$('uitheme').querySelectorAll('button').forEach(b=>b.onclick=()=>setUiTheme(b.dataset.v));
+setUiTheme(document.documentElement.getAttribute('data-ui-theme')||'dark');
+
+/* ---- downloads ---- */
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+function download(filename,text){ const b=new Blob([text],{type:'application/json'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download=filename; a.click(); URL.revokeObjectURL(u); toast('Downloaded '+filename); }
+$('dl-intake').onclick=()=>{ const {intake}=render(); download(slugify(intake.identity.team_name)+'.intake.json', JSON.stringify(intake,null,2)); };
+$('dl-theme').onclick=()=>{ const {tokens}=render(); download('theme.tokens.json', JSON.stringify(tokens,null,2)); };
+$('dl-config').onclick=()=>{ const {intake,tokens}=render(); download('org.config.json', JSON.stringify(mapConfig(intake,tokens),null,2)); };
+$('dl-logo').onclick=()=>{ if(!logoDataUrl) return; const {intake}=render(); const ext=(logoName&&logoName.split('.').pop().toLowerCase()==='svg')?'svg':'png'; const a=document.createElement('a'); a.href=logoDataUrl; a.download=slugify(intake.identity.team_name)+'-logo.'+ext; a.click(); toast('Downloaded logo'); };
+$('copy').onclick=()=>{ const {intake}=render(); navigator.clipboard.writeText(JSON.stringify(intake,null,2)).then(()=>toast('Intake JSON copied')); };
+
+/* ---- bind all simple inputs + seed ---- */
+document.querySelectorAll('#form input,#form select,#form textarea').forEach(el=>el.addEventListener('input',render));
+render();
+</script>
+</body>
+</html>

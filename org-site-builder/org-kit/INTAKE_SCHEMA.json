@@ -1,0 +1,216 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Org Site Intake Spec",
+  "description": "Structured output of the AI intake. Feed this to the Org-Site Builder to produce a complete branded team org site.",
+  "type": "object",
+  "required": ["schema_version","identity","brand","governance","coaching","operations","roster","contact"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+
+    "identity": {
+      "type": "object",
+      "required": ["team_name","sport","age_division","city","state"],
+      "properties": {
+        "team_name":     { "type": "string", "description": "As it appears on uniforms" },
+        "sport":         { "type": "string", "enum": ["softball","baseball","soccer","basketball","volleyball","lacrosse","other"] },
+        "age_division":  { "type": "string", "examples": ["8U","10U","12U","14U","16U","18U"] },
+        "city":          { "type": "string" },
+        "state":         { "type": "string" },
+        "sanctioning":   { "type": "array", "items": { "type": "string" }, "examples": [["USSSA","NCS","NSA"]] },
+        "founded":       { "type": "string" },
+        "tagline":       { "type": "string", "maxLength": 80 },
+        "voice":         { "type": "string", "enum": ["grit","family","underdog","elite","fun","scrappy","pro-style","custom"] }
+      }
+    },
+
+    "brand": {
+      "type": "object",
+      "required": ["primary_color","accent_color","background_mood"],
+      "properties": {
+        "logo_status":       { "type": "string", "enum": ["provided","needs_design"] },
+        "logo_description":  { "type": "string" },
+        "primary_color":     { "type": "string", "description": "Hex preferred, plain English fallback" },
+        "accent_color":      { "type": "string" },
+        "background_mood":   { "type": "string", "enum": ["light","dark","split"] },
+        "partners":          { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "governance": {
+      "type": "object",
+      "properties": {
+        "executive": {
+          "type": "object",
+          "properties": {
+            "directors": {
+              "type": "array",
+              "minItems": 1, "maxItems": 4,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name":    { "type": "string" },
+                  "domains": { "type": "array", "items": { "type": "string" }, "examples": [["Strategy","Brand","Operations"]] }
+                }
+              }
+            }
+          }
+        },
+        "board": {
+          "type": "object",
+          "properties": {
+            "seat_count":     { "type": "integer", "minimum": 0, "maximum": 9 },
+            "seats": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name":       { "type": "string", "description": "Or 'Open Seat', 'A Mom', etc." },
+                  "represents": { "type": "string", "examples": ["Coaching staff","Team families","Community"] }
+                }
+              }
+            },
+            "voting_cadence":   { "type": "string", "examples": ["Monthly","Quarterly","As-needed"] },
+            "quorum":           { "type": "string", "examples": ["2 of 3 voting members present"] },
+            "decision_domains": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+
+    "coaching": {
+      "type": "object",
+      "required": ["model"],
+      "properties": {
+        "model": { "type": "string", "enum": ["single_head","co_head","specialty_staff"] },
+        "head_coaches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name":       { "type": "string" },
+              "bio":        { "type": "string" },
+              "years":      { "type": ["integer","null"] },
+              "background": { "type": "string" }
+            }
+          }
+        },
+        "assistants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name":  { "type": "string", "description": "Or 'Open'" },
+              "focus": { "type": "string", "examples": ["Hitting","Defense","Pitching/Catching"] }
+            }
+          }
+        },
+        "philosophy":               { "type": "string" },
+        "firewall_policy":          { "type": "string", "enum": ["default","custom"] },
+        "firewall_custom_text":     { "type": "string" },
+        "family_first_policy":      { "type": "string", "enum": ["default","custom"] },
+        "family_first_custom_text": { "type": "string" }
+      }
+    },
+
+    "operations": {
+      "type": "object",
+      "properties": {
+        "annual_dues":           { "type": "string", "examples": ["$2,400","$1,800-$2,200"] },
+        "dues_covers":           { "type": "array", "items": { "type": "string" } },
+        "coach_waivers":         { "type": "string", "enum": ["default","custom"] },
+        "coach_waivers_custom":  { "type": "string" },
+        "ops_staff": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": { "type": "string" },
+              "name": { "type": "string", "description": "Or 'TBD'" }
+            }
+          }
+        },
+        "fundraising_tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tier":     { "type": "string" },
+              "amount":   { "type": "string" },
+              "benefits": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title":       { "type": "string" },
+          "format":      { "type": "string", "enum": ["docx","pdf","drive"] },
+          "description": { "type": "string" }
+        }
+      }
+    },
+
+    "roster": {
+      "type": "object",
+      "required": ["size","players","default_privacy"],
+      "properties": {
+        "size": { "type": "integer", "minimum": 0 },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["first","last_initial","number","slug"],
+            "properties": {
+              "first":        { "type": "string" },
+              "last_initial": { "type": "string", "maxLength": 1 },
+              "number":       { "type": "integer", "minimum": 0, "maximum": 99 },
+              "slug":         { "type": "string", "pattern": "^[a-z]+-[a-z]$", "description": "firstname-lastinitial, lowercase" }
+            }
+          }
+        },
+        "default_privacy":       { "type": "string", "const": "first_name_last_initial" },
+        "media_release_status":  { "type": "string", "enum": ["have","needs_drafting"] },
+        "profile_content_scope": { "type": "array", "items": { "type": "string", "enum": ["stats","action_photos","character_quotes","film_clips"] } }
+      }
+    },
+
+    "platform": {
+      "type": "object",
+      "properties": {
+        "page_type":              { "type": "string", "enum": ["rallyiq","tech_stack"] },
+        "stats_app":              { "type": "string", "examples": ["GameChanger"] },
+        "comm_app":               { "type": "string", "examples": ["BAND","TeamSnap","GroupMe"] },
+        "sanctioning_platforms":  { "type": "array", "items": { "type": "string" } },
+        "rallyiq_modules":        { "type": "array", "items": { "type": "string", "enum": ["Coach","Teams","Profiles","Fundraise","Scout","Org"] } },
+        "multi_team":             { "type": "boolean" },
+        "teams":                  { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "age_division": { "type": "string" } } } }
+      }
+    },
+
+    "contact": {
+      "type": "object",
+      "required": ["primary_name","primary_email"],
+      "properties": {
+        "primary_name":     { "type": "string" },
+        "primary_email":    { "type": "string", "format": "email" },
+        "primary_phone":    { "type": "string" },
+        "public_email":     { "type": "string" },
+        "social": {
+          "type": "object",
+          "properties": {
+            "instagram": { "type": "string" },
+            "facebook":  { "type": "string" }
+          }
+        },
+        "tryouts_handler":  { "type": "string" }
+      }
+    },
+
+    "notes": { "type": "string", "description": "Anything the intake captured that didn't fit a field" }
+  }
+}

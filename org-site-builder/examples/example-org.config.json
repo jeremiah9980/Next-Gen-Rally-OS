@@ -1,0 +1,138 @@
+{
+  "organization": {
+    "name": "Example Softball",
+    "nickname": "Example Elite",
+    "ageGroup": "12U",
+    "season": "2025 Season",
+    "tagline": "Built different. Developed together.",
+    "location": "Georgetown, Texas",
+    "circuits": ["USSSA", "NSA", "NCS"]
+  },
+  "branding": {
+    "logo": "/images/logos/logo.png",
+    "logoAlt": "Example Softball logo",
+    "favicon": "/images/logos/logo.png",
+    "heroImage": "/images/hero/hero.jpg",
+    "heroImageAlt": "Example Softball players on the field",
+    "preset": "blue-yellow-energy"
+  },
+  "nav": {
+    "ctaLabel": "Join the Team",
+    "ctaHref": "#tryouts",
+    "links": [
+      { "label": "About", "href": "#about" },
+      { "label": "Coaches", "href": "#coaches" },
+      { "label": "Roster", "href": "#roster" },
+      { "label": "Schedule", "href": "#schedule" },
+      { "label": "Tryouts", "href": "#tryouts" },
+      { "label": "Sponsors", "href": "#sponsors" },
+      { "label": "Gallery", "href": "#gallery" },
+      { "label": "Contact", "href": "#contact" }
+    ]
+  },
+  "hero": {
+    "kicker": "Georgetown, Texas \u2022 12U Select Softball \u2022 2025 Season",
+    "title": "Example Softball",
+    "subtitle": "Select Softball Organization",
+    "primaryCta": { "label": "Join the Team", "href": "#tryouts" },
+    "secondaryCta": { "label": "Learn More", "href": "#about" }
+  },
+  "recruitingStrip": {
+    "enabled": true,
+    "items": ["2025 Season", "Now Recruiting Players", "Coaches", "Sponsors"]
+  },
+  "about": {
+    "enabled": true,
+    "heading": "Built Different",
+    "subtitle": "A development-first select softball organization with a serious identity and clear structure.",
+    "body": [
+      "Most select softball programs run through one person carrying everything \u2014 scheduling, dues, parent texts, lineups. That model burns coaches out.",
+      "We are built differently. Operations are owned by directors so coaches can own the field, and every player gets a real development plan."
+    ],
+    "pillars": [
+      { "icon": "\ud83e\udd4e", "title": "Elite Coaching", "text": "Development-first, family-first coaching from experienced staff who let athletes grow." },
+      { "icon": "\ud83c\udfdb\ufe0f", "title": "Real Structure", "text": "Clear roles and accountability so the organization runs on plan, not on one phone." },
+      { "icon": "\ud83c\udfc6", "title": "Compete Big", "text": "USSSA, NSA, and NCS circuits with a schedule built to challenge and develop every player." }
+    ]
+  },
+  "coaches": [
+    {
+      "name": "Coach Name",
+      "role": "Head Coach",
+      "photo": "/images/coaches/head-coach.jpg",
+      "photoAlt": "Head Coach",
+      "bio": "Add a short coaching bio here \u2014 background, philosophy, and what families can expect."
+    }
+  ],
+  "roster": {
+    "enabled": true,
+    "format": "gamechanger",
+    "note": "Roster shown in GameChanger format (first name + last initial + jersey). Individual profile pages activate per player once a signed parent media release is on file.",
+    "players": [
+      {
+        "firstName": "First",
+        "lastInitial": "L",
+        "number": "00",
+        "positions": ["Position"],
+        "photo": "/images/players/first-l.jpg",
+        "photoAlt": "",
+        "live": false,
+        "profileUrl": ""
+      }
+    ]
+  },
+  "tryouts": {
+    "enabled": true,
+    "heading": "Tryouts & Recruiting",
+    "dates": ["June 10", "June 16"],
+    "time": "6:00 PM - 8:00 PM",
+    "location": "Practice Field Address",
+    "details": "Bring your glove, bat, helmet, cleats, and water. Arrive 15 minutes early to check in.",
+    "signupUrl": "https://example.com/signup",
+    "signupLabel": "Register for Tryouts",
+    "qrCode": "/qr/signup.png"
+  },
+  "schedule": {
+    "enabled": true,
+    "heading": "Schedule",
+    "subtitle": "Upcoming practices, tournaments, and events.",
+    "events": [
+      { "date": "June 10", "name": "Open Tryout", "location": "Practice Field", "type": "Tryout" },
+      { "date": "July 12\u201313", "name": "Summer Kickoff Tournament", "location": "Round Rock, TX", "type": "Tournament" }
+    ]
+  },
+  "sponsors": {
+    "enabled": true,
+    "heading": "Our Sponsors",
+    "subtitle": "Community partners who help us compete and develop.",
+    "ctaLabel": "Become a Sponsor",
+    "ctaHref": "#contact",
+    "items": [
+      { "name": "Sponsor Name", "logo": "/images/sponsors/sponsor.png", "url": "https://example.com", "tier": "Gold" }
+    ]
+  },
+  "gallery": {
+    "enabled": true,
+    "heading": "Gallery",
+    "subtitle": "Moments from the season.",
+    "items": [
+      { "image": "/images/gallery/photo-1.jpg", "alt": "Team photo", "caption": "" }
+    ]
+  },
+  "contact": {
+    "enabled": true,
+    "heading": "Contact & Tryouts",
+    "subtitle": "Roster openings, coaching roles, and sponsorship inquiries.",
+    "coachName": "Coach Name",
+    "phone": "512-000-0000",
+    "email": "coach@example.com",
+    "social": [
+      { "platform": "Instagram", "url": "https://instagram.com/" },
+      { "platform": "Facebook", "url": "https://facebook.com/" }
+    ]
+  },
+  "footer": {
+    "tagline": "Georgetown, Texas \u2022 12U Select Softball \u2022 USSSA \u2022 NSA \u2022 NCS \u2022 2025",
+    "credit": ""
+  }
+}

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rally · Deploy Control Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070A12; --bg2:#0A0F1C; --card:#0E1626; --card2:#111B2E;
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+    --ink:#EAF0FB; --muted:rgba(234,240,251,.58); --faint:rgba(234,240,251,.38);
+    --accent:#6AA9FF; --gold:#C9A227;
+    --live:#34D399; --build:#FBBF24; --fail:#F87171; --idle:#64748B;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(106,169,255,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(201,162,39,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:'Barlow Semi Condensed',sans-serif;
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:46px 46px; mask-image:radial-gradient(circle at 50% 30%,#000,transparent 85%);}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px 80px;position:relative}
+
+  /* header */
+  header{position:sticky;top:0;z-index:20;margin:0 -22px 26px;padding:18px 22px 16px;
+    background:linear-gradient(180deg,rgba(7,10,18,.96),rgba(7,10,18,.78) 70%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topline{height:2px;background:linear-gradient(90deg,var(--gold),transparent 40%);margin:-18px -22px 16px}
+  .bar{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .brand{display:flex;align-items:baseline;gap:12px}
+  .brand h1{font-family:'Anton',sans-serif;font-weight:400;font-size:26px;letter-spacing:.06em;margin:0;text-transform:uppercase}
+  .brand h1 .dot{color:var(--accent)}
+  .brand .sub{font-family:'Oswald',sans-serif;font-style:italic;font-weight:500;color:var(--faint);text-transform:uppercase;letter-spacing:.14em;font-size:11px}
+  .spacer{flex:1}
+  .chip{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line2);
+    border-radius:999px;padding:5px 11px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .chip b{color:var(--ink);font-weight:700}
+  .chip.warn{border-color:rgba(248,113,113,.5);color:#FCA5A5}
+  button{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+    font-size:12px;color:var(--ink);background:var(--card2);border:1px solid var(--line2);
+    border-radius:9px;padding:9px 14px;cursor:pointer;transition:.15s}
+  button:hover{border-color:var(--accent);color:#fff;transform:translateY(-1px)}
+  button.ghost{background:transparent}
+  button.primary{background:var(--accent);color:#06101F;border-color:var(--accent)}
+  button.primary:hover{filter:brightness(1.08)}
+
+  /* settings drawer */
+  .drawer{overflow:hidden;max-height:0;transition:max-height .3s ease;border-bottom:1px solid transparent}
+  .drawer.open{max-height:520px;border-color:var(--line)}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;padding:18px 2px 6px}
+  .panel .full{grid-column:1/-1}
+  label{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em;
+    font-size:10.5px;color:var(--faint);margin:0 0 6px 2px}
+  input,textarea{width:100%;background:#070C16;border:1px solid var(--line2);border-radius:9px;color:var(--ink);
+    font-family:var(--mono);font-size:13px;padding:10px 12px;resize:vertical}
+  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  textarea{min-height:78px;line-height:1.55}
+  .hint{font-size:11.5px;color:var(--faint);margin:7px 2px 0;line-height:1.5}
+  .panel-actions{display:flex;gap:10px;flex-wrap:wrap;padding:4px 2px 14px}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+    border-radius:14px;padding:16px 16px 14px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--idle)}
+  .card[data-state=live]::before{background:var(--live)} .card[data-state=building]::before{background:var(--build)}
+  .card[data-state=failed]::before{background:var(--fail)} .card[data-state=idle]::before{background:var(--idle)}
+  .card.busy{opacity:.6}
+  .chead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .sem{width:11px;height:11px;border-radius:50%;background:var(--idle);box-shadow:0 0 0 0 rgba(0,0,0,0);flex:none}
+  [data-state=live] .sem{background:var(--live);box-shadow:0 0 12px rgba(52,211,153,.7)}
+  [data-state=building] .sem{background:var(--build);box-shadow:0 0 12px rgba(251,191,36,.7);animation:pulse 1.1s infinite}
+  [data-state=failed] .sem{background:var(--fail);box-shadow:0 0 12px rgba(248,113,113,.7)}
+  @keyframes pulse{50%{opacity:.35;transform:scale(.82)}}
+  .state{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:700}
+  [data-state=live] .state{color:var(--live)} [data-state=building] .state{color:var(--build)}
+  [data-state=failed] .state{color:var(--fail)} [data-state=idle] .state{color:var(--faint)}
+  .repo{font-family:var(--mono);font-size:13.5px;color:var(--ink);font-weight:500;word-break:break-all}
+  .repo .owner{color:var(--faint)}
+  .meta{margin-top:10px;display:grid;gap:7px;font-size:13px}
+  .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .row .k{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--faint)}
+  .row .v{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right}
+  .row .v.ok{color:#86EFAC} .row .v.bad{color:#FCA5A5} .row .v.run{color:#FCD34D}
+  .links{display:flex;gap:8px;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+  .links a{flex:1;text-align:center;text-decoration:none;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    letter-spacing:.08em;font-size:11px;color:var(--muted);border:1px solid var(--line2);border-radius:8px;padding:7px;transition:.15s}
+  .links a:hover{color:#fff;border-color:var(--accent)}
+  .empty{border:1px dashed var(--line2);border-radius:14px;padding:46px 22px;text-align:center;color:var(--muted)}
+  .empty h3{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.05em;color:var(--ink);margin:0 0 8px;text-transform:uppercase}
+  footer{margin-top:30px;text-align:center;color:var(--faint);font-size:11.5px;font-family:var(--mono)}
+  a.inline{color:var(--accent);text-decoration:none} a.inline:hover{text-decoration:underline}
+  @media(max-width:560px){.panel{grid-template-columns:1fr}.brand h1{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="topline"></div>
+    <div class="bar">
+      <div class="brand">
+        <h1>RALLY<span class="dot">·</span>DEPLOY</h1>
+        <span class="sub">Control Room</span>
+      </div>
+      <div class="spacer"></div>
+      <span class="chip" id="rate" title="GitHub API rate limit">API <b id="rateVal">—</b></span>
+      <span class="chip" id="regChip" title="repos from the shared registry" style="display:none">registry <b id="regCount">0</b></span>
+      <span class="chip" id="clock">next <b id="countdown">—</b></span>
+      <button class="ghost" id="refreshBtn">↻ Refresh</button>
+      <button id="gearBtn">⚙ Settings</button>
+    </div>
+    <div class="drawer" id="drawer">
+      <div class="panel">
+        <div>
+          <label for="owner">GitHub owner / username</label>
+          <input id="owner" placeholder="jeremiah9980" spellcheck="false" autocomplete="off">
+        </div>
+        <div>
+          <label for="interval">Auto-refresh (seconds)</label>
+          <input id="interval" type="number" min="15" step="5" value="45">
+        </div>
+        <div class="full">
+          <label for="registry">Registry repo — auto-populates from rally-ship (<span class="muted">owner/repo holding registry.json</span>)</label>
+          <input id="registry" placeholder="jeremiah9980/rally-deploy" spellcheck="false" autocomplete="off">
+          <div class="hint">Every time <b>rally-ship.sh --dashboard-repo &lt;owner/repo&gt;</b> deploys a site, it appends that repo to <code>registry.json</code> here. The dashboard merges the registry with your manual list below, so new sites appear on their own. A read-only token is needed to read a private registry repo.</div>
+        </div>
+        <div class="full">
+          <label for="token">Fine-grained token — read-only (optional but recommended)</label>
+          <input id="token" type="password" placeholder="github_pat_…  ·  stays in this browser only" spellcheck="false" autocomplete="off">
+          <div class="hint">Without a token you get ~60 API calls/hour (public repos only). A fine-grained PAT scoped <b>read-only</b> to <i>Actions</i>, <i>Pages</i>, and <i>Metadata</i> raises it to 5,000/hr and shows private repos. The token is saved in <b>this browser's localStorage</b>, sent only to api.github.com, and never written into the file.</div>
+        </div>
+        <div class="full">
+          <label for="repos">Tracked repos — one per line (<span class="muted">owner/repo</span> or just <span class="muted">repo</span>)</label>
+          <textarea id="repos" placeholder="jeremiah9980/lonestar-reign&#10;texas-venom&#10;bananas2k15"></textarea>
+        </div>
+      </div>
+      <div class="panel-actions">
+        <button class="primary" id="saveBtn">Save &amp; refresh</button>
+        <button class="ghost" id="discoverBtn">⌕ Discover repos with Pages</button>
+        <button class="ghost" id="clearTokenBtn">Clear token</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="grid" class="grid"></main>
+  <div class="empty" id="empty" style="display:none">
+    <h3>No repos tracked yet</h3>
+    <p>Open <b>⚙ Settings</b>, set your owner, paste your org repos, and (recommended) add a read-only token.<br>
+       Or hit <b>Discover</b> to pull every repo of yours that has GitHub Pages enabled.</p>
+  </div>
+  <footer>Rally · Deploy Control Room — client-side only. Reads the GitHub REST API; writes nothing. Built on Rally-ORG.</footer>
+</div>
+
+<script>
+const LS = {
+  get:(k,d)=>{try{const v=localStorage.getItem('rallydeploy.'+k);return v===null?d:v;}catch{return d;}},
+  set:(k,v)=>{try{localStorage.setItem('rallydeploy.'+k,v);}catch{}},
+  del:(k)=>{try{localStorage.removeItem('rallydeploy.'+k);}catch{}}
+};
+const $ = s=>document.querySelector(s);
+const el = (t,c)=>{const e=document.createElement(t); if(c)e.className=c; return e;};
+
+const state = { owner:'', token:'', repos:[], registry:'', interval:45, rate:null, timer:null, left:0 };
+
+function loadSettings(){
+  state.owner = LS.get('owner','');
+  state.token = LS.get('token','');
+  state.interval = Math.max(15, parseInt(LS.get('interval','45'),10)||45);
+  state.registry = LS.get('registry','');
+  state.repos = parseRepos(LS.get('repos',''));
+  $('#owner').value = state.owner;
+  $('#registry').value = state.registry;
+  $('#token').value = state.token;
+  $('#interval').value = state.interval;
+  $('#repos').value = LS.get('repos','');
+}
+function parseRepos(raw){
+  return (raw||'').split(/[\n,]+/).map(s=>s.trim()).filter(Boolean)
+    .map(s=> s.includes('/') ? s : (state.owner? state.owner+'/'+s : s))
+    .filter(s=>s.includes('/'));
+}
+function saveSettings(){
+  state.owner = $('#owner').value.trim();
+  state.token = $('#token').value.trim();
+  state.registry = $('#registry').value.trim();
+  state.interval = Math.max(15, parseInt($('#interval').value,10)||45);
+  LS.set('owner',state.owner); LS.set('token',state.token);
+  LS.set('interval',String(state.interval)); LS.set('repos',$('#repos').value);
+  LS.set('registry',state.registry);
+  state.repos = parseRepos($('#repos').value);
+}
+
+async function gh(path){
+  const headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+  if(state.token) headers['Authorization']='Bearer '+state.token;
+  const res = await fetch('https://api.github.com'+path,{headers});
+  const rem=res.headers.get('x-ratelimit-remaining'), lim=res.headers.get('x-ratelimit-limit');
+  if(rem!==null) state.rate={rem:+rem,lim:+lim}, paintRate();
+  if(res.status===404) return {__status:404};
+  if(res.status===401){ throw new Error('401 — bad/expired token'); }
+  if(res.status===403){ throw new Error('403 — rate limited (add a token)'); }
+  if(!res.ok) throw new Error(res.status+' '+res.statusText);
+  return res.json();
+}
+function paintRate(){
+  if(!state.rate){ $('#rateVal').textContent='—'; return; }
+  $('#rateVal').textContent=state.rate.rem+'/'+state.rate.lim;
+  $('#rate').classList.toggle('warn', state.rate.rem<=5);
+}
+
+function rel(ts){
+  if(!ts) return '—';
+  const d=(Date.now()-new Date(ts).getTime())/1000;
+  if(d<60) return Math.max(1,d|0)+'s ago';
+  if(d<3600) return (d/60|0)+'m ago';
+  if(d<86400) return (d/3600|0)+'h ago';
+  return (d/86400|0)+'d ago';
+}
+
+async function loadRegistry(){
+  const reg=(state.registry||'').trim();
+  if(!reg||!reg.includes('/')) { $('#regChip').style.display='none'; return []; }
+  try{
+    const r=await gh(`/repos/${reg}/contents/registry.json`);
+    if(!r||r.__status===404||!r.content) { $('#regChip').style.display='none'; return []; }
+    const txt=atob(String(r.content).replace(/\s+/g,''));
+    const j=JSON.parse(txt);
+    const arr=Array.isArray(j)?j:(j.repos||[]);
+    const names=arr.map(x=>typeof x==='string'?x:x&&x.repo).filter(Boolean);
+    $('#regCount').textContent=names.length; $('#regChip').style.display=names.length?'inline-flex':'none';
+    return names;
+  }catch(e){ $('#regChip').style.display='none'; return []; }
+}
+
+async function fetchRepo(full){
+  const [owner,repo]=full.split('/');
+  const out={full,owner,repo,pages:null,run:null,error:null};
+  try{
+    const [pages,runs] = await Promise.all([
+      gh(`/repos/${owner}/${repo}/pages`),
+      gh(`/repos/${owner}/${repo}/actions/runs?per_page=1`)
+    ]);
+    out.pages = pages && !pages.__status ? pages : null;
+    out.run = runs && runs.workflow_runs && runs.workflow_runs[0] ? runs.workflow_runs[0] : null;
+  }catch(e){ out.error=e.message; }
+  return out;
+}
+
+function computeState(r){
+  if(r.error) return {key:'failed',label:r.error.startsWith('401')||r.error.startsWith('403')?'Auth/limit':'Error'};
+  const run=r.run, pg=r.pages;
+  if(run){
+    const st=run.status, cc=run.conclusion;
+    if(st==='queued'||st==='in_progress'||st==='waiting'||st==='pending') return {key:'building',label:'Building'};
+    if(cc==='failure'||cc==='cancelled'||cc==='timed_out'||cc==='startup_failure') return {key:'failed',label:'Failed'};
+  }
+  if(pg){
+    if(pg.status==='building') return {key:'building',label:'Building'};
+    if(pg.status==='errored') return {key:'failed',label:'Errored'};
+    if(pg.status==='built') return {key:'live',label:'Live'};
+  }
+  if(run && run.conclusion==='success') return {key:'live',label:'Live'};
+  if(!pg && !run) return {key:'idle',label:'No Pages'};
+  return {key:'idle',label:'Idle'};
+}
+
+function cardFor(full){
+  let c=document.getElementById('card:'+full);
+  if(!c){ c=el('article','card'); c.id='card:'+full; c.dataset.state='idle'; $('#grid').appendChild(c); }
+  return c;
+}
+function renderCard(r){
+  const c=cardFor(r.full); c.classList.remove('busy');
+  const s=computeState(r); c.dataset.state=s.key;
+  const [owner,repo]=r.full.split('/');
+  const live = (r.pages && r.pages.html_url) || `https://${owner}.github.io/${repo}/`;
+  const runConc = r.run ? (r.run.conclusion||r.run.status||'—') : '—';
+  const runClass = r.run? (r.run.conclusion==='success'?'ok': (r.run.status&&r.run.status!=='completed'?'run': (r.run.conclusion?'bad':''))) : '';
+  const when = r.run? rel(r.run.updated_at||r.run.created_at) : (r.pages? rel(r.pages.updated_at):'—');
+  const wf = r.run? (r.run.name||r.run.display_title||'run') : '—';
+  c.innerHTML=`
+    <div class="chead"><span class="sem"></span><span class="state">${s.label}</span></div>
+    <div class="repo"><span class="owner">${owner}/</span>${repo}</div>
+    <div class="meta">
+      <div class="row"><span class="k">Latest run</span><span class="v ${runClass}">${esc(wf)} · ${esc(runConc)}</span></div>
+      <div class="row"><span class="k">Updated</span><span class="v">${when}</span></div>
+      <div class="row"><span class="k">Pages</span><span class="v">${r.pages? esc(r.pages.status||'?')+(r.pages.cname?' · '+esc(r.pages.cname):'') : '—'}</span></div>
+    </div>
+    <div class="links">
+      <a href="${esc(live)}" target="_blank" rel="noopener">Live ↗</a>
+      <a href="https://github.com/${esc(r.full)}/actions" target="_blank" rel="noopener">Actions ↗</a>
+      ${r.run? `<a href="${esc(r.run.html_url)}" target="_blank" rel="noopener">Run ↗</a>`:''}
+    </div>`;
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+async function refreshAll(){
+  const fromReg = await loadRegistry();
+  const working = [...new Set([...state.repos, ...fromReg])].sort();
+  if(!working.length){ $('#empty').style.display='block'; renderTimerStop(); return; }
+  $('#empty').style.display='none';
+  // prune cards for repos no longer tracked (manual list ∪ registry)
+  [...document.querySelectorAll('.card')].forEach(c=>{ if(!working.includes(c.id.slice(5))) c.remove(); });
+  working.forEach(f=>cardFor(f).classList.add('busy'));
+  for(const full of working){
+    const r=await fetchRepo(full); renderCard(r);
+  }
+  resetCountdown();
+}
+
+/* discover repos that already have Pages enabled */
+async function discover(){
+  const owner=$('#owner').value.trim()||state.owner;
+  if(!owner){ alert('Set the owner first.'); return; }
+  state.owner=owner; state.token=$('#token').value.trim();
+  try{
+    const list = await gh(`/users/${owner}/repos?per_page=100&sort=updated`);
+    if(!Array.isArray(list)){ alert('Could not list repos.'); return; }
+    const withPages = list.filter(r=>r.has_pages).map(r=>r.full_name);
+    const cur = new Set(parseRepos($('#repos').value));
+    withPages.forEach(f=>cur.add(f));
+    $('#repos').value=[...cur].join('\n');
+    saveSettings(); await refreshAll();
+    if(!withPages.length) alert('No repos with Pages found for '+owner+'. Add them manually.');
+  }catch(e){ alert('Discover failed: '+e.message); }
+}
+
+/* countdown / timer */
+function resetCountdown(){ state.left=state.interval; paintClock(); renderTimerStart(); }
+function paintClock(){ $('#countdown').textContent=state.left+'s'; }
+function renderTimerStart(){
+  renderTimerStop();
+  state.timer=setInterval(()=>{
+    if(document.hidden) return;             // pause when tab hidden (saves rate limit)
+    state.left--; paintClock();
+    if(state.left<=0) refreshAll();
+  },1000);
+}
+function renderTimerStop(){ if(state.timer){clearInterval(state.timer);state.timer=null;} }
+
+/* wiring */
+$('#gearBtn').onclick=()=>$('#drawer').classList.toggle('open');
+$('#refreshBtn').onclick=()=>refreshAll();
+$('#saveBtn').onclick=()=>{ saveSettings(); $('#drawer').classList.remove('open'); refreshAll(); };
+$('#discoverBtn').onclick=discover;
+$('#clearTokenBtn').onclick=()=>{ LS.del('token'); state.token=''; $('#token').value=''; alert('Token cleared from this browser.'); };
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ refreshAll(); }});
+
+loadSettings();
+if(!state.repos.length) $('#drawer').classList.add('open');
+refreshAll();
+</script>
+</body>
+</html>

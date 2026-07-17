@@ -1,0 +1,140 @@
+/* ============================================================
+   components.css — reusable section component styles
+   ============================================================ */
+
+/* ── CARD GRID + PILLARS ── */
+.card-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-top: 4px solid var(--secondary);
+  border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm);
+}
+.card-icon { font-size: 28px; margin-bottom: 12px; }
+.card-title {
+  font-family: var(--font-display); font-size: var(--h3, 18px); font-weight: 800; color: var(--primary);
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+}
+.card-text { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+/* ── ABOUT split ── */
+.about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; margin-top: 8px; }
+
+/* ── COACHES ── */
+.coach-grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.coach-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+}
+.coach-photo { position: relative; aspect-ratio: 1 / 1; background: var(--hero-bg); overflow: hidden; }
+.coach-photo img { width: 100%; height: 100%; object-fit: cover; }
+.coach-photo-fallback {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 900; font-size: 56px; color: var(--hero-accent); opacity: .5;
+}
+.coach-photo img + .coach-photo-fallback { display: none; }
+.coach-card.no-photo .coach-photo-fallback { display: flex; }
+.coach-body { padding: 18px; }
+.coach-name { font-family: var(--font-display); font-weight: 900; font-size: 20px; text-transform: uppercase; color: var(--primary); line-height: 1; }
+.coach-role { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 2px; font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+.coach-bio { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-top: 12px; }
+
+/* ── ROSTER ── */
+.roster-counter {
+  display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border: 1px solid var(--border);
+  background: var(--section-soft); border-radius: var(--radius-pill); font-family: var(--font-display);
+  text-transform: uppercase; letter-spacing: 1.5px; font-size: 12px; color: var(--primary); margin-bottom: 18px;
+}
+.roster-counter strong { color: var(--primary); font-weight: 800; }
+.roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px; margin-top: 20px; }
+.roster-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  overflow: hidden; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s;
+}
+.roster-card.is-live { border-color: var(--secondary); box-shadow: 0 6px 0 var(--secondary-strong), var(--shadow-md); }
+.roster-card.is-live:hover { transform: translateY(-3px); }
+.rc-photo { position: relative; aspect-ratio: 3 / 4; background: var(--hero-bg); overflow: hidden; }
+.rc-photo img { width: 100%; height: 100%; object-fit: cover; }
+.rc-photo-fallback {
+  position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center;
+}
+.rc-photo-fallback .rc-spot { font-family: var(--font-display); font-weight: 900; font-size: 64px; color: var(--hero-accent); opacity: .25; }
+.roster-card.no-photo .rc-photo-fallback { display: flex; }
+.rc-num {
+  position: absolute; bottom: 12px; left: 12px; background: var(--primary); color: var(--on-primary);
+  font-family: var(--font-display); font-weight: 900; font-size: 18px; padding: 6px 14px;
+  border-radius: var(--radius-sm); border: 2px solid var(--secondary); letter-spacing: 1px;
+}
+.rc-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+.rc-name { font-family: var(--font-display); font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 1; color: var(--primary); }
+.rc-name .rc-ln { color: var(--secondary-strong); }
+.rc-pos { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 2px; font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+.rc-cta {
+  margin-top: 14px; display: flex; align-items: center; justify-content: space-between; background: var(--section-soft);
+  color: var(--text-muted); font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  letter-spacing: 2px; font-size: 12px; padding: 12px 16px; border-radius: var(--radius-sm);
+  text-decoration: none; pointer-events: none;
+}
+.rc-cta::after { content: '\2192'; opacity: .4; }
+.roster-card.is-live .rc-cta { background: var(--secondary); color: var(--on-secondary); pointer-events: auto; }
+.roster-card.is-live .rc-cta::after { opacity: 1; }
+
+/* ── SCHEDULE ── */
+.schedule-list { display: flex; flex-direction: column; gap: 10px; }
+.schedule-row {
+  display: grid; grid-template-columns: 120px 1fr auto; gap: 16px; align-items: center;
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 14px 18px;
+}
+.schedule-date { font-family: var(--font-display); font-weight: 900; font-size: 16px; color: var(--primary); text-transform: uppercase; }
+.schedule-info .schedule-name { font-weight: 700; color: var(--text); }
+.schedule-info .schedule-loc { font-size: 13px; color: var(--text-muted); }
+.schedule-type {
+  font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  background: var(--section-soft); color: var(--primary); padding: 4px 10px; border-radius: var(--radius-pill); white-space: nowrap;
+}
+
+/* ── SPONSORS ── */
+.sponsor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; align-items: center; }
+.sponsor-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;
+}
+.sponsor-card img { max-height: 70px; width: auto; object-fit: contain; }
+.sponsor-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; color: var(--text); }
+.sponsor-tier { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+
+/* ── GALLERY ── */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.gallery-item { position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 4 / 3; border: 1px solid var(--border); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+.gallery-item:hover img { transform: scale(1.05); }
+.gallery-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px; font-size: 12px; color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .65));
+}
+
+/* ── TRYOUTS + CONTACT ── */
+.tryouts-grid, .contact-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: start; }
+.info-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 24px; box-shadow: var(--shadow-sm);
+}
+.info-row { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1.5px; font-size: 11px; color: var(--primary); min-width: 90px; }
+.info-value { color: var(--text); font-size: 15px; }
+.qr-card { text-align: center; }
+.qr-card img { width: 180px; height: 180px; margin: 0 auto 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: #fff; padding: 8px; }
+.contact-social { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.contact-social a {
+  font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;
+  border: 1px solid var(--border); padding: 8px 14px; border-radius: var(--radius-pill); color: var(--primary);
+}
+.contact-social a:hover { background: var(--section-soft); text-decoration: none; }
+
+/* ── CALLOUT ── */
+.callout {
+  border-left: 4px solid var(--secondary); background: var(--section-soft);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 20px 24px; margin-top: 24px;
+}
+.callout p { color: var(--text); font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .5px; font-size: 17px; }
+.callout p .callout-key { color: var(--primary); }
