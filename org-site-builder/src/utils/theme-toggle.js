@@ -14,8 +14,12 @@ export function initThemeToggle({ storageKey = 'org-theme' } = {}) {
   const toggle = document.getElementById('themeToggle');
   const label = toggle ? toggle.querySelector('.theme-toggle-label') : null;
 
+  function readSaved() {
+    try { return localStorage.getItem(storageKey); } catch (_) { return null; /* private mode */ }
+  }
+
   function preferredTheme() {
-    const saved = localStorage.getItem(storageKey);
+    const saved = readSaved();
     if (saved === 'light' || saved === 'dark') return saved;
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   }
@@ -43,9 +47,11 @@ export function initThemeToggle({ storageKey = 'org-theme' } = {}) {
   }
 
   // Respond to OS-level changes only if the user hasn't chosen explicitly.
+  // Older Safari only has addListener, so fall back to it.
   if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-      if (!localStorage.getItem(storageKey)) applyTheme(e.matches ? 'light' : 'dark');
-    });
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    const onChange = (e) => { if (!readSaved()) applyTheme(e.matches ? 'light' : 'dark'); };
+    if (typeof mq.addEventListener === 'function') mq.addEventListener('change', onChange);
+    else if (typeof mq.addListener === 'function') mq.addListener(onChange);
   }
 }

@@ -9,7 +9,13 @@
 import { render as header } from './components/header.js';
 import { render as hero } from './components/hero.js';
 import { render as about } from './components/about.js';
+import { render as governance } from './components/governance.js';
+import { render as coaching } from './components/coaching.js';
 import { render as coaches } from './components/coaches.js';
+import { render as finances } from './components/finances.js';
+import { render as platform } from './components/platform.js';
+import { render as support } from './components/support.js';
+import { render as documents } from './components/documents.js';
 import { render as roster } from './components/roster.js';
 import { render as schedule } from './components/schedule.js';
 import { render as tryouts, mount as mountTryouts } from './components/tryouts.js';
@@ -142,19 +148,26 @@ async function boot() {
       strip,
       '<main id="main">',
       about(config, ctx),
+      governance(config, ctx),
+      coaching(config, ctx),
       coaches(config, ctx),
+      finances(config, ctx),
       roster(config, ctx),
       schedule(config, ctx),
       tryouts(config, ctx),
+      platform(config, ctx),
+      support(config, ctx),
       sponsors(config, ctx),
       gallery(config, ctx),
+      documents(config, ctx),
       contact(config, ctx),
       '</main>',
       footer(config, ctx),
     ].join('\n');
 
-    const nick = (config.organization && (config.organization.nickname || config.organization.name)) || 'org';
-    initThemeToggle({ storageKey: nick.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-theme' });
+    // Deterministic, path-scoped key — index.html's pre-paint script derives
+    // the identical key, so first paint and the toggle always agree.
+    initThemeToggle({ storageKey: 'org-theme:' + location.pathname.replace(/index\.html$/, '') });
     mountTryouts(config, ctx);
     wireNavAndSpy();
   } catch (err) {

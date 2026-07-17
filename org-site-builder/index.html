@@ -16,8 +16,10 @@
   <script>
     (function () {
       try {
-        var keys = Object.keys(localStorage).filter(function (k) { return /-theme$/.test(k); });
-        var saved = keys.length ? localStorage.getItem(keys[0]) : null;
+        // Deterministic, path-scoped key — main.js derives the identical key,
+        // so pre-paint and the runtime toggle always agree.
+        var key = 'org-theme:' + location.pathname.replace(/index\.html$/, '');
+        var saved = localStorage.getItem(key);
         var pref = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', pref === 'light' ? 'light' : 'dark');
       } catch (e) {}
