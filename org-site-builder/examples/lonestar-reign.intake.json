@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "identity": {
+    "team_name": "Lonestar Reign",
+    "sport": "softball",
+    "age_division": "14U",
+    "city": "Round Rock",
+    "state": "TX",
+    "sanctioning": ["USSSA", "NCS", "PGF"],
+    "founded": "2024",
+    "tagline": "Earn the crown.",
+    "voice": "elite"
+  },
+  "brand": {
+    "logo_status": "needs_design",
+    "logo_description": "A crowned star inside a home-plate shield; crimson field with a brushed-platinum crown and star.",
+    "primary_color": "#9B1B30",
+    "accent_color": "#C9CDD6",
+    "background_mood": "dark",
+    "partners": ["Marucci", "Mizuno"]
+  },
+  "governance": {
+    "executive": {
+      "directors": [
+        { "name": "D. Alvarez", "domains": ["Strategy", "Brand", "Sponsorships"] },
+        { "name": "R. Okafor", "domains": ["Player Development", "Coaching Liaison"] },
+        { "name": "M. Tran", "domains": ["Operations", "Finance", "Community"] }
+      ]
+    },
+    "board": {
+      "seat_count": 3,
+      "seats": [
+        { "name": "R. Okafor", "represents": "Coaching staff" },
+        { "name": "A Parent Rep", "represents": "Team families" },
+        { "name": "Open Seat", "represents": "Community / local business" }
+      ],
+      "voting_cadence": "Monthly",
+      "quorum": "2 of 3 voting members present",
+      "decision_domains": ["Dues changes", "Coaching changes", "Bylaws amendments", "Refunds", "Dispute resolution"]
+    }
+  },
+  "coaching": {
+    "model": "single_head",
+    "head_coaches": [
+      { "name": "Coach R. Okafor", "bio": "Former D1 infielder; eight seasons developing select infielders and building disciplined, accountable cultures.", "years": 8, "background": "D1 SS, two-time conference defensive player" }
+    ],
+    "assistants": [
+      { "name": "Coach Day", "focus": "Hitting" },
+      { "name": "Open", "focus": "Pitching/Catching" },
+      { "name": "Open", "focus": "Defense / Baserunning" }
+    ],
+    "philosophy": "At 14U we believe development beats short-term wins. Every athlete gets a real plan, honest reps, and a standard she's held to with care. We compete hard and we recruit smart, but we build the player first.",
+    "firewall_policy": "default",
+    "firewall_custom_text": "",
+    "family_first_policy": "default",
+    "family_first_custom_text": ""
+  },
+  "operations": {
+    "annual_dues": "$2,400",
+    "dues_covers": ["Uniform package", "Tournament entry fees", "Indoor practice facility", "Team equipment", "Coaches' tournament expenses"],
+    "coach_waivers": "default",
+    "coach_waivers_custom": "",
+    "ops_staff": [
+      { "role": "Team Mom", "name": "TBD" },
+      { "role": "Scorekeeper / GameChanger lead", "name": "TBD" },
+      { "role": "Travel Coordinator", "name": "M. Tran" },
+      { "role": "Fundraising Coordinator", "name": "D. Alvarez" }
+    ],
+    "fundraising_tiers": [
+      { "tier": "Banner Sponsor", "amount": "$250-$500", "benefits": ["Logo on field banner", "Social shoutout"] },
+      { "tier": "Team Sponsor", "amount": "$500-$1,000", "benefits": ["Logo on website", "Logo on practice tees", "Social shoutout"] },
+      { "tier": "Tournament Sponsor", "amount": "$1,000+", "benefits": ["Logo on jerseys", "Banner at games", "Website + social feature"] },
+      { "tier": "Founding Sponsor", "amount": "$2,500+", "benefits": ["Premier jersey placement", "Year-round website feature", "Dugout banner", "Founding-partner recognition"] }
+    ]
+  },
+  "documents": [
+    { "title": "Lonestar Reign Bylaws", "format": "pdf", "description": "Formal governance rules: tiers, board, voting, firewall and family-first policies." },
+    { "title": "Family Welcome Packet", "format": "pdf", "description": "Everything a new family needs for the season." },
+    { "title": "Sponsorship Package", "format": "pdf", "description": "Tiers, benefits, and how local businesses partner with the org." },
+    { "title": "Media Release (Public Web)", "format": "pdf", "description": "Scoped specifically to public web display of a minor athlete on the team site." }
+  ],
+  "roster": {
+    "size": 12,
+    "players": [
+      { "first": "Aubrey", "last_initial": "B", "number": 2, "slug": "aubrey-b" },
+      { "first": "Mia", "last_initial": "C", "number": 4, "slug": "mia-c" },
+      { "first": "Harper", "last_initial": "D", "number": 7, "slug": "harper-d" },
+      { "first": "Sofia", "last_initial": "G", "number": 8, "slug": "sofia-g" },
+      { "first": "Layla", "last_initial": "H", "number": 10, "slug": "layla-h" },
+      { "first": "Emma", "last_initial": "J", "number": 11, "slug": "emma-j" },
+      { "first": "Zoe", "last_initial": "M", "number": 13, "slug": "zoe-m" },
+      { "first": "Ava", "last_initial": "P", "number": 14, "slug": "ava-p" },
+      { "first": "Brooke", "last_initial": "R", "number": 21, "slug": "brooke-r" },
+      { "first": "Isla", "last_initial": "S", "number": 23, "slug": "isla-s" },
+      { "first": "Nora", "last_initial": "T", "number": 27, "slug": "nora-t" },
+      { "first": "Camila", "last_initial": "V", "number": 32, "slug": "camila-v" }
+    ],
+    "default_privacy": "first_name_last_initial",
+    "media_release_status": "needs_drafting",
+    "profile_content_scope": ["stats", "action_photos", "character_quotes", "film_clips"]
+  },
+  "platform": {
+    "page_type": "rallyiq",
+    "stats_app": "GameChanger",
+    "comm_app": "BAND",
+    "sanctioning_platforms": ["USSSA", "NCS", "PGF"],
+    "rallyiq_modules": ["Coach", "Teams", "Profiles", "Fundraise", "Scout", "Org"],
+    "multi_team": false,
+    "teams": []
+  },
+  "contact": {
+    "primary_name": "D. Alvarez",
+    "primary_email": "hello@lonestarreign.org",
+    "primary_phone": "512-555-0142",
+    "public_email": "hello@lonestarreign.org",
+    "social": { "instagram": "@lonestarreign", "facebook": "LonestarReignSoftball" },
+    "tryouts_handler": "D. Alvarez (Co-Director) — not the head coach"
+  },
+  "notes": "First-year-plus org rebuilding its public presence. Wants the governance-grade org site (Rally-ORG) wired to the RallyIQ platform. Logo in design; ship a typographic wordmark fallback until the mark lands."
+}

@@ -85,6 +85,19 @@ services/
   ncs-worker/     node-cron poller: fetch NCS pages → parse → diff vs
                   sourceSnapshot → create NcsChangeReview rows. Never writes
                   canonical records.
+  integrations-worker/  Cloudflare Worker (deployed standalone, no Prisma):
+                  scrapes playncs.com server-side and returns CORS-enabled
+                  JSON; matches players against the gc_stats D1 database.
+                  Backs the CMS Integration Center's live mode.
+
+cms/              Zero-infrastructure JSON-file CMS for static org/team
+                  sites: admin dashboard (cms/admin/), Integration Center
+                  (cms/admin/integrations.html), JSON Schema, starter
+                  content. See docs/cms.md.
+org-site-builder/ Rally-ORG builder kit: 9-phase governance intake →
+                  intake-to-build bridge → config-driven no-build static
+                  site engine, plus the in-browser Builder Portal
+                  (portal/index.html). See docs/org-site-builder.md.
 
 infra/            .env.example (env contract), Vercel manifests, cron
                   definitions, smoke-test script, db workflows (see
@@ -286,6 +299,8 @@ Honest current-state list a buyer's team should know:
 - `README.md` — quickstart + workspace summary
 - `docs/ncs-integration.md` — NCS operational guide (import, re-diff, worker)
 - `docs/gamechanger-integration.md` — GC mapping and push approval
+- `docs/cms.md` — JSON-file CMS + Integration Center + integrations Worker
+- `docs/org-site-builder.md` — Rally-ORG builder kit + Builder Portal
 - `infra/db/README.md` — migration & seed workflows
 - `infra/vercel/README.md` — per-project deploy settings
 - `infra/SMOKE_TEST.md` — manual release verification

@@ -44,6 +44,13 @@ packages/
   config/        Site config schema (YAML) + zod validation.
 services/
   ncs-worker/    Scheduled NCS polling worker. Emits NcsChangeReview items.
+  integrations-worker/  Cloudflare Worker: NCS scraping proxy + GameChanger
+                 stat matching (backs the CMS Integration Center).
+cms/             JSON-file CMS: admin dashboard + Integration Center + schema
+                 + starter content for static org/team sites. No backend.
+org-site-builder/  Rally-ORG builder kit: governance intake → config bridge →
+                 no-build static site engine, plus the no-code Builder Portal
+                 (portal/index.html) that runs the whole flow in-browser.
 infra/           Env contracts (.env.example), DB, cron, per-team deploy notes.
 docs/            Product + dev docs.
 ```
@@ -124,3 +131,5 @@ in at `/login` with the printed demo credentials (default
 
 - [NCS Integration](docs/ncs-integration.md)
 - [GameChanger Integration](docs/gamechanger-integration.md)
+- [CMS & Integration Center](docs/cms.md)
+- [Org Site Builder](docs/org-site-builder.md)

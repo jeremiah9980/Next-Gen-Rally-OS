@@ -1,0 +1,43 @@
+/* ============================================================
+   responsive.css — mobile-first breakpoints
+   The base layout is desktop-comfortable; these queries collapse
+   multi-column grids and reveal the mobile nav at small widths.
+   ============================================================ */
+
+@media (max-width: 920px) {
+  .about-split,
+  .tryouts-grid,
+  .contact-grid { grid-template-columns: 1fr; }
+  .qr-card { max-width: 280px; margin: 0 auto; }
+}
+
+@media (max-width: 760px) {
+  /* Collapse the inline nav links into a toggle-revealed stack */
+  .nav-links {
+    position: absolute; top: 60px; left: 0; right: 0; flex-direction: column; gap: 0;
+    background: var(--nav-bg); border-bottom: 3px solid var(--secondary);
+    padding: 8px 16px 16px; display: none;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { width: 100%; padding: 12px 8px; border-bottom: 1px solid var(--border); }
+  .nav-toggle-btn {
+    display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+    background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    cursor: pointer; color: var(--text); font-size: 20px;
+  }
+  .nav-cta { display: none; }
+}
+
+@media (max-width: 600px) {
+  .section { padding: 48px 0; }
+  .hero { padding: 48px 0 40px; }
+  .schedule-row { grid-template-columns: 1fr; gap: 6px; }
+  .schedule-type { justify-self: start; }
+  .card-grid, .coach-grid { grid-template-columns: 1fr; }
+  .roster-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .rc-name { font-size: 18px; }
+}
+
+@media (max-width: 380px) {
+  .roster-grid { grid-template-columns: 1fr; }
+}

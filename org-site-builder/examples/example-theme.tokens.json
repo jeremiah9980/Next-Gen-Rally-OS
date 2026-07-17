@@ -1,0 +1,69 @@
+{
+  "$comment": "Edit colors here. Every value maps to a CSS variable consumed by the site. Set both light and dark so the toggle always looks intentional. Use a contrast checker (https://webaim.org/resources/contrastchecker/) to confirm text on background is at least 4.5:1.",
+  "preset": "blue-yellow-energy",
+  "fonts": {
+    "display": "'Barlow Condensed', sans-serif",
+    "body": "'Barlow', sans-serif",
+    "googleFontsHref": "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap"
+  },
+  "scales": {
+    "radius": { "sm": "6px", "md": "10px", "lg": "16px", "pill": "999px" },
+    "shadow": {
+      "sm": "0 1px 2px rgba(0,0,0,0.06)",
+      "md": "0 8px 24px rgba(0,0,0,0.10)",
+      "lg": "0 20px 60px rgba(0,0,0,0.18)"
+    },
+    "type": {
+      "kicker": "11px",
+      "small": "13px",
+      "body": "16px",
+      "h3": "18px",
+      "h2": "clamp(26px, 4vw, 38px)",
+      "h1": "clamp(44px, 8vw, 80px)"
+    }
+  },
+  "light": {
+    "primary": "#1A56B0",
+    "primaryStrong": "#1347A0",
+    "secondary": "#F5C400",
+    "secondaryStrong": "#E6B800",
+    "accent": "#FFFFFF",
+    "text": "#1C1C1C",
+    "textMuted": "rgba(28,28,28,0.66)",
+    "pageBg": "#F9F8F4",
+    "sectionSoft": "rgba(26,86,176,0.05)",
+    "card": "#FFFFFF",
+    "border": "rgba(28,28,28,0.12)",
+    "navBg": "rgba(255,255,255,0.92)",
+    "footerBg": "#1A56B0",
+    "footerText": "rgba(255,255,255,0.72)",
+    "heroBg": "linear-gradient(135deg, #1A56B0 0%, #1347A0 100%)",
+    "heroText": "#FFFFFF",
+    "heroAccent": "#F5C400",
+    "glow": "rgba(26,86,176,0.18)",
+    "onPrimary": "#FFFFFF",
+    "onSecondary": "#1347A0"
+  },
+  "dark": {
+    "primary": "#3B82F6",
+    "primaryStrong": "#2563EB",
+    "secondary": "#FACC15",
+    "secondaryStrong": "#EAB308",
+    "accent": "#FFFFFF",
+    "text": "#F4F6FB",
+    "textMuted": "rgba(244,246,251,0.70)",
+    "pageBg": "#0A0E17",
+    "sectionSoft": "rgba(59,130,246,0.06)",
+    "card": "rgba(20,28,46,0.85)",
+    "border": "rgba(59,130,246,0.24)",
+    "navBg": "rgba(8,12,20,0.90)",
+    "footerBg": "#06090F",
+    "footerText": "rgba(255,255,255,0.62)",
+    "heroBg": "linear-gradient(135deg, #0A0E17 0%, #14223A 50%, #0A0E17 100%)",
+    "heroText": "#FFFFFF",
+    "heroAccent": "#FACC15",
+    "glow": "rgba(59,130,246,0.40)",
+    "onPrimary": "#06090F",
+    "onSecondary": "#06090F"
+  }
+}

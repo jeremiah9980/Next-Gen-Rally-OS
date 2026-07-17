@@ -47,6 +47,9 @@ const HTML_PAGES = [
   ['suite-diagram.html', 'Product Suite Diagram', 'Product', 'Visual map of the product suite and how the pieces connect.'],
 ]
 
+// MD_PAGES entry for the org site builder lives with the Product group.
+MD_PAGES.push(['docs/org-site-builder.md', 'org-site-builder', 'Org Site Builder', 'Product', 'The Rally-ORG kit: governance intake, config engine, and no-code Builder Portal.'])
+
 const GROUPS = ['Product', 'Engineering', 'Coaching']
 const GROUP_BLURBS = {
   Product: 'What the suite is, how it looks, and how to use it.',
@@ -360,7 +363,7 @@ for (const p of all.filter((p) => p.file)) {
 
 // Landing-page index hub: hero + grouped doc card grid browsing everything.
 const ICONS = {
-  'pitch-deck': '🏆', 'user-guide': '📖', 'suite-diagram': '🗺️',
+  'pitch-deck': '🏆', 'user-guide': '📖', 'suite-diagram': '🗺️', 'org-site-builder': '🏗️',
   overview: '⚡', architecture: '🏗️', 'ncs-integration': '🔍', cms: '📝',
   'gamechanger-integration': '🔄', database: '🗄️', deployment: '🚀',
   'coaching-content': '🥎', 'development-roadmap': '📈',

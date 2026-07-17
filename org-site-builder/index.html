@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Select softball organization — coaching, roster, tryouts, and team info.">
+  <title>Softball Organization</title>
+
+  <!-- Stylesheets (theme color values are injected at runtime from theme.tokens.json) -->
+  <link rel="stylesheet" href="src/styles/base.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="src/styles/theme.css">
+  <link rel="stylesheet" href="src/styles/responsive.css">
+
+  <!-- Set the saved/system theme BEFORE paint to avoid a flash of the wrong theme -->
+  <script>
+    (function () {
+      try {
+        // Deterministic, path-scoped key — main.js derives the identical key,
+        // so pre-paint and the runtime toggle always agree.
+        var key = 'org-theme:' + location.pathname.replace(/index\.html$/, '');
+        var saved = localStorage.getItem(key);
+        var pref = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', pref === 'light' ? 'light' : 'dark');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div id="app">
+    <div class="app-status"><p>Loading…</p></div>
+  </div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

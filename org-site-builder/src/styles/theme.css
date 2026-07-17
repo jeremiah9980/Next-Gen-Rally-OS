@@ -1,0 +1,42 @@
+/* ============================================================
+   theme.css — theme-toggle control + transition rules
+   The actual light/dark color values are injected by main.js
+   into <style id="theme-vars"> as :root and [data-theme="dark"].
+   ============================================================ */
+
+/* Elements that should ease between themes (avoid transitioning
+   layout properties so there is NO layout shift on toggle). */
+.navbar, .card, .coach-card, .roster-card, .schedule-row, .sponsor-card,
+.info-card, footer, .hero, .recruiting-strip, .section-soft {
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  background: transparent; border: 1px solid var(--border); border-radius: var(--radius-pill);
+  padding: 5px 12px 5px 10px; color: var(--text); font-family: var(--font-display);
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+}
+.theme-toggle:hover { border-color: var(--primary); }
+.theme-toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.theme-toggle-track {
+  position: relative; width: 34px; height: 18px; border-radius: var(--radius-pill);
+  background: var(--section-soft); border: 1px solid var(--border); flex-shrink: 0;
+}
+.theme-toggle-knob {
+  position: absolute; top: 1px; left: 1px; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--secondary); transition: transform .18s ease;
+}
+[data-theme="light"] .theme-toggle-knob { transform: translateX(16px); }
+.theme-toggle-label { min-width: 32px; text-align: left; }
+
+/* Icon swap: show sun in dark mode (offer light), moon in light mode (offer dark) */
+.theme-toggle .icon-sun { display: inline; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: inline; }
