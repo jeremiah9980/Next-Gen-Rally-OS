@@ -14,11 +14,11 @@ export type GameChangerSnapshotInput = {
 
 export function buildGameChangerSnapshot(input: GameChangerSnapshotInput) {
   if (!input.result.trim()) {
-    throw new Error('Result is required for GameChanger stat import.')
+    throw new Error('Result cannot be empty or whitespace-only for GameChanger stat import.')
   }
 
   if (!input.score.trim()) {
-    throw new Error('Score is required for GameChanger stat import.')
+    throw new Error('Score cannot be empty or whitespace-only for GameChanger stat import.')
   }
 
   return {
