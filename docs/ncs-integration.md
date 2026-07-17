@@ -13,16 +13,34 @@ The NCS integration provides:
 
 ---
 
-## Paste-and-Parse Pattern
+## Two Ways to Get a Roster In
 
-Because NCS does not provide a public API, the integration uses a **paste-and-parse** workflow:
+### 1. Live search (NCS Fastpitch portal)
+
+The Roster Dashboard's **Search NCS Teams** tab calls the live `playncs.com` team search and
+team-detail pages directly — no copy/paste required:
+
+1. Search by team name, city, and/or state (optionally a season id).
+2. Pick your team from the results table.
+3. The team's live roster is fetched and dropped straight into the same preview/select step as
+   the paste flow.
+
+This is read-only scraping of public, server-rendered HTML (NCS has no developer API) — see
+`packages/ncs/src/scrape.ts` (pure HTML → data parsers, unit-tested without network access) and
+`packages/ncs/src/client.ts` (the `fetch` calls). It never writes anything on its own; the coach
+still has to run the **Import** step, so governance (no auto-apply) is unaffected.
+
+### 2. Paste-and-parse
+
+For NCS pages the live search doesn't cover (or any other source), the **Paste Text** tab uses a
+**paste-and-parse** workflow:
 
 1. Navigate to the NCS website and copy roster / tournament table rows.
 2. Paste the text into the dashboard input area.
 3. The parser auto-detects tab-delimited or multi-space columns.
-4. If a recognisable header row is present the columns are mapped by name; otherwise positional
-   fallback order is used (`jersey | name | position | grad year` for rosters;
-   `name | date | location | age groups` for tournaments).
+4. If a recognisable header row is present the columns are mapped by name (including `bats` /
+   `throws`); otherwise a positional fallback scans each row for a jersey number, a known position
+   code, and a grad year (in any column order) and treats the remainder as the player's name.
 
 ---
 

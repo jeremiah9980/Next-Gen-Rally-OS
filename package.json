@@ -2,6 +2,7 @@
   "name": "next-gen-rally-os",
   "private": true,
   "scripts": {
+    "setup": "node scripts/setup.mjs",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
@@ -9,9 +10,14 @@
     "typecheck": "turbo run typecheck",
     "db:push": "turbo run db:push --filter=@rally/core-data",
     "db:generate": "turbo run db:generate --filter=@rally/core-data",
+    "db:migrate": "pnpm --filter @rally/core-data run db:migrate",
+    "db:seed": "pnpm --filter @rally/core-data run db:seed",
+    "db:seed:content": "pnpm --filter @rally/core-data run db:seed:content",
+    "docs:build": "node scripts/build-docs-site.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,md,json,yaml}\" --ignore-path .gitignore"
   },
   "devDependencies": {
+    "marked": "^18.0.5",
     "prettier": "^3.3.3",
     "turbo": "^2.3.3",
     "typescript": "^5.6.3"

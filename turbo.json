@@ -1,6 +1,20 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalPassThroughEnv": [
+    "DATABASE_URL",
+    "NEXTAUTH_URL",
+    "NEXTAUTH_SECRET",
+    "EMAIL_SERVER",
+    "EMAIL_FROM",
+    "ANTHROPIC_API_KEY",
+    "NCS_POLL_CRON",
+    "VERCEL_TOKEN",
+    "PUBLIC_SITE_ORG_SLUG",
+    "SEED_COACH_EMAIL",
+    "SEED_COACH_PASSWORD",
+    "SEED_COACH_NAME"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

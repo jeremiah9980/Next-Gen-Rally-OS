@@ -1,0 +1,36 @@
+{
+  "name": "@rally/org-builder",
+  "private": true,
+  "version": "0.0.0",
+  "bin": {
+    "rally-os": "cli/rally-os.ts"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "rally-os": "tsx cli/rally-os.ts",
+    "lint": "echo 'No lint configured for @rally/org-builder'",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.1",
+    "@rally/config": "workspace:*",
+    "@rally/core-data": "workspace:*",
+    "@rally/org-kit": "workspace:*",
+    "@rally/projection": "workspace:*",
+    "@rally/site-template": "workspace:*",
+    "@rally/ui": "workspace:*",
+    "next": "^16.2.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.4"
+  }
+}

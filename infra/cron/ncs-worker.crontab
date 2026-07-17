@@ -1,0 +1,4 @@
+# Next-Gen-Rally-OS — NCS polling worker (every 6 hours).
+# Install with: crontab ncs-worker.crontab
+# Ensure DATABASE_URL and NCS_POLL_CRON are exported in the worker environment.
+0 */6 * * * cd /opt/rally-os && pnpm --filter @rally/ncs-worker start >> /var/log/ncs-worker.log 2>&1

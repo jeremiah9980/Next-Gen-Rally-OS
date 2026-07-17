@@ -1,0 +1,21 @@
+{
+  "name": "@rally/gamechanger",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "echo 'No lint configured for @rally/gamechanger'",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rally/ncs-parser": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.6"
+  }
+}

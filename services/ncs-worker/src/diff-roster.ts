@@ -4,7 +4,7 @@ import type { NcsRosterRow } from '@rally/ncs-parser'
 export interface StoredSource {
   id: string
   ncsId: string | null
-  rawName: string
+  rawName: string | null
   rawJersey: string | null
   rawPosition: string | null
   playerId: string
@@ -51,7 +51,7 @@ export function diffRoster(
         continue
       }
     } else {
-      source = stored.find((item) => normalizePlayerName(item.rawName) === normIncomingName)
+      source = stored.find((item) => normalizePlayerName(item.rawName ?? '') === normIncomingName)
 
       if (!source && row.jersey) {
         source = stored.find((item) => item.rawJersey === row.jersey)
@@ -81,7 +81,7 @@ export function diffRoster(
       })
     }
 
-    if (normIncomingName !== normalizePlayerName(source.rawName)) {
+    if (normIncomingName !== normalizePlayerName(source.rawName ?? '')) {
       changes.push({
         teamSeasonId,
         playerId: source.playerId,
@@ -96,7 +96,7 @@ export function diffRoster(
   for (const source of stored) {
     const found = source.ncsId
       ? incoming.some((row) => row.ncsId === source.ncsId)
-      : incoming.some((row) => normalizePlayerName(row.rawName) === normalizePlayerName(source.rawName))
+      : incoming.some((row) => normalizePlayerName(row.rawName) === normalizePlayerName(source.rawName ?? ''))
 
     if (!found) {
       changes.push({

@@ -83,6 +83,13 @@ describe('parseNcsRosterText — header mode', () => {
     const result = parseNcsRosterText(tabSample)
     expect(result.warnings).toHaveLength(0)
   })
+
+  it('maps bats and throws columns', () => {
+    const sample = 'Name\tJersey\tBats\tThrows\nAlice Smith\t12\tL\tR\n'
+    const result = parseNcsRosterText(sample)
+    expect(result.rows[0].bats).toBe('L')
+    expect(result.rows[0].throws).toBe('R')
+  })
 })
 
 // ─── parseNcsRosterText — positional fallback ─────────────────────────────────
@@ -118,6 +125,31 @@ describe('parseNcsRosterText — positional fallback', () => {
   it('assigns fourth column to gradYear', () => {
     const result = parseNcsRosterText(positionalSample)
     expect(result.rows[0].gradYear).toBe('2026')
+  })
+
+  it('is order-independent — matches jersey/position/grad year regardless of column order', () => {
+    const sample = ['2026  Alice Smith  P  5', '2025  Bob Jones  C  12'].join('\n')
+    const result = parseNcsRosterText(sample)
+    expect(result.parseMode).toBe('positional')
+    expect(result.rows[0].jerseyNumber).toBe('5')
+    expect(result.rows[0].fullName).toBe('Alice Smith')
+    expect(result.rows[0].position).toBe('P')
+    expect(result.rows[0].gradYear).toBe('2026')
+  })
+
+  it('handles a leading # on a jersey number in positional mode', () => {
+    const sample = '#9  Carlos Rivera  SS  2027'
+    const result = parseNcsRosterText(sample)
+    expect(result.rows[0].jerseyNumber).toBe('9')
+  })
+
+  it('omits position/gradYear when absent rather than misassigning columns', () => {
+    const sample = '5  Alice Smith'
+    const result = parseNcsRosterText(sample)
+    expect(result.rows[0].jerseyNumber).toBe('5')
+    expect(result.rows[0].fullName).toBe('Alice Smith')
+    expect(result.rows[0].position).toBeUndefined()
+    expect(result.rows[0].gradYear).toBeUndefined()
   })
 })
 

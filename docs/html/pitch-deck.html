@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Next-Gen Rally-OS — Pitch Deck</title>
+<style>
+  :root {
+    --bg: #080D0A;
+    --bg2: #0F1810;
+    --bg3: #162014;
+    --lime: #A8E63D;
+    --lime-dim: #6B9926;
+    --violet: #7C3AED;
+    --violet-dim: #4C1D95;
+    --orange: #F97316;
+    --text: #E8F0E9;
+    --muted: #7A9B7E;
+    --border: #1E2E20;
+    --card: #111A12;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 8vw, 6rem) clamp(1.5rem, 8vw, 8rem);
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* slide counter */
+  section::before {
+    content: attr(data-n);
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  p.body {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 58ch;
+    line-height: 1.7;
+  }
+
+  .lime { color: var(--lime); }
+  .violet { color: #A78BFA; }
+  .orange { color: var(--orange); }
+
+  /* ── SLIDE 1: Hero ── */
+  #s1 {
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  #s1 .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  #s1 .glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(168,230,61,0.12) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    pointer-events: none;
+  }
+
+  #s1 .content { position: relative; max-width: 900px; }
+
+  #s1 .tagline {
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+  }
+
+  #s1 .tagline em {
+    font-style: normal;
+    color: var(--lime);
+  }
+
+  #s1 .sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 52ch;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--lime-dim);
+    color: var(--lime);
+    background: rgba(168,230,61,0.06);
+  }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+  /* ── SLIDE 2: Problem ── */
+  #s2 .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .pain-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+
+  .pain-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .pain-card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── SLIDE 3: Solution ── */
+  #s3 .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    row-gap: 1rem;
+  }
+
+  .flow-node {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    min-width: 170px;
+    text-align: center;
+  }
+
+  .flow-node .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  .flow-node .name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .flow-node.accent { border-color: var(--lime-dim); background: rgba(168,230,61,0.05); }
+  .flow-node.accent .name { color: var(--lime); }
+
+  .flow-arrow {
+    padding: 0 0.5rem;
+    color: var(--muted);
+    font-size: 1.1rem;
+  }
+
+  /* ── SLIDE 4: Product Suite ── */
+  #s4 .app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .app-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.75rem;
+    transition: border-color 0.2s;
+  }
+
+  .app-card:hover { border-color: var(--lime-dim); }
+
+  .app-card .badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lime);
+    border: 1px solid var(--lime-dim);
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .app-card .badge.violet { color: #A78BFA; border-color: #4C1D95; }
+  .app-card .badge.orange { color: var(--orange); border-color: #7C2D12; }
+
+  .app-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  /* ── SLIDE 5: Key Features ── */
+  #s5 .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    #s5 .features { grid-template-columns: 1fr; }
+  }
+
+  .feature-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+  }
+
+  .feature-row .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lime);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+
+  .feature-row p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── SLIDE 6: Market ── */
+  #s6 .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    #s6 .stats { grid-template-columns: 1fr; }
+  }
+
+  .stat-box {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem 1.5rem;
+    background: var(--card);
+    text-align: center;
+  }
+
+  .stat-box .num {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--lime);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-box .desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+    line-height: 1.5;
+  }
+
+  /* ── SLIDE 7: Tech ── */
+  #s7 .tech-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    #s7 .tech-cols { grid-template-columns: 1fr; }
+  }
+
+  .tech-group h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .tech-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    margin: 0.25rem 0.25rem 0 0;
+    background: var(--bg3);
+  }
+
+  /* ── SLIDE 8: CTA ── */
+  #s8 {
+    text-align: center;
+    align-items: center;
+  }
+
+  #s8 .glow2 {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  #s8 .content { position: relative; }
+
+  #s8 h2 { margin-bottom: 1.5rem; }
+  #s8 p { color: var(--muted); max-width: 50ch; margin: 0 auto 2.5rem; }
+
+  .cta-link {
+    display: inline-block;
+    background: var(--lime);
+    color: #080D0A;
+    font-weight: 800;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    transition: opacity 0.15s;
+  }
+
+  .cta-link:hover { opacity: 0.88; }
+
+  /* nav dots */
+  .nav-dots {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border: none;
+  }
+
+  .nav-dot.active {
+    background: var(--lime);
+    transform: scale(1.4);
+  }
+
+  /* divider line in headings */
+  .rule {
+    width: 2.5rem;
+    height: 3px;
+    background: var(--lime);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* dim half-tone texture on some slides */
+  #s2::after, #s5::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(168,230,61,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+
+<nav class="nav-dots" aria-label="Slide navigation">
+  <button class="nav-dot active" onclick="scrollToSlide(1)" aria-label="Slide 1"></button>
+  <button class="nav-dot" onclick="scrollToSlide(2)" aria-label="Slide 2"></button>
+  <button class="nav-dot" onclick="scrollToSlide(3)" aria-label="Slide 3"></button>
+  <button class="nav-dot" onclick="scrollToSlide(4)" aria-label="Slide 4"></button>
+  <button class="nav-dot" onclick="scrollToSlide(5)" aria-label="Slide 5"></button>
+  <button class="nav-dot" onclick="scrollToSlide(6)" aria-label="Slide 6"></button>
+  <button class="nav-dot" onclick="scrollToSlide(7)" aria-label="Slide 7"></button>
+  <button class="nav-dot" onclick="scrollToSlide(8)" aria-label="Slide 8"></button>
+</nav>
+
+<!-- SLIDE 1: HERO -->
+<section id="s1" data-n="01 / 08">
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <div class="content">
+    <div class="eyebrow">Next-Gen Rally-OS</div>
+    <h1 class="tagline">
+      The <em>intelligence layer</em><br>youth sports<br>never had.
+    </h1>
+    <p class="sub">
+      One platform — NCS roster intelligence, AI-powered coaching tools, and a
+      publish-ready public team site — designed for the coach who manages
+      everything and still needs to win on Saturday.
+    </p>
+    <div class="pills">
+      <span class="pill">NCS Integration</span>
+      <span class="pill">AI Practice Plans</span>
+      <span class="pill">Live Roster Sync</span>
+      <span class="pill">Public Team Sites</span>
+      <span class="pill">Change Governance</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: PROBLEM -->
+<section id="s2" data-n="02 / 08">
+  <div>
+    <div class="eyebrow">The Problem</div>
+    <div class="rule"></div>
+    <h2>Coaches are <span class="orange">stitching together</span><br>five broken tools.</h2>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="icon">🔄</span>
+        <h3>Manual roster copy-paste</h3>
+        <p>NCS roster changes mean screenshot-to-spreadsheet workflows repeated every week, with no audit trail.</p>
+      </div>
+      <div class="pain-card">
+        <span class="icon">🔎</span>
+        <h3>No change intelligence</h3>
+        <p>Coaches only learn a player transferred or a tournament date shifted when it's too late to react.</p>
+      </div>
+      <div class="pain-card">
+        <span class="icon">📋</span>
+        <h3>Practice plans from scratch</h3>
+        <p>Designing age-appropriate, standard-aligned practice sessions takes hours that coaches don't have.</p>
+      </div>
+      <div class="pain-card">
+        <span class="icon">🌐</span>
+        <h3>No professional team presence</h3>
+        <p>Most youth teams have no searchable public presence — no schedule, no roster, no recruiting visibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: SOLUTION -->
+<section id="s3" data-n="03 / 08">
+  <div>
+    <div class="eyebrow">The Solution</div>
+    <div class="rule"></div>
+    <h2>One system, end-to-end.</h2>
+    <p class="body" style="margin-top:0.75rem;">
+      Rally-OS connects every piece of the coaching workflow — from the first NCS search
+      to a published team site — with governance baked in at every step.
+    </p>
+    <div class="flow" style="margin-top:2.5rem;">
+      <div class="flow-node">
+        <div class="label">Source</div>
+        <div class="name">NCS Portal</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="label">Monitor</div>
+        <div class="name">NCS Worker</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node accent">
+        <div class="label">Record</div>
+        <div class="name" style="color:var(--lime)">Rally-OS</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="label">Publish</div>
+        <div class="name">Org Builder</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="label">Live</div>
+        <div class="name">Team Site</div>
+      </div>
+    </div>
+    <p class="body" style="margin-top:2rem; font-size:0.875rem;">
+      Every roster change is detected, queued for coach review, and only applied on explicit approval — no auto-writes, ever. Full audit trail maintained throughout.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 4: PRODUCT SUITE -->
+<section id="s4" data-n="04 / 08">
+  <div>
+    <div class="eyebrow">Product Suite</div>
+    <div class="rule"></div>
+    <h2>Five legacy tools.<br><span class="lime">One monorepo.</span></h2>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="badge">App</div>
+        <h3>Rally-OS Portal</h3>
+        <p>The coach's daily operations hub. NCS roster import, tournament tracking, change review queue, GameChanger stats, and AI practice planning.</p>
+      </div>
+      <div class="app-card">
+        <div class="badge">App</div>
+        <h3>Org Builder</h3>
+        <p>YAML-driven site configuration wizard. Preview enabled modules, provision a TeamSeason, generate a starter branding kit, and deploy to Vercel.</p>
+      </div>
+      <div class="app-card">
+        <div class="badge orange">App</div>
+        <h3>Public Site</h3>
+        <p>A generated, publicly accessible team site with roster, schedule, tournaments, practice plans, and player profiles — updated from the coach portal.</p>
+      </div>
+      <div class="app-card">
+        <div class="badge violet">Service</div>
+        <h3>NCS Worker</h3>
+        <p>Scheduled background polling of NCS team pages. Diffs live data against stored snapshots and queues every change for coach review. Never auto-applies.</p>
+      </div>
+      <div class="app-card">
+        <div class="badge violet">Package</div>
+        <h3>AI Package</h3>
+        <p>Claude-powered practice plan generation. Takes player age group, season phase, and standards — returns a structured, field-ready practice session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: KEY FEATURES -->
+<section id="s5" data-n="05 / 08">
+  <div>
+    <div class="eyebrow">Key Features</div>
+    <div class="rule"></div>
+    <h2>Built around<br>how coaches actually work.</h2>
+    <div class="features">
+      <div class="feature-row">
+        <div class="dot"></div>
+        <div>
+          <h3>Live NCS Team Search</h3>
+          <p>Search playncs.com by name, city, or state, pick your team, and pull the live roster in seconds — no copy-paste required.</p>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="dot" style="background:var(--orange)"></div>
+        <div>
+          <h3>Change Governance Queue</h3>
+          <p>Every detected NCS roster or tournament change is queued for explicit coach approval. Nothing changes without human sign-off.</p>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="dot" style="background:#A78BFA"></div>
+        <div>
+          <h3>AI Practice Planning</h3>
+          <p>Claude generates age-group-appropriate, standard-aligned practice sessions with drills, timing, and coaching points.</p>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="dot"></div>
+        <div>
+          <h3>Order-Independent Parser</h3>
+          <p>Paste any NCS roster table — header or positional — and the parser extracts jersey, name, position, grad year, bats, throws automatically.</p>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="dot" style="background:var(--orange)"></div>
+        <div>
+          <h3>Org Kit Generator</h3>
+          <p>Provisioning a team generates a starter brand kit: palette, SVG logo with team initials, social post templates, and a pre-filled Vercel checklist.</p>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="dot" style="background:#A78BFA"></div>
+        <div>
+          <h3>13-Module Public Site</h3>
+          <p>Home, roster, schedule, tournaments, practice plans, player profiles, GameChanger stats, fundraising, and more — all config-driven.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: MARKET -->
+<section id="s6" data-n="06 / 08">
+  <div>
+    <div class="eyebrow">Market Opportunity</div>
+    <div class="rule"></div>
+    <h2>Youth sports is a<br><span class="lime">$45B market</span> with<br>no modern ops layer.</h2>
+    <div class="stats">
+      <div class="stat-box">
+        <div class="num">7.4M</div>
+        <div class="desc">Youth softball &amp; baseball players in the US competing in organized leagues</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">340K+</div>
+        <div class="desc">Travel &amp; club teams actively registered across NCS, USSSA, and similar associations</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">0</div>
+        <div class="desc">Platforms that combine roster intelligence, AI coaching tools, and public team sites in one product</div>
+      </div>
+    </div>
+    <p class="body" style="margin-top:2rem; font-size:0.875rem;">
+      Existing tools (TeamSnap, GameChanger, SportsEngine) handle scheduling or stats in isolation.
+      No competitor offers NCS-native roster intelligence with change governance and AI coaching assistance.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 7: TECH -->
+<section id="s7" data-n="07 / 08">
+  <div>
+    <div class="eyebrow">Technical Foundation</div>
+    <div class="rule"></div>
+    <h2>Production-ready,<br>monorepo-first.</h2>
+    <div class="tech-cols">
+      <div>
+        <div class="tech-group">
+          <h4>Application Stack</h4>
+          <span class="tech-tag">Next.js 16</span>
+          <span class="tech-tag">React 18</span>
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">Tailwind CSS</span>
+          <span class="tech-tag">NextAuth.js</span>
+        </div>
+        <div class="tech-group" style="margin-top:1.5rem;">
+          <h4>Data &amp; AI</h4>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Prisma ORM</span>
+          <span class="tech-tag">Claude (Anthropic)</span>
+          <span class="tech-tag">Zod</span>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group">
+          <h4>Build &amp; Deploy</h4>
+          <span class="tech-tag">Turborepo</span>
+          <span class="tech-tag">pnpm workspaces</span>
+          <span class="tech-tag">Vercel</span>
+          <span class="tech-tag">Cloudflare Workers</span>
+          <span class="tech-tag">node-cron</span>
+        </div>
+        <div class="tech-group" style="margin-top:1.5rem;">
+          <h4>Quality</h4>
+          <span class="tech-tag">Vitest</span>
+          <span class="tech-tag">ESLint</span>
+          <span class="tech-tag">69 passing tests</span>
+          <span class="tech-tag">CI/CD on every PR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: CTA -->
+<section id="s8" data-n="08 / 08">
+  <div class="glow2"></div>
+  <div class="content">
+    <div class="eyebrow">Ready to ship</div>
+    <h2>One codebase.<br><span class="violet">Five products.</span><br>Infinite seasons.</h2>
+    <p>
+      Next-Gen Rally-OS is a production-ready monorepo with full CI, Prisma migrations,
+      demo seed data, and deployment manifests. Ready to license, white-label, or deploy
+      as a SaaS product.
+    </p>
+    <a class="cta-link" href="#">Request Demo Access</a>
+  </div>
+</section>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const dots = document.querySelectorAll('.nav-dot');
+
+  function scrollToSlide(n) {
+    sections[n - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = Array.from(sections).indexOf(e.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</html>

@@ -9,7 +9,7 @@ import type {
   ParsedTournamentRow,
   RosterParseResult,
   TournamentParseResult,
-} from './types.js'
+} from './types'
 
 // ─── URL validation ───────────────────────────────────────────────────────────
 
@@ -17,6 +17,7 @@ const NCS_URL_PATTERNS = [
   /^https?:\/\/(www\.)?ncssports\.org\//i,
   /^https?:\/\/(www\.)?norcalscout\.com\//i,
   /^https?:\/\/(www\.)?ncs\.org\//i,
+  /^https?:\/\/(www\.)?playncs\.com\//i,
 ]
 
 /**
@@ -78,7 +79,14 @@ const ROSTER_HEADER_KEYWORDS = [
   'grad',
   'id',
   'player',
+  'bat',
+  'throw',
 ]
+
+/** Known NCS/baseball position codes, used by the positional fallback heuristic. */
+const KNOWN_POSITIONS = new Set([
+  'P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'OF', 'UT', 'IF', 'DP',
+])
 
 function looksLikeRosterHeader(cols: string[]): boolean {
   const normed = cols.map(norm)
@@ -95,6 +103,8 @@ function mapRosterHeaderCol(col: string): string {
   if (c === 'name' || c === 'player' || c === 'player name' || c === 'full name') return 'fullName'
   if (c.includes('jersey') || c === '#' || c === 'number' || c === 'no' || c === 'no.') return 'jerseyNumber'
   if (c.includes('pos')) return 'position'
+  if (c.includes('bat')) return 'bats'
+  if (c.includes('throw')) return 'throws'
   if (c.includes('grad') || c.includes('year') || c.includes('class')) return 'gradYear'
   return col
 }
@@ -162,6 +172,12 @@ export function parseNcsRosterText(text: string): RosterParseResult {
           case 'position':
             row.position = val
             break
+          case 'bats':
+            row.bats = val
+            break
+          case 'throws':
+            row.throws = val
+            break
           case 'gradYear':
             row.gradYear = val
             break
@@ -178,29 +194,48 @@ export function parseNcsRosterText(text: string): RosterParseResult {
   }
 
   // --- Positional fallback ---
-  // Assumed column order: jersey, name (or firstName, lastName), position, gradYear
+  // No fixed column order assumed. Each cell is matched against a pattern
+  // (jersey number, known position code, grad year) and removed from the
+  // pool; whatever remains is joined back together as the player's name.
   warnings.push(
-    'No header row detected; using positional column order: jersey, name, position, grad year.',
+    'No header row detected; using positional heuristics (jersey #, position code, grad year, remainder = name).',
   )
   const POSITIONAL_COLS = ['jerseyNumber', 'fullName', 'position', 'gradYear']
   const rows: ParsedRosterRow[] = []
 
   for (const cols of allLines) {
-    if (cols.length === 0) continue
+    const cells = cols.map((c) => c.trim()).filter((c) => c.length > 0)
+    if (cells.length === 0) continue
     const raw: Record<string, string> = {}
     POSITIONAL_COLS.forEach((label, i) => {
       raw[label] = cols[i] ?? ''
     })
+
+    const remaining = [...cells]
     const row: ParsedRosterRow = { raw }
-    const jersey = (cols[0] ?? '').trim().replace(/^#/, '')
-    const name = (cols[1] ?? '').trim()
-    const position = (cols[2] ?? '').trim()
-    const gradYear = (cols[3] ?? '').trim()
-    if (jersey) row.jerseyNumber = jersey
+
+    const jerseyIdx = remaining.findIndex((c) => /^#?\d{1,3}$/.test(c))
+    if (jerseyIdx !== -1) {
+      row.jerseyNumber = remaining[jerseyIdx]!.replace(/^#/, '')
+      remaining.splice(jerseyIdx, 1)
+    }
+
+    const posIdx = remaining.findIndex((c) => KNOWN_POSITIONS.has(c.toUpperCase()))
+    if (posIdx !== -1) {
+      row.position = remaining[posIdx]!.toUpperCase()
+      remaining.splice(posIdx, 1)
+    }
+
+    const gradIdx = remaining.findIndex((c) => /^20\d{2}$/.test(c))
+    if (gradIdx !== -1) {
+      row.gradYear = remaining[gradIdx]
+      remaining.splice(gradIdx, 1)
+    }
+
+    const name = remaining.join(' ').trim()
     if (name) row.fullName = name
-    if (position) row.position = position
-    if (gradYear) row.gradYear = gradYear
-    rows.push(row)
+
+    if (row.fullName || row.jerseyNumber) rows.push(row)
   }
 
   return { rows, columns: POSITIONAL_COLS, parseMode: 'positional', warnings }

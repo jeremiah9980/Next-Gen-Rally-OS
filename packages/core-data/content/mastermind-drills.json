@@ -1,0 +1,1562 @@
+[
+  {
+    "id": "mm-drill-001",
+    "name": "Home-to-First Burst",
+    "category": "Baserunning",
+    "durationMinutes": 7,
+    "description": "Develop home-to-first burst with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "10U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-002",
+    "name": "Banana Turn Progression",
+    "category": "Baserunning",
+    "durationMinutes": 9,
+    "description": "Develop banana turn progression with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "11U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-003",
+    "name": "Lead-Return-Explode",
+    "category": "Baserunning",
+    "durationMinutes": 11,
+    "description": "Develop lead-return-explode with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "12U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-004",
+    "name": "Secondary Shuffle Reads",
+    "category": "Baserunning",
+    "durationMinutes": 7,
+    "description": "Develop secondary shuffle reads with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "13U/14U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-005",
+    "name": "Dirt Ball Score Drill",
+    "category": "Baserunning",
+    "durationMinutes": 9,
+    "description": "Develop dirt ball score drill with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "10U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-006",
+    "name": "Delayed Steal Timing",
+    "category": "Baserunning",
+    "durationMinutes": 11,
+    "description": "Develop delayed steal timing with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "11U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-007",
+    "name": "Tag-Up Timing Ladder",
+    "category": "Baserunning",
+    "durationMinutes": 7,
+    "description": "Develop tag-up timing ladder with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "12U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-008",
+    "name": "First-and-Third Runner Reads",
+    "category": "Baserunning",
+    "durationMinutes": 9,
+    "description": "Develop first-and-third runner reads with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "13U/14U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-009",
+    "name": "Rundown Escape Decisions",
+    "category": "Baserunning",
+    "durationMinutes": 11,
+    "description": "Develop rundown escape decisions with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "10U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-010",
+    "name": "Two-Out Scoring Sprint",
+    "category": "Baserunning",
+    "durationMinutes": 7,
+    "description": "Develop two-out scoring sprint with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones at bases, coach with ball, one runner active and one on deck.\nCues: Explode first step; Eyes on coach and ball; Touch inside corner; Low slide, fast pop-up\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones at bases, coach with ball, one runner active and one on deck.",
+    "focusTags": [
+      "11U",
+      "Baserunning"
+    ]
+  },
+  {
+    "id": "mm-drill-011",
+    "name": "Triangle Ground Ball Footwork",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop triangle ground ball footwork with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "10U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-012",
+    "name": "Short-Hop Wall Series",
+    "category": "Fielding",
+    "durationMinutes": 9,
+    "description": "Develop short-hop wall series with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "11U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-013",
+    "name": "Forehand-Backhand Ladder",
+    "category": "Fielding",
+    "durationMinutes": 11,
+    "description": "Develop forehand-backhand ladder with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "12U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-014",
+    "name": "Charge and Throw on Run",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop charge and throw on run with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "13U/14U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-015",
+    "name": "Slow Roller Barehand Progression",
+    "category": "Fielding",
+    "durationMinutes": 9,
+    "description": "Develop slow roller barehand progression with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "10U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-016",
+    "name": "Double Play Feeds",
+    "category": "Fielding",
+    "durationMinutes": 11,
+    "description": "Develop double play feeds with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "11U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-017",
+    "name": "Corner Reaction Bunt Read",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop corner reaction bunt read with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "12U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-018",
+    "name": "Middle Infield Drop-Step",
+    "category": "Fielding",
+    "durationMinutes": 9,
+    "description": "Develop middle infield drop-step with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "13U/14U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-019",
+    "name": "Tag Application Circuit",
+    "category": "Fielding",
+    "durationMinutes": 11,
+    "description": "Develop tag application circuit with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "10U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-020",
+    "name": "Error Recovery Rep",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop error recovery rep with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones create angle or triangle; coach rolls or hits controlled balls.\nCues: Feet before glove; Field out front; Read hop early; Replace feet before throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones create angle or triangle; coach rolls or hits controlled balls.",
+    "focusTags": [
+      "11U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-021",
+    "name": "Four Corner Clean Throws",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop four corner clean throws with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "10U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-022",
+    "name": "Quick Exchange Clock",
+    "category": "Fielding",
+    "durationMinutes": 9,
+    "description": "Develop quick exchange clock with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "11U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-023",
+    "name": "Throw Through Target",
+    "category": "Fielding",
+    "durationMinutes": 11,
+    "description": "Develop throw through target with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "12U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-024",
+    "name": "Crow-Hop Outfield Throws",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop crow-hop outfield throws with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "13U/14U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-025",
+    "name": "Relay Line Accuracy",
+    "category": "Fielding",
+    "durationMinutes": 9,
+    "description": "Develop relay line accuracy with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "10U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-026",
+    "name": "Tag-and-Throw",
+    "category": "Fielding",
+    "durationMinutes": 11,
+    "description": "Develop tag-and-throw with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "11U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-027",
+    "name": "Off-Balance Reset Throw",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop off-balance reset throw with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "12U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-028",
+    "name": "Long Toss Build-Down",
+    "category": "Fielding",
+    "durationMinutes": 9,
+    "description": "Develop long toss build-down with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "13U/14U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-029",
+    "name": "Arm Slot Awareness",
+    "category": "Fielding",
+    "durationMinutes": 11,
+    "description": "Develop arm slot awareness with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "10U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-030",
+    "name": "Pressure Throw Countdown",
+    "category": "Fielding",
+    "durationMinutes": 7,
+    "description": "Develop pressure throw countdown with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Small groups of 3-4; targets at chest height or base bags as targets.\nCues: Step to target; Ball out quick; Throw through chest; Finish balanced\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Small groups of 3-4; targets at chest height or base bags as targets.",
+    "focusTags": [
+      "11U",
+      "Fielding"
+    ]
+  },
+  {
+    "id": "mm-drill-031",
+    "name": "Middle Lane Tee Round",
+    "category": "Batting",
+    "durationMinutes": 7,
+    "description": "Develop middle lane tee round with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "10U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-032",
+    "name": "Front Toss Strike Plan",
+    "category": "Batting",
+    "durationMinutes": 9,
+    "description": "Develop front toss strike plan with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "11U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-033",
+    "name": "Two-Strike Battle Round",
+    "category": "Batting",
+    "durationMinutes": 11,
+    "description": "Develop two-strike battle round with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "12U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-034",
+    "name": "Hit Behind Runner",
+    "category": "Batting",
+    "durationMinutes": 7,
+    "description": "Develop hit behind runner with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "13U/14U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-035",
+    "name": "Runner-on-Third RBI Contact",
+    "category": "Batting",
+    "durationMinutes": 9,
+    "description": "Develop runner-on-third rbi contact with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "10U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-036",
+    "name": "Opposite-Field Line Drive",
+    "category": "Batting",
+    "durationMinutes": 11,
+    "description": "Develop opposite-field line drive with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "11U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-037",
+    "name": "Inside Pitch Turn Drill",
+    "category": "Batting",
+    "durationMinutes": 7,
+    "description": "Develop inside pitch turn drill with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "12U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-038",
+    "name": "Outside Pitch Stay Drill",
+    "category": "Batting",
+    "durationMinutes": 9,
+    "description": "Develop outside pitch stay drill with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "13U/14U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-039",
+    "name": "Count-Based Swing Decisions",
+    "category": "Batting",
+    "durationMinutes": 11,
+    "description": "Develop count-based swing decisions with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "10U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-040",
+    "name": "Game At-Bat Simulation",
+    "category": "Batting",
+    "durationMinutes": 7,
+    "description": "Develop game at-bat simulation with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Tee, front toss, or machine with visible target zones.\nCues: Load early; See pitch deep; Attack middle; Balanced finish\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Tee, front toss, or machine with visible target zones.",
+    "focusTags": [
+      "11U",
+      "Batting"
+    ]
+  },
+  {
+    "id": "mm-drill-041",
+    "name": "Quiet Receive Frame",
+    "category": "Catching",
+    "durationMinutes": 7,
+    "description": "Develop quiet receive frame with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "10U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-042",
+    "name": "Low Pitch Beat-to-Spot",
+    "category": "Catching",
+    "durationMinutes": 9,
+    "description": "Develop low pitch beat-to-spot with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "11U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-043",
+    "name": "Block and Recover",
+    "category": "Catching",
+    "durationMinutes": 11,
+    "description": "Develop block and recover with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "12U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-044",
+    "name": "Throwdown Footwork",
+    "category": "Catching",
+    "durationMinutes": 7,
+    "description": "Develop throwdown footwork with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "13U/14U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-045",
+    "name": "Back Pick Footwork",
+    "category": "Catching",
+    "durationMinutes": 9,
+    "description": "Develop back pick footwork with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "10U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-046",
+    "name": "Pitcher-Catcher Communication",
+    "category": "Catching",
+    "durationMinutes": 11,
+    "description": "Develop pitcher-catcher communication with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "11U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-047",
+    "name": "Pop-Up Find and Throw",
+    "category": "Catching",
+    "durationMinutes": 7,
+    "description": "Develop pop-up find and throw with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "12U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-048",
+    "name": "Bunt Field and Throw",
+    "category": "Catching",
+    "durationMinutes": 9,
+    "description": "Develop bunt field and throw with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "13U/14U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-049",
+    "name": "1st/3rd Catcher Decision",
+    "category": "Catching",
+    "durationMinutes": 11,
+    "description": "Develop 1st/3rd catcher decision with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "10U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-050",
+    "name": "Catcher Leadership Calls",
+    "category": "Catching",
+    "durationMinutes": 7,
+    "description": "Develop catcher leadership calls with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Catcher in gear if blocking/throwing; use soft balls for early reps.\nCues: Beat ball to spot; Chest over block; Feet beat arm; Lead the defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Catcher in gear if blocking/throwing; use soft balls for early reps.",
+    "focusTags": [
+      "11U",
+      "Catching"
+    ]
+  },
+  {
+    "id": "mm-drill-051",
+    "name": "Power Line Balance",
+    "category": "Pitching",
+    "durationMinutes": 7,
+    "description": "Develop power line balance with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "10U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-052",
+    "name": "K Drill / Arm Circle Timing",
+    "category": "Pitching",
+    "durationMinutes": 9,
+    "description": "Develop k drill / arm circle timing with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "11U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-053",
+    "name": "Spot Command Grid",
+    "category": "Pitching",
+    "durationMinutes": 11,
+    "description": "Develop spot command grid with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "12U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-054",
+    "name": "Changeup Feel Series",
+    "category": "Pitching",
+    "durationMinutes": 7,
+    "description": "Develop changeup feel series with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "13U/14U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-055",
+    "name": "Fastball-Changeup Tunnel",
+    "category": "Pitching",
+    "durationMinutes": 9,
+    "description": "Develop fastball-changeup tunnel with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "10U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-056",
+    "name": "Pitcher Fielding Position",
+    "category": "Pitching",
+    "durationMinutes": 11,
+    "description": "Develop pitcher fielding position with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "11U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-057",
+    "name": "Bunt Fielding From Circle",
+    "category": "Pitching",
+    "durationMinutes": 7,
+    "description": "Develop bunt fielding from circle with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "12U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-058",
+    "name": "Walk Recovery Routine",
+    "category": "Pitching",
+    "durationMinutes": 9,
+    "description": "Develop walk recovery routine with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "13U/14U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-059",
+    "name": "Count Sequencing Reps",
+    "category": "Pitching",
+    "durationMinutes": 11,
+    "description": "Develop count sequencing reps with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "10U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-060",
+    "name": "Bullpen With Consequence",
+    "category": "Pitching",
+    "durationMinutes": 7,
+    "description": "Develop bullpen with consequence with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Power line or command grid; catcher/target and charting sheet.\nCues: Stay on power line; Smooth arm circle; Finish to catcher; Command before speed\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Power line or command grid; catcher/target and charting sheet.",
+    "focusTags": [
+      "11U",
+      "Pitching"
+    ]
+  },
+  {
+    "id": "mm-drill-061",
+    "name": "Bunt Stance Freeze",
+    "category": "Bunting",
+    "durationMinutes": 7,
+    "description": "Develop bunt stance freeze with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "10U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-062",
+    "name": "Catch It With The Bat",
+    "category": "Bunting",
+    "durationMinutes": 9,
+    "description": "Develop catch it with the bat with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "11U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-063",
+    "name": "1B-Side Directional Bunt",
+    "category": "Bunting",
+    "durationMinutes": 11,
+    "description": "Develop 1b-side directional bunt with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "12U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-064",
+    "name": "3B-Side Directional Bunt",
+    "category": "Bunting",
+    "durationMinutes": 7,
+    "description": "Develop 3b-side directional bunt with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "13U/14U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-065",
+    "name": "Push Bunt Space Attack",
+    "category": "Bunting",
+    "durationMinutes": 9,
+    "description": "Develop push bunt space attack with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "10U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-066",
+    "name": "Drag Bunt Line Drill",
+    "category": "Bunting",
+    "durationMinutes": 11,
+    "description": "Develop drag bunt line drill with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "11U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-067",
+    "name": "Safety Squeeze Down First",
+    "category": "Bunting",
+    "durationMinutes": 7,
+    "description": "Develop safety squeeze down first with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "12U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-068",
+    "name": "Bunt Under Pressure",
+    "category": "Bunting",
+    "durationMinutes": 9,
+    "description": "Develop bunt under pressure with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "13U/14U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-069",
+    "name": "Fake Bunt Pull Back",
+    "category": "Bunting",
+    "durationMinutes": 11,
+    "description": "Develop fake bunt pull back with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "10U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-070",
+    "name": "Bunt Read Defense Race",
+    "category": "Bunting",
+    "durationMinutes": 7,
+    "description": "Develop bunt read defense race with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Home plate area with cone zones down 1B and 3B lines.\nCues: Top hand safe; Bend knees; Angle down; Dead ball first\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Home plate area with cone zones down 1B and 3B lines.",
+    "focusTags": [
+      "11U",
+      "Bunting"
+    ]
+  },
+  {
+    "id": "mm-drill-071",
+    "name": "Dry Footwork Path",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop dry footwork path with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "10U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-072",
+    "name": "Tee Soft Slap",
+    "category": "Slapping",
+    "durationMinutes": 9,
+    "description": "Develop tee soft slap with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "11U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-073",
+    "name": "Front Toss Hard Slap",
+    "category": "Slapping",
+    "durationMinutes": 11,
+    "description": "Develop front toss hard slap with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "12U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-074",
+    "name": "Fake Bunt Slap",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop fake bunt slap with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "13U/14U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-075",
+    "name": "Triple Threat Decision",
+    "category": "Slapping",
+    "durationMinutes": 9,
+    "description": "Develop triple threat decision with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "10U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-076",
+    "name": "Crossover Timing Line",
+    "category": "Slapping",
+    "durationMinutes": 11,
+    "description": "Develop crossover timing line with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "11U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-077",
+    "name": "Soft Slap Placement",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop soft slap placement with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "12U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-078",
+    "name": "Hard Slap Through 5-6",
+    "category": "Slapping",
+    "durationMinutes": 9,
+    "description": "Develop hard slap through 5-6 with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "13U/14U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-079",
+    "name": "Slap and Read Defense",
+    "category": "Slapping",
+    "durationMinutes": 11,
+    "description": "Develop slap and read defense with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "10U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-080",
+    "name": "Slapper Versus Crash Corners",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop slapper versus crash corners with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Batter box lane marked with tape/cones; tee or front toss.\nCues: Eyes level; Feet controlled; Contact before leaving box; Pressure defense\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Batter box lane marked with tape/cones; tee or front toss.",
+    "focusTags": [
+      "11U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-081",
+    "name": "Sign 5 Back Pick to 1B",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop sign 5 back pick to 1b with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "10U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-082",
+    "name": "Sign 5 Back Pick to 3B",
+    "category": "Slapping",
+    "durationMinutes": 9,
+    "description": "Develop sign 5 back pick to 3b with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "11U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-083",
+    "name": "Cross Play SS Crash",
+    "category": "Slapping",
+    "durationMinutes": 11,
+    "description": "Develop cross play ss crash with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "12U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-084",
+    "name": "Catcher Pump Fake Hold",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop catcher pump fake hold with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "13U/14U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-085",
+    "name": "Pick and Cover Rotation",
+    "category": "Slapping",
+    "durationMinutes": 9,
+    "description": "Develop pick and cover rotation with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "10U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-086",
+    "name": "Corner Sneak Pick",
+    "category": "Slapping",
+    "durationMinutes": 11,
+    "description": "Develop corner sneak pick with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "11U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-087",
+    "name": "Pitcher Look-Back Reset",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop pitcher look-back reset with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "12U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-088",
+    "name": "Middle Cut on Steal",
+    "category": "Slapping",
+    "durationMinutes": 9,
+    "description": "Develop middle cut on steal with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "13U/14U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-089",
+    "name": "1st/3rd Pick Menu",
+    "category": "Slapping",
+    "durationMinutes": 11,
+    "description": "Develop 1st/3rd pick menu with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "10U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-090",
+    "name": "Runner Freeze Drill",
+    "category": "Slapping",
+    "durationMinutes": 7,
+    "description": "Develop runner freeze drill with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Live base runners, catcher/pitcher/corners, middle infield rotating.\nCues: Do not tip it; Corners expect throw; Middle covers advance; Tag fast\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Live base runners, catcher/pitcher/corners, middle infield rotating.",
+    "focusTags": [
+      "11U",
+      "Slapping"
+    ]
+  },
+  {
+    "id": "mm-drill-091",
+    "name": "Bunt Defense Standard",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop bunt defense standard with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-092",
+    "name": "Bunt Defense Wheel Look",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop bunt defense wheel look with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-093",
+    "name": "Slap Defense Rotation",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop slap defense rotation with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "12U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-094",
+    "name": "First-and-Third Defense",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop first-and-third defense with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "13U/14U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-095",
+    "name": "Rundown Funnel",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop rundown funnel with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-096",
+    "name": "Cutoff Communication",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop cutoff communication with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-097",
+    "name": "Relay to Home",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop relay to home with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "12U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-098",
+    "name": "Infield In Contact Play",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop infield in contact play with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "13U/14U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-099",
+    "name": "Bases Loaded Force Reads",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop bases loaded force reads with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-100",
+    "name": "Two-Out Communication",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop two-out communication with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Full or half field. Walk, jog, then game-speed reps.\nCues: Know job before pitch; Move on read; Talk loud; Backup every throw\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Full or half field. Walk, jog, then game-speed reps.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-101",
+    "name": "Drop-Step Angle Ladder",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop drop-step angle ladder with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-102",
+    "name": "Do-or-Die Ground Ball",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop do-or-die ground ball with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-103",
+    "name": "Crow Hop Throw Home",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop crow hop throw home with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "12U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-104",
+    "name": "Gap Communication",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop gap communication with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "13U/14U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-105",
+    "name": "Fence Ball Recovery",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop fence ball recovery with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-106",
+    "name": "Backup Base Map",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop backup base map with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-107",
+    "name": "Outfield Relay Target",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop outfield relay target with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "12U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-108",
+    "name": "Sun Ball / High Ball Read",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop sun ball / high ball read with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "13U/14U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-109",
+    "name": "First-Step Reaction",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop first-step reaction with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-110",
+    "name": "No-Extra-Base Challenge",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop no-extra-base challenge with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Cones for routes, cutoff targets, and backup responsibility markers.\nCues: First step back/angle; Communicate early; Hit cutoff; Erase extra bases\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Cones for routes, cutoff targets, and backup responsibility markers.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-111",
+    "name": "Reset Breath Routine",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop reset breath routine with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-112",
+    "name": "Mistake Flush Word",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop mistake flush word with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-113",
+    "name": "Pre-Pitch Job Call",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop pre-pitch job call with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "12U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-114",
+    "name": "Dugout Signal Quiz",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop dugout signal quiz with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "13U/14U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-115",
+    "name": "Partner Coaching Rep",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop partner coaching rep with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-116",
+    "name": "Pressure Scoreboard Drill",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop pressure scoreboard drill with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-117",
+    "name": "Player-Led Warmup",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop player-led warmup with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "12U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-118",
+    "name": "Captain Communication Huddle",
+    "category": "Team Defense",
+    "durationMinutes": 9,
+    "description": "Develop captain communication huddle with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "13U/14U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-119",
+    "name": "Post-Practice Self Grade",
+    "category": "Team Defense",
+    "durationMinutes": 11,
+    "description": "Develop post-practice self grade with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "10U",
+      "Team Defense"
+    ]
+  },
+  {
+    "id": "mm-drill-120",
+    "name": "Confidence Bank",
+    "category": "Team Defense",
+    "durationMinutes": 7,
+    "description": "Develop confidence bank with fast decisions, clean mechanics, and competitive standards.",
+    "instructions": "Setup: Team circle, whiteboard, or pre-pitch huddle format.\nCues: Reset fast; Own your role; Encourage teammates; Compete next pitch\nScoring: +1 clean execution; +1 communication before/through play; +1 game-speed decision; -1 mental repeat mistake\nProgression: Walk-through -> Controlled rep -> Competitive rep -> Live situation",
+    "equipment": "Team circle, whiteboard, or pre-pitch huddle format.",
+    "focusTags": [
+      "11U",
+      "Team Defense"
+    ]
+  }
+]
