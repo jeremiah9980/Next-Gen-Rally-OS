@@ -3,3 +3,11 @@ packages:
   - 'packages/*'
   - 'services/*'
   - 'org-site-builder'
+
+# Security overrides (postcss XSS GHSA-qx2v-qp2m-jg93, uuid bounds check
+# GHSA-w5hq-g745-h8pq). pnpm 10+ reads them here; the duplicate under
+# "pnpm.overrides" in package.json is for pnpm 9 (what CI pins). Keep both
+# in sync until the repo drops pnpm 9.
+overrides:
+  'postcss@<8.5.10': '>=8.5.10'
+  'uuid@<11.1.1': '>=11.1.1'
